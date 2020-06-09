@@ -242,49 +242,11 @@ public interface Supplier<T> {
 JavaLearning:com.prd.interfaces.functional.SupplierFunctionalTest
 ```
 
-* Function概述
 
-  Function接口用来根据一个类型的数据得到另一个类型的数据，前者称为前置条件，后者称为后置条件。类似一种数据管道，将数据传递处理。
 
-```java
-@FunctionalInterface
-public interface Function<T, R> {
-    R apply(T t);
-    ......
-}
-```
 
-Function 接口中最主要的抽象方法为: R apply(T t) ，根据类型T的参数获取类型R的结果。 使用的场景例如:将 String 类型转换为 Integer 类型。
 
-代码示例：
 
-```java
-JavaLearning:com.prd.interfaces.functional.FunctionTest
-```
-
-* Predicate概述
-
-​       有时候我们需要对某种类型的数据进行判断，从而得到一个boolean值结果。这时可以使用java.util.function.Predicate<T> 接口。
-
-```java
-@FunctionalInterface
-public interface Predicate<T> {
-    boolean test(T t);
-    ......
-}
-```
-
-​		Predicate还实现有多个default方法，可以进行 &（与），|（或），！（非）等组合判断。
-
-代码示例：
-
-```
-JavaLearning:com.prd.interfaces.functional.PredicateTest
-```
-
-* UnaryOperator接口概述
-
-   该接口继承Function
 
 
 
