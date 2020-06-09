@@ -6,5 +6,6 @@
     * [GITBOOK](common/gitbook/gitbook.md)
 * [JavaSE](javase/JavaSE.md)
     * [第1章 接口](javase/001-interfaces.md)
+    * [第2章 内部类](javase/002-innerClass.md)
 * [MySQL](mysql/MySQL.md)
 

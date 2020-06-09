@@ -262,6 +262,8 @@ Function 接口中最主要的抽象方法为: R apply(T t) ，根据类型T的�
 JavaLearning:com.prd.interfaces.functional.FunctionTest
 ```
 
+​		***Function接口的identity方法用在lamdba方法中的,Collectors.toMap的三个参数的http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm 可以参考collect Map的example 4  ????***
+
 * Predicate概述
 
 ​       有时候我们需要对某种类型的数据进行判断，从而得到一个boolean值结果。这时可以使用java.util.function.Predicate<T> 接口。
@@ -283,10 +285,27 @@ JavaLearning:com.prd.interfaces.functional.PredicateTest
 ```
 
 * UnaryOperator接口概述
+```java
+public interface UnaryOperator<T> extends Function<T, T>
+```
+​		从`extends Function<T, T>`可以看出, 这个方法是Function的一个简单写法, 即传入一个参数, 返回值类型和参数类型相同的方法。这个方法当然也继承了`andThen`和`compose`; 此外, 由于静态方法不能继承所以在代码中重写了一遍, 其作用是相同的。
 
-   该接口继承Function
+代码示例：
 
+```java
+JavaLearning:com.prd.interfaces.functional.UnaryOperatorTest
+```
 
+### 类似的接口
+
+1. `IntFunction<R>`等, 传入参数为int等基本类型, 返回类型为R。
+2. `ToIntFunction<T>` 等, 传入类型为T, 返回类型为int。
+3. `IntToDoubleFunction`等, 传入int, 返回double。
+4. `BiFunction<T, U, R>`, 传入类型为T和u, 返回类型为R。
+5. `ToIntBiFunction<T, U>`, 传入类型为T和U, 返回类型为int。
+    需要注意, 上面的方法和`Funciton`本身并没有继承关系, 都是相互独立的。
+
+   
 
 ### 2.2 lambda表达式语法
 
@@ -392,5 +411,85 @@ lambda :Lambda -----:1474622341604
 
 ### 2.4 方法引用
 
+​		方法引用就是在不调用方法的情况下引用方法，即就是简化lambda语法。如：`Timer r = new Timer(1000, event - > System.out.println(event))` 就可以简化为 `Timer ` r = new Timer(1000, System.out::println)。
+
+​		方法引用的标准形式是:`类名::方法名`。（**注意：只需要写方法名，不需要写括号**）
+
+| 类型                             | 示例                      |
+| -------------------------------- | ------------------------- |
+| 引用静态方法                     | Class::staticMethod       |
+| 引用某个对象的实例方法           | object::instanceMethod    |
+| 引用某个类型的任意对象的实例方法 | ClassType::instanceMethod |
+| 引用构造方法                     | ClassName::new            |
 
 
+
+#### 2.4.1 出现方法引用的原因
+
+​		在Java中，我们可以通过创建新对象来使用对象的引用,或者引用已有的对象，例如：
+
+```java
+//创建新对象来引用该对象
+List list = new ArrayList();
+dosth(list);
+
+//引用已有的对象
+List list2 = list;
+dosth(list2);
+```
+
+​		如果我们只在另一个方法中使用对象的方法，我们仍然必须将完整的对象作为参数传递。那么将方法作为参数传递不是更有效吗？**方法引用这种语法糖不能用于所有的方法，它们只能用于只有一个方法的lambda表达式**。
+
+```java
+//lambda转方法引用
+Consumer<String> c = s -> System.out.println(s);
+Consumer<String> c = System.out::println;
+```
+
+####  2.4.2 静态方法引用
+
+​		当我们所使用的lambda表达式仅仅调用了一个静态方法，我们就可以使用静态方法引用。格式如：`(args) -> Class.staticMethod(args)` ==> `Class::staticMethod`，不需要显式的传递参数，方法引用中会自动传递参数。
+
+代码示例:
+
+```java
+JavaLearning:com.prd.interfaces.reference.ClassMethodReferenceTest
+```
+
+#### 2.4.3 特定类型的对象的实例方法的方法引用
+
+​		使用实例的类型而非实例本身，参数隐式传递。格式如：`(obj, args) -> obj.instanceMethod(args)`==>`ObjectType::instanceMethod`
+
+代码示例：
+
+```java
+JavaLearning:com.prd.interfaces.reference.ClassInstanceMethodReferenceTest
+```
+
+#### 2.4.4 已有对象的实例方法引用
+
+​		直接引用已经在其他地方实例化的对象的一个方法，本身不需要再实现一次。格式如：`(args) -> obj.instanceMethod(args)`==>`obj::instanceMethod`
+
+代码示例：
+
+```java
+JavaLearning:com.prd.interfaces.reference.ObjectInstranceMethodReferenceTest
+```
+
+#### 2.4.5 构造方法引用
+
+​		唯一的功能就是创建一个新对象，与其他情况一样，参数（如果有）不会在方法引用中传递。格式如：`(args) -> new ClassName(args)`==>`ClassName::new`。
+
+​		如果存在多个构造函数，则Java会根据实际情况，推算使用哪个构造器。
+
+​		Java是无法创建泛型类型T的数组，但是通过构造方法引用，可以轻易的实现这个。eg：`Person[] people = stream.toArray(Person[]::new)`。
+
+代码示例：
+
+```java
+JavaLearning:com.prd.interfaces.reference.ConstructorReferenceTest
+```
+
+#### 2.4.6 总结
+
+​		方法引用常用户Java8的Streams特性中，使得编码更为简练，同时可以使设计模式更为精巧。
