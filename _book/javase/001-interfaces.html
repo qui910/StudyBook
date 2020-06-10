@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../mysql/MySQL.html" />
+    <link rel="next" href="002-innerClass.html" />
     
     
     <link rel="prev" href="JavaSE.html" />
@@ -174,6 +174,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.3.2" data-path="002-innerClass.html">
+            
+                <a href="002-innerClass.html">
+            
+                    
+                    第2章 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -185,6 +198,19 @@
             
                     
                     MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../microservices/MicroServices.html">
+            
+                <a href="../microservices/MicroServices.html">
+            
+                    
+                    MicroServices
             
                 </a>
             
@@ -270,7 +296,7 @@
 <p>&#x5982;Cloneable&#x63A5;&#x53E3;&#xFF0C;&#x5C31;&#x662F;&#x6807;&#x8BB0;&#x63A5;&#x53E3;&#x4E4B;&#x4E00;&#x3002;&#x4E0B;&#x9762;&#x501F;&#x6B64;&#xFF0C;&#x6B63;&#x597D;&#x7B80;&#x8FF0;&#x4E0B;&#x5BF9;&#x8C61;&#x514B;&#x9686;&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x3002;</p>
 <h4 id="121-&#x4F55;&#x4E3A;&#x514B;&#x9686;">1.2.1 &#x4F55;&#x4E3A;&#x514B;&#x9686;</h4>
 <p>&#x514B;&#x9686;&#x5373;&#x5B8C;&#x5168;&#x62F7;&#x8D1D;&#x5BF9;&#x8C61;&#xFF0C;&#x5305;&#x62EC;&#x5BF9;&#x8C61;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x4FDD;&#x5B58;&#x4E3A;2&#x4EFD;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x514B;&#x9686;&#x3002;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x53EA;&#x662F;&#x5F15;&#x7528;&#x7684;&#x590D;&#x5236;&#xFF0C;&#x800C;&#x5185;&#x5B58;&#x4E2D;&#x4E0D;&#x662F;&#x4E24;&#x4EFD;&#xFF0C;&#x5219;&#x4E0D;&#x662F;&#x514B;&#x9686;&#x3002;</p>
-<p><img src="F:\PersonalFolder\WorkFolder\GITBOOK&#x4ED3;&#x5E93;\StudyBook\javase\images\1.2.1-1.png" alt="1.2.1-1"></p>
+<p><img src="images/1.2.1-1.png" alt="1.2.1-1"></p>
 <p>&#x5BF9;&#x4E8E;&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x514B;&#x9686;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x5373;&#x590D;&#x5236;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x3002;</p>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> num =<span class="hljs-number">20</span>;
 <span class="hljs-keyword">int</span> num2 = num;
@@ -283,7 +309,7 @@
 <p>&#x3000;&#x3000;&#x6CE8;&#x610F;&#xFF0C;&#x5E38;&#x89C1;&#x7684;<code>Object a=new Object();Object b;b=a;</code>&#x8FD9;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x4EE3;&#x7801;&#x590D;&#x5236;&#x7684;&#x662F;&#x5F15;&#x7528;&#xFF0C;&#x5373;&#x5BF9;&#x8C61;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5730;&#x5740;&#xFF0C;a&#x548C;b&#x5BF9;&#x8C61;&#x4ECD;&#x7136;&#x6307;&#x5411;&#x4E86;&#x540C;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x3002;&#x800C;&#x901A;&#x8FC7;clone&#x65B9;&#x6CD5;&#x8D4B;&#x503C;&#x7684;&#x5BF9;&#x8C61;&#x8DDF;&#x539F;&#x6765;&#x7684;&#x5BF9;&#x8C61;&#x65F6;&#x540C;&#x65F6;&#x72EC;&#x7ACB;&#x5B58;&#x5728;&#x7684;&#x3002;</p>
 <h4 id="123-&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x514B;&#x9686;">1.2.3 &#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x514B;&#x9686;</h4>
 <p>&#x8FD9;&#x91CC;&#x5148;&#x4ECB;&#x7ECD;2&#x79CD;&#x514B;&#x9686;&#x65B9;&#x6CD5;&#xFF1A;<strong>&#x6D45;&#x514B;&#x9686;(ShallowClone)</strong>&#x548C;<strong>&#x6DF1;&#x514B;&#x9686;(DeepClone)</strong>&#x3002;&#x5728;Java&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x5206;&#x4E3A;&#x503C;&#x7C7B;&#x578B;&#xFF08;&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF09;&#x548C;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#xFF0C;&#x503C;&#x7C7B;&#x578B;&#x5305;&#x62EC;int&#x3001;double&#x3001;byte&#x3001;boolean&#x3001;char&#x7B49;&#x7B80;&#x5355;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x5305;&#x62EC;&#x7C7B;&#x3001;&#x63A5;&#x53E3;&#x3001;&#x6570;&#x7EC4;&#x7B49;&#x590D;&#x6742;&#x7C7B;&#x578B;&#x3002;&#x6D45;&#x514B;&#x9686;&#x548C;&#x6DF1;&#x514B;&#x9686;&#x7684;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#x662F;&#x5426;&#x652F;&#x6301;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x590D;&#x5236;&#x3002;&#x4E0B;&#x56FE;&#x80FD;&#x597D;&#x7684;&#x8BF4;&#x660E;&#x8FD9;&#x4E2A;&#xFF1A;</p>
-<p><img src="F:\PersonalFolder\WorkFolder\GITBOOK&#x4ED3;&#x5E93;\StudyBook\javase\images\1.2.3-1.png" alt="1.2.3-1"></p>
+<p><img src="images/1.2.3-1.png" alt="1.2.3-1"></p>
 <p><strong>&#x6D45;&#x514B;&#x9686;&#xFF1A;</strong></p>
 <ol>
 <li><p><strong>&#x88AB;&#x590D;&#x5236;&#x7684;&#x7C7B;&#x9700;&#x8981;&#x5B9E;&#x73B0;Clonenable&#x63A5;&#x53E3;</strong>&#xFF08;&#x4E0D;&#x5B9E;&#x73B0;&#x7684;&#x8BDD;&#x5728;&#x8C03;&#x7528;clone&#x65B9;&#x6CD5;&#x4F1A;&#x629B;&#x51FA;CloneNotSupportedException&#x5F02;&#x5E38;)&#xFF0C; &#x8BE5;&#x63A5;&#x53E3;&#x4E3A;&#x6807;&#x8BB0;&#x63A5;&#x53E3;(&#x4E0D;&#x542B;&#x4EFB;&#x4F55;&#x65B9;&#x6CD5;)</p>
@@ -467,6 +493,7 @@ interface GreetingService
 <p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
 <pre><code class="lang-java">JavaLearning:com.prd.interfaces.functional.FunctionTest
 </code></pre>
+<p>&#x200B;        <strong><em>Function&#x63A5;&#x53E3;&#x7684;identity&#x65B9;&#x6CD5;&#x7528;&#x5728;lamdba&#x65B9;&#x6CD5;&#x4E2D;&#x7684;,Collectors.toMap&#x7684;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;<a href="http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm" target="_blank">http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm</a> &#x53EF;&#x4EE5;&#x53C2;&#x8003;collect Map&#x7684;example 4  ????</em></strong></p>
 <ul>
 <li>Predicate&#x6982;&#x8FF0;</li>
 </ul>
@@ -481,10 +508,22 @@ interface GreetingService
 <p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
 <pre><code>JavaLearning:com.prd.interfaces.functional.PredicateTest
 </code></pre><ul>
-<li><p>UnaryOperator&#x63A5;&#x53E3;&#x6982;&#x8FF0;</p>
-<p> &#x8BE5;&#x63A5;&#x53E3;&#x7EE7;&#x627F;Function</p>
-</li>
+<li>UnaryOperator&#x63A5;&#x53E3;&#x6982;&#x8FF0;<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UnaryOperator</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Function</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">T</span>&gt;
+</span></code></pre>
+&#x200B;        &#x4ECE;<code>extends Function&lt;T, T&gt;</code>&#x53EF;&#x4EE5;&#x770B;&#x51FA;, &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;Function&#x7684;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x5199;&#x6CD5;, &#x5373;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x53C2;&#x6570;, &#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x548C;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x76F8;&#x540C;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5F53;&#x7136;&#x4E5F;&#x7EE7;&#x627F;&#x4E86;<code>andThen</code>&#x548C;<code>compose</code>; &#x6B64;&#x5916;, &#x7531;&#x4E8E;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x4E0D;&#x80FD;&#x7EE7;&#x627F;&#x6240;&#x4EE5;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x91CD;&#x5199;&#x4E86;&#x4E00;&#x904D;, &#x5176;&#x4F5C;&#x7528;&#x662F;&#x76F8;&#x540C;&#x7684;&#x3002;</li>
 </ul>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-java">JavaLearning:com.prd.interfaces.functional.UnaryOperatorTest
+</code></pre>
+<h3 id="&#x7C7B;&#x4F3C;&#x7684;&#x63A5;&#x53E3;">&#x7C7B;&#x4F3C;&#x7684;&#x63A5;&#x53E3;</h3>
+<ol>
+<li><code>IntFunction&lt;R&gt;</code>&#x7B49;, &#x4F20;&#x5165;&#x53C2;&#x6570;&#x4E3A;int&#x7B49;&#x57FA;&#x672C;&#x7C7B;&#x578B;, &#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;R&#x3002;</li>
+<li><code>ToIntFunction&lt;T&gt;</code> &#x7B49;, &#x4F20;&#x5165;&#x7C7B;&#x578B;&#x4E3A;T, &#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;int&#x3002;</li>
+<li><code>IntToDoubleFunction</code>&#x7B49;, &#x4F20;&#x5165;int, &#x8FD4;&#x56DE;double&#x3002;</li>
+<li><code>BiFunction&lt;T, U, R&gt;</code>, &#x4F20;&#x5165;&#x7C7B;&#x578B;&#x4E3A;T&#x548C;u, &#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;R&#x3002;</li>
+<li><code>ToIntBiFunction&lt;T, U&gt;</code>, &#x4F20;&#x5165;&#x7C7B;&#x578B;&#x4E3A;T&#x548C;U, &#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;int&#x3002;
+ &#x9700;&#x8981;&#x6CE8;&#x610F;, &#x4E0A;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x548C;<code>Funciton</code>&#x672C;&#x8EAB;&#x5E76;&#x6CA1;&#x6709;&#x7EE7;&#x627F;&#x5173;&#x7CFB;, &#x90FD;&#x662F;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#x7684;&#x3002;</li>
+</ol>
 <h3 id="22-lambda&#x8868;&#x8FBE;&#x5F0F;&#x8BED;&#x6CD5;">2.2 lambda&#x8868;&#x8FBE;&#x5F0F;&#x8BED;&#x6CD5;</h3>
 <ul>
 <li>lambda&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x4E00;&#x822C;&#x8BED;&#x6CD5;</li>
@@ -555,6 +594,73 @@ lambda :Lambda -----:1474622341604</p>
 <p>&#x200B;        &#x4E0D;&#x8FC7;lambda&#x8868;&#x8FBE;&#x5F0F;&#x8BBF;&#x95EE;<strong>&#x5916;&#x90E8;&#x53D8;&#x91CF;&#x6709;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x9650;&#x5236;&#xFF1A;&#x53D8;&#x91CF;&#x4E0D;&#x53EF;&#x53D8;</strong>&#xFF08;&#x53EA;&#x662F;&#x5F15;&#x7528;&#x4E0D;&#x53EF;&#x53D8;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x771F;&#x6B63;&#x7684;&#x4E0D;&#x53EF;&#x53D8;&#xFF09;&#x3002;</p>
 <p>&#x200B;        &#x5F53;&#x5728;&#x8868;&#x8FBE;&#x5F0F;&#x5185;&#x90E8;&#x4FEE;&#x6539;waibu = waibu + &quot; &quot;;&#x65F6;&#xFF0C;IDE&#x5C31;&#x4F1A;&#x63D0;&#x793A;&#x4F60;&#xFF1A;<code>Local variable waibu defined in an enclosing scope must be final or effectively final</code>&#x7F16;&#x8BD1;&#x65F6;&#x4F1A;&#x62A5;&#x9519;&#x3002;&#x56E0;&#x4E3A;&#x53D8;&#x91CF;waibu&#x88AB;lambda&#x8868;&#x8FBE;&#x5F0F;&#x5F15;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x9690;&#x5F0F;&#x7684;&#x628A;&#x5176;&#x5F53;&#x6210;final&#x6765;&#x5904;&#x7406;&#x3002;&#x4EE5;&#x524D;Java&#x7684;&#x533F;&#x540D;&#x5185;&#x90E8;&#x7C7B;&#x5728;&#x8BBF;&#x95EE;&#x5916;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5916;&#x90E8;&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x7528;final&#x4FEE;&#x9970;&#x3002;&#x73B0;&#x5728;java8&#x5BF9;&#x8FD9;&#x4E2A;&#x9650;&#x5236;&#x505A;&#x4E86;&#x4F18;&#x5316;&#xFF0C;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x663E;&#x793A;&#x4F7F;&#x7528;final&#x4FEE;&#x9970;&#xFF0C;&#x4F46;&#x662F;&#x7F16;&#x8BD1;&#x5668;&#x9690;&#x5F0F;&#x5F53;&#x6210;final&#x6765;&#x5904;&#x7406;&#x3002;</p>
 <h3 id="24-&#x65B9;&#x6CD5;&#x5F15;&#x7528;">2.4 &#x65B9;&#x6CD5;&#x5F15;&#x7528;</h3>
+<p>&#x200B;        &#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x5C31;&#x662F;&#x5728;&#x4E0D;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5F15;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x5373;&#x5C31;&#x662F;&#x7B80;&#x5316;lambda&#x8BED;&#x6CD5;&#x3002;&#x5982;&#xFF1A;<code>Timer r = new Timer(1000, event - &gt; System.out.println(event))</code> &#x5C31;&#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x4E3A; <code>Timer</code> r = new Timer(1000, System.out::println)&#x3002;</p>
+<p>&#x200B;        &#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x7684;&#x6807;&#x51C6;&#x5F62;&#x5F0F;&#x662F;:<code>&#x7C7B;&#x540D;::&#x65B9;&#x6CD5;&#x540D;</code>&#x3002;&#xFF08;<strong>&#x6CE8;&#x610F;&#xFF1A;&#x53EA;&#x9700;&#x8981;&#x5199;&#x65B9;&#x6CD5;&#x540D;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5199;&#x62EC;&#x53F7;</strong>&#xFF09;</p>
+<table>
+<thead>
+<tr>
+<th>&#x7C7B;&#x578B;</th>
+<th>&#x793A;&#x4F8B;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&#x5F15;&#x7528;&#x9759;&#x6001;&#x65B9;&#x6CD5;</td>
+<td>Class::staticMethod</td>
+</tr>
+<tr>
+<td>&#x5F15;&#x7528;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;</td>
+<td>object::instanceMethod</td>
+</tr>
+<tr>
+<td>&#x5F15;&#x7528;&#x67D0;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x4EFB;&#x610F;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;</td>
+<td>ClassType::instanceMethod</td>
+</tr>
+<tr>
+<td>&#x5F15;&#x7528;&#x6784;&#x9020;&#x65B9;&#x6CD5;</td>
+<td>ClassName::new</td>
+</tr>
+</tbody>
+</table>
+<h4 id="241-&#x51FA;&#x73B0;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x7684;&#x539F;&#x56E0;">2.4.1 &#x51FA;&#x73B0;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x7684;&#x539F;&#x56E0;</h4>
+<p>&#x200B;        &#x5728;Java&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x521B;&#x5EFA;&#x65B0;&#x5BF9;&#x8C61;&#x6765;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;,&#x6216;&#x8005;&#x5F15;&#x7528;&#x5DF2;&#x6709;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x521B;&#x5EFA;&#x65B0;&#x5BF9;&#x8C61;&#x6765;&#x5F15;&#x7528;&#x8BE5;&#x5BF9;&#x8C61;</span>
+List list = <span class="hljs-keyword">new</span> ArrayList();
+dosth(list);
+
+<span class="hljs-comment">//&#x5F15;&#x7528;&#x5DF2;&#x6709;&#x7684;&#x5BF9;&#x8C61;</span>
+List list2 = list;
+dosth(list2);
+</code></pre>
+<p>&#x200B;        &#x5982;&#x679C;&#x6211;&#x4EEC;&#x53EA;&#x5728;&#x53E6;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x4ECD;&#x7136;&#x5FC5;&#x987B;&#x5C06;&#x5B8C;&#x6574;&#x7684;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x3002;&#x90A3;&#x4E48;&#x5C06;&#x65B9;&#x6CD5;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x4E0D;&#x662F;&#x66F4;&#x6709;&#x6548;&#x5417;&#xFF1F;<strong>&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x8FD9;&#x79CD;&#x8BED;&#x6CD5;&#x7CD6;&#x4E0D;&#x80FD;&#x7528;&#x4E8E;&#x6240;&#x6709;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x53EA;&#x80FD;&#x7528;&#x4E8E;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;lambda&#x8868;&#x8FBE;&#x5F0F;</strong>&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">//lambda&#x8F6C;&#x65B9;&#x6CD5;&#x5F15;&#x7528;</span>
+Consumer&lt;String&gt; c = s -&gt; System.out.println(s);
+Consumer&lt;String&gt; c = System.out::println;
+</code></pre>
+<h4 id="242-&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x5F15;&#x7528;">2.4.2 &#x9759;&#x6001;&#x65B9;&#x6CD5;&#x5F15;&#x7528;</h4>
+<p>&#x200B;        &#x5F53;&#x6211;&#x4EEC;&#x6240;&#x4F7F;&#x7528;&#x7684;lambda&#x8868;&#x8FBE;&#x5F0F;&#x4EC5;&#x4EC5;&#x8C03;&#x7528;&#x4E86;&#x4E00;&#x4E2A;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x3002;&#x683C;&#x5F0F;&#x5982;&#xFF1A;<code>(args) -&gt; Class.staticMethod(args)</code> ==&gt; <code>Class::staticMethod</code>&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x7684;&#x4F20;&#x9012;&#x53C2;&#x6570;&#xFF0C;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x4E2D;&#x4F1A;&#x81EA;&#x52A8;&#x4F20;&#x9012;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;:</p>
+<pre><code class="lang-java">JavaLearning:com.prd.interfaces.reference.ClassMethodReferenceTest
+</code></pre>
+<h4 id="243-&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x7684;&#x65B9;&#x6CD5;&#x5F15;&#x7528;">2.4.3 &#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x7684;&#x65B9;&#x6CD5;&#x5F15;&#x7528;</h4>
+<p>&#x200B;        &#x4F7F;&#x7528;&#x5B9E;&#x4F8B;&#x7684;&#x7C7B;&#x578B;&#x800C;&#x975E;&#x5B9E;&#x4F8B;&#x672C;&#x8EAB;&#xFF0C;&#x53C2;&#x6570;&#x9690;&#x5F0F;&#x4F20;&#x9012;&#x3002;&#x683C;&#x5F0F;&#x5982;&#xFF1A;<code>(obj, args) -&gt; obj.instanceMethod(args)</code>==&gt;<code>ObjectType::instanceMethod</code></p>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-java">JavaLearning:com.prd.interfaces.reference.ClassInstanceMethodReferenceTest
+</code></pre>
+<h4 id="244-&#x5DF2;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x5F15;&#x7528;">2.4.4 &#x5DF2;&#x6709;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x5F15;&#x7528;</h4>
+<p>&#x200B;        &#x76F4;&#x63A5;&#x5F15;&#x7528;&#x5DF2;&#x7ECF;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x5B9E;&#x4F8B;&#x5316;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x672C;&#x8EAB;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x5B9E;&#x73B0;&#x4E00;&#x6B21;&#x3002;&#x683C;&#x5F0F;&#x5982;&#xFF1A;<code>(args) -&gt; obj.instanceMethod(args)</code>==&gt;<code>obj::instanceMethod</code></p>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-java">JavaLearning:com.prd.interfaces.reference.ObjectInstranceMethodReferenceTest
+</code></pre>
+<h4 id="245-&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x5F15;&#x7528;">2.4.5 &#x6784;&#x9020;&#x65B9;&#x6CD5;&#x5F15;&#x7528;</h4>
+<p>&#x200B;        &#x552F;&#x4E00;&#x7684;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x5BF9;&#x8C61;&#xFF0C;&#x4E0E;&#x5176;&#x4ED6;&#x60C5;&#x51B5;&#x4E00;&#x6837;&#xFF0C;&#x53C2;&#x6570;&#xFF08;&#x5982;&#x679C;&#x6709;&#xFF09;&#x4E0D;&#x4F1A;&#x5728;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x4E2D;&#x4F20;&#x9012;&#x3002;&#x683C;&#x5F0F;&#x5982;&#xFF1A;<code>(args) -&gt; new ClassName(args)</code>==&gt;<code>ClassName::new</code>&#x3002;</p>
+<p>&#x200B;        &#x5982;&#x679C;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5219;Java&#x4F1A;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#xFF0C;&#x63A8;&#x7B97;&#x4F7F;&#x7528;&#x54EA;&#x4E2A;&#x6784;&#x9020;&#x5668;&#x3002;</p>
+<p>&#x200B;        Java&#x662F;&#x65E0;&#x6CD5;&#x521B;&#x5EFA;&#x6CDB;&#x578B;&#x7C7B;&#x578B;T&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x4F46;&#x662F;&#x901A;&#x8FC7;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x5F15;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x8F7B;&#x6613;&#x7684;&#x5B9E;&#x73B0;&#x8FD9;&#x4E2A;&#x3002;eg&#xFF1A;<code>Person[] people = stream.toArray(Person[]::new)</code>&#x3002;</p>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-java">JavaLearning:com.prd.interfaces.reference.ConstructorReferenceTest
+</code></pre>
+<h4 id="246-&#x603B;&#x7ED3;">2.4.6 &#x603B;&#x7ED3;</h4>
+<p>&#x200B;        &#x65B9;&#x6CD5;&#x5F15;&#x7528;&#x5E38;&#x7528;&#x6237;Java8&#x7684;Streams&#x7279;&#x6027;&#x4E2D;&#xFF0C;&#x4F7F;&#x5F97;&#x7F16;&#x7801;&#x66F4;&#x4E3A;&#x7B80;&#x7EC3;&#xFF0C;&#x540C;&#x65F6;&#x53EF;&#x4EE5;&#x4F7F;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x66F4;&#x4E3A;&#x7CBE;&#x5DE7;&#x3002;</p>
 
                                 
                                 </section>
@@ -587,7 +693,7 @@ lambda :Lambda -----:1474622341604</p>
                 </a>
                 
                 
-                <a href="../mysql/MySQL.html" class="navigation navigation-next " aria-label="Next page: MySQL">
+                <a href="002-innerClass.html" class="navigation navigation-next " aria-label="Next page: 第2章 内部类">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -598,7 +704,7 @@ lambda :Lambda -----:1474622341604</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第1章 接口","level":"1.3.1","depth":2,"next":{"title":"MySQL","level":"1.4","depth":1,"path":"mysql/MySQL.md","ref":"mysql/MySQL.md","articles":[]},"previous":{"title":"JavaSE","level":"1.3","depth":1,"path":"javase/JavaSE.md","ref":"javase/JavaSE.md","articles":[{"title":"第1章 接口","level":"1.3.1","depth":2,"path":"javase/001-interfaces.md","ref":"javase/001-interfaces.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"javase/001-interfaces.md","mtime":"2020-06-08T16:40:08.787Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-09T01:13:14.573Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第1章 接口","level":"1.3.1","depth":2,"next":{"title":"第2章 内部类","level":"1.3.2","depth":2,"path":"javase/002-innerClass.md","ref":"javase/002-innerClass.md","articles":[]},"previous":{"title":"JavaSE","level":"1.3","depth":1,"path":"javase/JavaSE.md","ref":"javase/JavaSE.md","articles":[{"title":"第1章 接口","level":"1.3.1","depth":2,"path":"javase/001-interfaces.md","ref":"javase/001-interfaces.md","articles":[]},{"title":"第2章 内部类","level":"1.3.2","depth":2,"path":"javase/002-innerClass.md","ref":"javase/002-innerClass.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"javase/001-interfaces.md","mtime":"2020-06-10T12:38:28.634Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-10T04:58:06.467Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

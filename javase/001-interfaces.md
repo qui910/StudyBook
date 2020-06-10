@@ -47,7 +47,7 @@ JavaLearning:com.prd.interfaces.samemethod.SameMethondTest
 
 克隆即完全拷贝对象，包括对象在内存中保存为2份，这就是克隆。下图所示只是引用的复制，而内存中不是两份，则不是克隆。
 
-![1.2.1-1](F:\PersonalFolder\WorkFolder\GITBOOK仓库\StudyBook\javase\images\1.2.1-1.png)
+![1.2.1-1](images\1.2.1-1.png)
 
 对于基本数据类型时，如果要克隆一个变量，即复制一个变量，可以直接操作。
 
@@ -72,7 +72,7 @@ int num2 = num;
 
 这里先介绍2种克隆方法：**浅克隆(ShallowClone)**和**深克隆(DeepClone)**。在Java语言中，数据类型分为值类型（基本数据类型）和引用类型，值类型包括int、double、byte、boolean、char等简单数据类型，引用类型包括类、接口、数组等复杂类型。浅克隆和深克隆的主要区别在于是否支持引用类型的成员变量的复制。下图能好的说明这个：
 
-![1.2.3-1](F:\PersonalFolder\WorkFolder\GITBOOK仓库\StudyBook\javase\images\1.2.3-1.png)
+![1.2.3-1](images\1.2.3-1.png)
 
 **浅克隆：**
 
