@@ -199,3 +199,16 @@ Field[] getFields()//获得类中所以public的方法
 Field getDeclaredField(String name)//根据方法名获得public和非public变量
 Field[] getDeclaredFields()//获得类中所有的public和非public方法 
 ```
+
+### 1.6 反射数组
+
+​		利用反射API可以使用java.lang.reflect.Array类创建和检查基类型的数组。其主要特性是Array中一个名为newInstance()的静态方法，它将创建一个数组，从而可以指定基类型和长度。还可以通过指定一个长度数组（每个长度对应一个维）并用此方法来构造多维数组实例。
+
+代码示例：
+
+```java
+JavaLearning：com.prd.reflect.ReflectArrayTest
+```
+
+## 2 代理
+
