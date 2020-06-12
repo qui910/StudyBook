@@ -202,7 +202,7 @@ Field[] getDeclaredFields()//获得类中所有的public和非public方法
 
 ### 1.6 反射数组
 
-​		利用反射API可以使用java.lang.reflect.Array类创建和检查基类型的数组。其主要特性是Array中一个名为newInstance()的静态方法，它将创建一个数组，从而可以指定基类型和长度。还可以通过指定一个长度数组（每个长度对应一个维）并用此方法来构造多维数组实例。
+​		利用反射API可以使用`java.lang.reflect.Array`类创建和检查基类型的数组。其主要特性是Array中一个名为`newInstance()`的静态方法，它将创建一个数组，从而可以指定基类型和长度。还可以通过指定一个长度数组（每个长度对应一个维）并用此方法来构造多维数组实例。
 
 代码示例：
 
@@ -210,5 +210,59 @@ Field[] getDeclaredFields()//获得类中所有的public和非public方法
 JavaLearning：com.prd.reflect.ReflectArrayTest
 ```
 
-## 2 代理
+## 2 代理　
 
+​		代理就是在程序运行过程中，对于一个或一组给定的接口，动态生成这些接口的实例，并实现对这些实例的控制和使用。例如：在某个接口的方法运行前后添加监控日志等。从实现上来说，代理可以分为静态代理和动态代理。
+
+### 2.1 静态代理
+
+​		创建一个接口，然后创建被代理的类实现该接口并且实现该接口中的抽象方法。之后再创建一个代理类，同时使其也实现这个接口。在代理类中持有一个被代理对象的引用，而后在代理类方法中调用该对象的方法。
+
+代码示例：
+
+```java
+JavaLearning：com.prd.reflect.StaticProxyTest
+```
+
+​		使用静态代理很容易就完成了对一个类的代理操作。但是静态代理的缺点也暴露了出来：由于代理只能为一个类服务，如果需要代理的类很多，那么就需要编写大量的代理类，比较繁琐。。接下来可以看下动态代理。
+
+### 2.2 动态代理
+
+​		动态代理是在运行过程中，利用反射机制实现的。实现动态代理的步骤：
+
+* 首先，要提供一个调用处理器，需 实现`InvocationHandler`接口
+
+* 其次，就是通过Proxy类的静态方法`newProxyInstance`返回一个接口的代理实例。
+
+* 最后，执行代理实例的方法。
+
+代理示例：
+
+```java
+JavaLearning：com.prd.reflect.DynamicProxyTest
+```
+
+#### 2.2.1 动态代理底层实现
+
+​		动态代理具体步骤：
+
+* 通过实现` InvocationHandler` 接口创建自己的调用处理器；
+
+* 通过为 Proxy 类指定` ClassLoader` 对象和一组` interface` 来创建动态代理类；
+
+* 通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型；
+
+* 通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。
+
+  既然生成代理对象是用的Proxy类的静态方`newProxyInstance`，那么我们就去它的源码里看一下它到底都做了些什么？
+
+  详细讲解可以参考如下网址：[JAVA动态代理](https://www.jianshu.com/p/9bcac608c714)
+
+
+​       动态代理生成的代理类是在内存中存在的，如果需要学习代理类的源码，可以设置如下：`System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");    `。在运行代码的时候就会在项目的根目录下生成 `com.sun.proxy.$ProxyX.class` 了，我们可以通过反编译来理解 Proxy 的处理过程。
+
+​      也可以通过`Proxy.getProxyClass(真正用到的类.class.getClassLoader(), 真正用到的类.class)); `来获取字节码，然后写到本地。参考（[如何查看 Proxy 模式的 $ProxyX.class文件](https://blog.csdn.net/niuzhucedenglu/article/details/82970897)）
+
+​		动态代理流程图：
+
+![003-2.2.1](images/003-2.2.1.png)
