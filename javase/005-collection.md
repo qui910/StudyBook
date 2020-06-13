@@ -6,7 +6,7 @@
 
 ​		Java集合框架图：
 
-![005-1](F:\PersonalFolder\WorkFolder\GITBOOK仓库\StudyBook\javase\images\005-1.png)
+![005-1](images\005-1.png)
 
 ## 2 Collection
 
@@ -120,9 +120,9 @@ abstract void set(E object)
 
 ## 6 fail-fast
 
-​		fail-fast 机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，就可能会产生fail-fast事件。
+​		fail-fast 机制是java集合(Collection)中的一种错误机制。当多个线程对同一个集合的内容进行操作时，当其中一个或几个线程通过`iterator`去遍历集合，其他的线程读写集合，则会导致fast-fast事件。
 
-​		例如：当某一个线程A通过iterator去遍历某集合的过程中，若该集合的内容被其他线程所改变了；那么线程A访问集合时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
+​		例如：当某一个线程A通过`iterator`去遍历某集合的过程中，若该集合的内容被其他线程所改变了；那么线程A访问集合时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
 
 ### 6.1 fail-fast原理
 
@@ -197,11 +197,212 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
         }
     }
     ...
+}
+```
+
+​		从中，我们可以发现在调用` next() `和 `remove()`时，都会执行 `checkForComodification()`。若 “modCount 不等于 expectedModCount”，则抛出ConcurrentModificationException异常，产生fail-fast事件。   
+
+​		要搞明白 fail-fast机制，我们就要需要理解什么时候“modCount 不等于 expectedModCount”！。   
+
+​		从Itr类中，我们知道 expectedModCount 在创建Itr对象时，被赋值为 modCount。通过Itr，我们知道：expectedModCount不可能被修改为不等于 modCount。所以，需要考证的就是modCount何时会被修改。  
+
+​		接下来，我们查看ArrayList的源码，来看看modCount是如何被修改的。
+
+```java
+public class ArrayList<E> extends AbstractList<E>
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+{
+    ...
+    // list中容量变化时，对应的同步函数
+    public void ensureCapacity(int minCapacity) {
+        modCount++;
+        int oldCapacity = elementData.length;
+        if (minCapacity > oldCapacity) {
+            Object oldData[] = elementData;
+            int newCapacity = (oldCapacity * 3)/2 + 1;
+            if (newCapacity < minCapacity)
+                newCapacity = minCapacity;
+            // minCapacity is usually close to size, so this is a win:
+            elementData = Arrays.copyOf(elementData, newCapacity);
+        }
+    }
+
+    // 添加元素到队列最后
+    public boolean add(E e) {
+        // 修改modCount
+        ensureCapacity(size + 1);  // Increments modCount!!
+        elementData[size++] = e;
+        return true;
+    }
+
+    // 添加元素到指定的位置
+    public void add(int index, E element) {
+        if (index > size || index < 0)
+            throw new IndexOutOfBoundsException(
+            "Index: "+index+", Size: "+size);
+
+        // 修改modCount
+        ensureCapacity(size+1);  // Increments modCount!!
+        System.arraycopy(elementData, index, elementData, index + 1,
+             size - index);
+        elementData[index] = element;
+        size++;
+    }
+
+    // 添加集合
+    public boolean addAll(Collection<? extends E> c) {
+        Object[] a = c.toArray();
+        int numNew = a.length;
+        // 修改modCount
+        ensureCapacity(size + numNew);  // Increments modCount
+        System.arraycopy(a, 0, elementData, size, numNew);
+        size += numNew;
+        return numNew != 0;
+    }
+   
+
+    // 删除指定位置的元素 
+    public E remove(int index) {
+        RangeCheck(index);
+
+        // 修改modCount
+        modCount++;
+        E oldValue = (E) elementData[index];
+
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index, numMoved);
+        elementData[--size] = null; // Let gc do its work
+
+        return oldValue;
+    }
+
+    // 快速删除指定位置的元素 
+    private void fastRemove(int index) {
+        // 修改modCount
+        modCount++;
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index,
+                             numMoved);
+        elementData[--size] = null; // Let gc do its work
+    }
+
+    // 清空集合
+    public void clear() {
+        // 修改modCount
+        modCount++;
+
+        // Let gc do its work
+        for (int i = 0; i < size; i++)
+            elementData[i] = null;
+
+        size = 0;
+    }
+    ...
+}	
+```
+
+​		从中，我们发现：无论是`add()`、`remove()`，还是`clear()`，只要涉及到修改集合中的元素个数时，都会改变modCount的值。
+接下来，我们再系统的梳理一下fail-fast是怎么产生的。步骤如下：
+
+* 新建了一个ArrayList，名称为arrayList。
+* 向arrayList中添加内容。
+* 新建一个“线程a”，并在“线程a”中通过Iterator反复的读取arrayList的值。
+* 新建一个“线程b”，在“线程b”中删除arrayList中的一个“节点A”。
+* 这时，就会产生有趣的事件了。
+
+​		在某一时刻，“线程a”创建了arrayList的Iterator。此时“节点A”仍然存在于arrayList中，创建arrayList时，expectedModCount = modCount(假设它们此时的值为N)。
+
+​		在“线程a”在遍历arrayList过程中的某一时刻，“线程b”执行了，并且“线程b”删除了arrayList中的“节点A”。“线程b”执行remove()进行删除操作时，在remove()中执行了“modCount++”，此时modCount变成了N+1！“线程a”接着遍历，当它执行到next()函数时，调用checkForComodification()比较“expectedModCount”和“modCount”的大小；而“expectedModCount=N”，“modCount=N+1”,这样，便抛出ConcurrentModificationException异常，产生fail-fast事件。
+
+​		至此，我们就完全了解了fail-fast是如何产生的！即，当多个线程对同一个集合进行操作的时候，某线程访问集合的过程中，该集合的内容被其他线程所改变(即其它线程通过add、remove、clear等方法，改变了modCount的值)；这时，就会抛出ConcurrentModificationException异常，产生fail-fast事件。
+
+### 6.2 fail-fast解决办法
+
+​		fail-fast机制，是一种错误检测机制。它只能被用来检测错误，因为JDK并不保证fail-fast机制一定会发生。若在多线程环境下使用fail-fast机制的集合，建议使用`java.util.concurrent包下的类`去取代`java.util包下的类`。
+
+​		所以，本例中只需要将ArrayList替换成java.util.concurrent包下对应的类即可。即，将代码
+`private static List<String> list = new ArrayList<String>();`
+
+​		替换为
+`private static List<String> list = new CopyOnWriteArrayList<String>();`则可以解决该办法。
+
+### 6.3 解决fail-fast的原理
+
+​		上面，说明了“解决fail-fast机制的办法”，也知道了“fail-fast产生的根本原因”。接下来，我们再进一步谈谈java.util.concurrent包中是如何解决fail-fast事件的。
+
+​		还是以和ArrayList对应的CopyOnWriteArrayList进行说明。我们先看看CopyOnWriteArrayList的源码：
+
+```java
+public class CopyOnWriteArrayList<E>
+    implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
+    ...
+    // 返回集合对应的迭代器
+    public Iterator<E> iterator() {
+        return new COWIterator<E>(getArray(), 0);
+    }
+    ...
+
+    private static class COWIterator<E> implements ListIterator<E> {
+        private final Object[] snapshot;
+    
+        private int cursor;
+    
+        private COWIterator(Object[] elements, int initialCursor) {
+            cursor = initialCursor;
+            // 新建COWIterator时，将集合中的元素保存到一个新的拷贝数组中。
+            // 这样，当原始集合的数据改变，拷贝数据中的值也不会变化。
+            snapshot = elements;
+        }
+    
+        public boolean hasNext() {
+            return cursor < snapshot.length;
+        }
+    
+        public boolean hasPrevious() {
+            return cursor > 0;
+        }
+    
+        public E next() {
+            if (! hasNext())
+                throw new NoSuchElementException();
+            return (E) snapshot[cursor++];
+        }
+    
+        public E previous() {
+            if (! hasPrevious())
+                throw new NoSuchElementException();
+            return (E) snapshot[--cursor];
+        }
+    
+        public int nextIndex() {
+            return cursor;
+        }
+    
+        public int previousIndex() {
+            return cursor-1;
+        }
+    
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    
+        public void set(E e) {
+            throw new UnsupportedOperationException();
+        }
+    
+        public void add(E e) {
+            throw new UnsupportedOperationException();
+        }
+    }
+    ...
 
 }
 ```
 
+​	从中，我们可以看出:
 
-
-
-
+* 和`ArrayList`继承于`AbstractList`不同，`CopyOnWriteArrayList`没有继承于`AbstractList`，它仅仅只是实现了`List`接口。
+* `ArrayList`的`iterator()`函数返回的`Iterator`是在`AbstractLis`中实现的；而`CopyOnWriteArrayList`是自己实现`Iterator`
+* `ArrayList`的`Iterator`实现类中调用`next()`时，会“调用`checkForComodification()`比较`expectedModCount`和`modCount`的大小”；但是，`CopyOnWriteArrayList`的`Iterator`实现类中，没有所谓的`checkForComodification()`，更不会抛出`ConcurrentModificationException`异常！ 
