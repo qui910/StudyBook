@@ -6,7 +6,7 @@
 
 ​		Java集合框架中最常使用的几种List实现类是 ArrayList, LinkedList, Vector和Stack。其架构图如下:
 
-![006-1](images\006-1.png)
+![006-1](..\images\006-1.png)
 
 ​		AbstractList 是一个抽象类，它继承于AbstractCollection。AbstractList实现List接口中除size()、get(int location)之外的函数。
 

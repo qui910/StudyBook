@@ -6,7 +6,7 @@
 
 ​		Java集合框架图：
 
-![005-1](images\005-1.png)
+![005-1](..\images\005-1.png)
 
 ## 2 Collection
 

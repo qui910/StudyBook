@@ -38,7 +38,7 @@ transient int size = 0;
 
 ​		其说明如图：
 
-![008-1](images\008-1.png)
+![008-1](..\images\008-1.png)
 
 ## 2.2 DescendingIterator倒序迭代器
 
