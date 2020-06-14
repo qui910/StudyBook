@@ -1,0 +1,533 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第6章 集合之List架构 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="007-arraylist.html" />
+    
+    
+    <link rel="prev" href="005-collection.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../common/">
+            
+                <a href="../common/">
+            
+                    
+                    常用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../common/git&github/git&github.html">
+            
+                <a href="../common/git&github/git&github.html">
+            
+                    
+                    GIT&GITHUB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../common/gitbook/gitbook.html">
+            
+                <a href="../common/gitbook/gitbook.html">
+            
+                    
+                    GITBOOK
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="JavaSE.html">
+            
+                <a href="JavaSE.html">
+            
+                    
+                    JavaSE
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="001-interfaces.html">
+            
+                <a href="001-interfaces.html">
+            
+                    
+                    第1章 接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="002-innerClass.html">
+            
+                <a href="002-innerClass.html">
+            
+                    
+                    第2章 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="003-proxy.html">
+            
+                <a href="003-proxy.html">
+            
+                    
+                    第3章 反射与代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="004-generic.html">
+            
+                <a href="004-generic.html">
+            
+                    
+                    第4章 泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="005-collection.html">
+            
+                <a href="005-collection.html">
+            
+                    
+                    第5章 集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6" data-path="006-list.html">
+            
+                <a href="006-list.html">
+            
+                    
+                    第6章 集合之List架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="007-arraylist.html">
+            
+                <a href="007-arraylist.html">
+            
+                    
+                    第7章 集合之ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="008-linkedlist.html">
+            
+                <a href="008-linkedlist.html">
+            
+                    
+                    第8章 集合之LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../mysql/MySQL.html">
+            
+                <a href="../mysql/MySQL.html">
+            
+                    
+                    MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../microservices/MicroServices.html">
+            
+                <a href="../microservices/MicroServices.html">
+            
+                    
+                    MicroServices
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第6章 集合之List架构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="1-&#x6982;&#x8FF0;">1 &#x6982;&#x8FF0;</h1>
+<p>&#x200B;        List&#x662F;&#x4E00;&#x4E2A;&#x5143;&#x7D20;<strong>&#x6709;&#x5E8F;</strong>&#x7684;&#x3001;&#x53EF;&#x4EE5;<strong>&#x91CD;&#x590D;</strong>&#x3001;&#x53EF;&#x4EE5;&#x4E3A;<strong>null</strong>&#x7684;&#x96C6;&#x5408;&#x3002;</p>
+<p>&#x200B;        List&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5E8F;&#x5217;&#xFF0C;&#x5B58;&#x50A8;&#x5185;&#x5BB9;&#x65F6;&#x76F4;&#x63A5;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x5F00;&#x8F9F;&#x4E00;&#x5757;<strong>&#x8FDE;&#x7EED;&#x7684;&#x7A7A;&#x95F4;</strong>&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x7A7A;&#x95F4;&#x5730;&#x5740;&#x4E0E;&#x7D22;&#x5F15;&#x5BF9;&#x5E94;&#x3002;</p>
+<p>&#x200B;        Java&#x96C6;&#x5408;&#x6846;&#x67B6;&#x4E2D;&#x6700;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x51E0;&#x79CD;List&#x5B9E;&#x73B0;&#x7C7B;&#x662F; ArrayList, LinkedList, Vector&#x548C;Stack&#x3002;&#x5176;&#x67B6;&#x6784;&#x56FE;&#x5982;&#x4E0B;:</p>
+<p><img src="images/006-1.png" alt="006-1"></p>
+<p>&#x200B;        AbstractList &#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;AbstractCollection&#x3002;AbstractList&#x5B9E;&#x73B0;List&#x63A5;&#x53E3;&#x4E2D;&#x9664;size()&#x3001;get(int location)&#x4E4B;&#x5916;&#x7684;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x200B;        AbstractSequentialList &#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;AbstractList&#x3002;AbstractSequentialList &#x5B9E;&#x73B0;&#x4E86;&#x201C;&#x94FE;&#x8868;&#x4E2D;&#xFF0C;&#x6839;&#x636E;index&#x7D22;&#x5F15;&#x503C;&#x64CD;&#x4F5C;&#x94FE;&#x8868;&#x7684;&#x5168;&#x90E8;&#x51FD;&#x6570;&#x201D;&#x3002;</p>
+<p>&#x200B;        ArrayList &#x662F;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x961F;&#x5217;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x52A8;&#x6001;&#x6570;&#x7EC4;&#x3002;&#x5B83;&#x7531;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;&#xFF0C;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x6548;&#x7387;&#x9AD8;&#xFF0C;&#x968F;&#x673A;&#x63D2;&#x5165;&#x3001;&#x968F;&#x673A;&#x5220;&#x9664;&#x6548;&#x7387;&#x4F4E;&#x3002;</p>
+<p>&#x200B;        LinkedList &#x662F;&#x4E00;&#x4E2A;&#x53CC;&#x5411;&#x94FE;&#x8868;&#x3002;&#x5B83;&#x4E5F;&#x53EF;&#x4EE5;&#x88AB;&#x5F53;&#x4F5C;&#x5806;&#x6808;&#x3001;&#x961F;&#x5217;&#x6216;&#x53CC;&#x7AEF;&#x961F;&#x5217;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;LinkedList&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x6548;&#x7387;&#x4F4E;&#xFF0C;&#x4F46;&#x968F;&#x673A;&#x63D2;&#x5165;&#x3001;&#x968F;&#x673A;&#x5220;&#x9664;&#x6548;&#x7387;&#x4F4E;&#x3002;</p>
+<p>&#x200B;        Vector &#x662F;&#x77E2;&#x91CF;&#x961F;&#x5217;&#xFF0C;&#x548C;ArrayList&#x4E00;&#x6837;&#xFF0C;&#x5B83;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x6570;&#x7EC4;&#xFF0C;&#x7531;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;&#x3002;&#x4F46;&#x662F;ArrayList&#x662F;&#x975E;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x800C;Vector&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#x3002;</p>
+<p>&#x200B;        Stack &#x662F;&#x6808;&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;Vector&#x3002;&#x5B83;&#x7684;&#x7279;&#x6027;&#x662F;&#xFF1A;&#x5148;&#x8FDB;&#x540E;&#x51FA;(FILO, First In Last Out)&#x3002;</p>
+<h2 id="11-&#x5E38;&#x7528;api">1.1 &#x5E38;&#x7528;API</h2>
+<p>&#x200B;        List&#x4ECE;Collection&#x7EE7;&#x627F;&#x4E86;&#x90E8;&#x5206;&#x65B9;&#x6CD5;,&#x5E76;&#x65B0;&#x589E;&#x90E8;&#x5206;&#x65B0;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5217;&#x8868;&#x4E2D;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x5143;&#x7D20;</span>
+<span class="hljs-function">E <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>;    
+<span class="hljs-comment">//&#x66FF;&#x6362;&#x5217;&#x8868;&#x4E2D;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x5143;&#x7D20;</span>
+set(<span class="hljs-keyword">int</span> index, E element);
+<span class="hljs-comment">//&#x5728;&#x5217;&#x8868;&#x7684;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;&#x6307;&#x5B9A;&#x5143;&#x7D20;</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, E element)</span></span>;        
+<span class="hljs-comment">//&#x5C06;&#x6307;&#x5B9A; collection &#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#x90FD;&#x63D2;&#x5165;&#x5230;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;</span>
+<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, Collection&lt;? extends E&gt; c)</span></span>;    
+<span class="hljs-comment">//&#x79FB;&#x9664;&#x5217;&#x8868;&#x4E2D;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x7684;&#x5143;&#x7D20;</span>
+<span class="hljs-function">E <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>;    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x5217;&#x8868;&#x4E2D;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0;&#x7684;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x7684;&#x7D22;&#x5F15;&#xFF1B;&#x5982;&#x679C;&#x6B64;&#x5217;&#x8868;&#x4E0D;&#x5305;&#x542B;&#x8BE5;&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; -1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">indexOf</span><span class="hljs-params">(Object o)</span></span>;    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x5217;&#x8868;&#x4E2D;&#x6700;&#x540E;&#x51FA;&#x73B0;&#x7684;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x7684;&#x7D22;&#x5F15;&#xFF1B;&#x5982;&#x679C;&#x5217;&#x8868;&#x4E0D;&#x5305;&#x542B;&#x6B64;&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; -1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lastIndexOf</span><span class="hljs-params">(Object o)</span></span>;    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x5217;&#x8868;&#x5143;&#x7D20;&#x7684;&#x5217;&#x8868;&#x8FED;&#x4EE3;&#x5668;&#xFF08;&#x6309;&#x9002;&#x5F53;&#x987A;&#x5E8F;&#xFF09;&#x3002;</span>
+<span class="hljs-function">ListIterator&lt;E&gt; <span class="hljs-title">listIterator</span><span class="hljs-params">()</span></span>;    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5217;&#x8868;&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x5217;&#x8868;&#x8FED;&#x4EE3;&#x5668;&#xFF08;&#x6309;&#x9002;&#x5F53;&#x987A;&#x5E8F;&#xFF09;&#xFF0C;&#x4ECE;&#x5217;&#x8868;&#x7684;&#x6307;&#x5B9A;&#x4F4D;&#x7F6E;&#x5F00;&#x59CB;&#x3002;</span>
+<span class="hljs-function">ListIterator&lt;E&gt; <span class="hljs-title">listIterator</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>;    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5217;&#x8868;&#x4E2D;&#x6307;&#x5B9A;&#x7684; fromIndex&#xFF08;&#x5305;&#x62EC; &#xFF09;&#x548C; toIndex&#xFF08;&#x4E0D;&#x5305;&#x62EC;&#xFF09;&#x4E4B;&#x95F4;&#x7684;&#x90E8;&#x5206;&#x89C6;&#x56FE;</span>
+<span class="hljs-function">List&lt;E&gt; <span class="hljs-title">subList</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fromIndex, <span class="hljs-keyword">int</span> toIndex)</span></span>;
+</code></pre>
+<ul>
+<li><code>List.subList(int fromIndex, int toIndex)</code> &#x65B9;&#x6CD5;&#x8FD4;&#x56DE; List &#x5728; fromIndex &#x4E0E; toIndex &#x8303;&#x56F4;&#x5185;&#x7684;&#x5B50;&#x96C6;&#x3002;&#x6CE8;&#x610F;&#x662F;<strong>&#x5DE6;&#x95ED;&#x53F3;&#x5F00;</strong>&#xFF0C;[fromIndex,toIndex)&#x3002;subList&#x8FD4;&#x56DE;&#x7684;&#x4ECD;&#x662F;List&#x539F;&#x6765;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8BBE;&#x7F6E;&#x4E86;&#x5F00;&#x59CB;&#x4F4D;&#x7F6E;offset&#x548C;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;size&#xFF0C;&#x6DFB;&#x52A0;&#x548C;&#x5220;&#x9664;&#x5143;&#x7D20;&#x90FD;&#x5728;&#x8FD9;&#x4E2A;&#x8303;&#x56F4;&#x64CD;&#x4F5C;&#x3002;</li>
+<li>&#x7531;&#x4E8E;subList&#x6301;&#x6709;List&#x540C;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;subList&#x8FDB;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x4E5F;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x539F;&#x6709;List&#x3002;&#x5E76;&#x4E14;&#x5728;subList&#x7684;set,get,add&#x7B49;&#x65B9;&#x6CD5;&#x4E2D;&#x4E5F;&#x4F1A;&#x5224;&#x65AD;modCount&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E00;&#x81F4;&#x4F1A;&#x4EA7;&#x751F;fast-fast&#x4E8B;&#x4EF6;&#x3002;</li>
+</ul>
+<h2 id="12-list&#x4F7F;&#x7528;&#x573A;&#x666F;">1.2 List&#x4F7F;&#x7528;&#x573A;&#x666F;</h2>
+<blockquote>
+<p>&#x5982;&#x679C;&#x6D89;&#x53CA;&#x5230;&#x201C;&#x6808;&#x201D;&#x3001;&#x201C;&#x961F;&#x5217;&#x201D;&#x3001;&#x201C;&#x94FE;&#x8868;&#x201D;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x5E94;&#x8BE5;&#x8003;&#x8651;&#x7528;List&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x9009;&#x62E9;&#x54EA;&#x4E2A;List&#xFF0C;&#x6839;&#x636E;&#x4E0B;&#x9762;&#x7684;&#x6807;&#x51C6;&#x6765;&#x53D6;&#x820D;&#x3002;</p>
+</blockquote>
+<ol>
+<li>&#x5BF9;&#x4E8E;&#x9700;&#x8981;&#x5FEB;&#x901F;&#x63D2;&#x5165;&#xFF0C;&#x5220;&#x9664;&#x5143;&#x7D20;&#xFF0C;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;LinkedList&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x9700;&#x8981;&#x5FEB;&#x901F;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x5143;&#x7D20;&#xFF0C;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;ArrayList&#x3002;</li>
+<li>&#x5BF9;&#x4E8E;&#x201C;&#x5355;&#x7EBF;&#x7A0B;&#x73AF;&#x5883;&#x201D; &#x6216;&#x8005; &#x201C;&#x591A;&#x7EBF;&#x7A0B;&#x73AF;&#x5883;&#xFF0C;&#x4F46;List&#x4EC5;&#x4EC5;&#x53EA;&#x4F1A;&#x88AB;&#x5355;&#x4E2A;&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;&#x201D;&#xFF0C;&#x6B64;&#x65F6;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x975E;&#x540C;&#x6B65;&#x7684;&#x7C7B;(&#x5982;ArrayList)&#x3002;&#x5BF9;&#x4E8E;&#x201C;&#x591A;&#x7EBF;&#x7A0B;&#x73AF;&#x5883;&#xFF0C;&#x4E14;List&#x53EF;&#x80FD;&#x540C;&#x65F6;&#x88AB;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;&#x201D;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x540C;&#x6B65;&#x7684;&#x7C7B;(&#x5982;Vector)&#x3002;&#x8003;&#x8651;&#x5230;Vector&#x662F;&#x652F;&#x6301;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x800C;Stack&#x53C8;&#x662F;&#x7EE7;&#x627F;&#x4E8E;Vector&#x7684;&#x3002;</li>
+</ol>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x5BF9;&#x4E8E;Vector&#xFF0C;&#x591A;&#x7EBF;&#x7A0B;&#x8BBF;&#x95EE;&#x65F6;&#x4E5F;&#x662F;&#x4F1A;&#x51FA;&#x73B0;&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x5168;&#x95EE;&#x9898;&#xFF0C;&#x5177;&#x4F53;&#x770B;Vector&#x63CF;&#x8FF0;&#x3002;</p>
+<h2 id="13-linkedlist&#x548C;arraylist&#x6027;&#x80FD;&#x5DEE;&#x5F02;&#x5206;&#x6790;">1.3 LinkedList&#x548C;ArrayList&#x6027;&#x80FD;&#x5DEE;&#x5F02;&#x5206;&#x6790;</h2>
+<ul>
+<li>LinkedList&#x4E2D;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x5F88;&#x5FEB;&#xFF0C;&#x800C;ArrayList&#x4E2D;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x5F88;&#x6162;&#x3002;&#x201C;&#x5220;&#x9664;&#x5143;&#x7D20;&#x201D;&#x4E0E;&#x201C;&#x63D2;&#x5165;&#x5143;&#x7D20;&#x201D;&#x7684;&#x539F;&#x7406;&#x7C7B;&#x4F3C;</li>
+<li>LinkedList&#x4E2D;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x5F88;&#x6162;&#xFF0C;&#x800C;ArrayList&#x4E2D;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x5F88;&#x5FEB;&#x3002;</li>
+</ul>
+<h2 id="14-vector&#x548C;arraylist&#x6BD4;&#x8F83;">1.4 Vector&#x548C;ArrayList&#x6BD4;&#x8F83;</h2>
+<h3 id="141-&#x76F8;&#x540C;&#x4E4B;&#x5904;">1.4.1 &#x76F8;&#x540C;&#x4E4B;&#x5904;</h3>
+<ul>
+<li>&#x90FD;&#x662F;List,&#x5B83;&#x4EEC;&#x90FD;&#x7EE7;&#x627F;&#x4E8E;AbstractList&#xFF0C;&#x5E76;&#x4E14;&#x5B9E;&#x73B0;List&#x63A5;&#x53E3;&#x3002;</li>
+<li>&#x90FD;&#x5B9E;&#x73B0;&#x4E86;RandomAccess&#x548C;Cloneable&#x63A5;&#x53E3;,&#x5B9E;&#x73B0;RandomAccess&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x4EEC;&#x90FD;&#x652F;&#x6301;&#x5FEB;&#x901F;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF1B;&#x5B9E;&#x73B0;Cloneable&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x4EEC;&#x80FD;&#x514B;&#x9686;&#x81EA;&#x5DF1;&#x3002;</li>
+<li>&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x672C;&#x8D28;&#x4E0A;&#x90FD;&#x662F;&#x52A8;&#x6001;&#x6570;&#x7EC4;.</li>
+<li>&#x9ED8;&#x8BA4;&#x6570;&#x7EC4;&#x5BB9;&#x91CF;&#x662F;10</li>
+<li>&#x90FD;&#x652F;&#x6301;Iterator&#x548C;listIterator&#x904D;&#x5386;.</li>
+</ul>
+<h3 id="142-&#x4E0D;&#x540C;&#x4E4B;&#x5904;">1.4.2 &#x4E0D;&#x540C;&#x4E4B;&#x5904;</h3>
+<ul>
+<li>&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x6027;&#x4E0D;&#x4E00;&#x6837;,ArrayList&#x662F;&#x975E;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#xFF1B;,&#x800C;Vector&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x5B83;&#x7684;&#x51FD;&#x6570;&#x90FD;&#x662F;synchronized&#x7684;&#xFF0C;&#x5373;&#x90FD;&#x662F;&#x652F;&#x6301;&#x540C;&#x6B65;&#x7684;&#x3002;,ArrayList&#x9002;&#x7528;&#x4E8E;&#x5355;&#x7EBF;&#x7A0B;&#xFF0C;Vector&#x9002;&#x7528;&#x4E8E;&#x591A;&#x7EBF;&#x7A0B;&#x3002;</li>
+<li>&#x5BF9;&#x5E8F;&#x5217;&#x5316;&#x652F;&#x6301;&#x4E0D;&#x540C;,ArrayList&#x652F;&#x6301;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x800C;Vector&#x4E0D;&#x652F;&#x6301;&#xFF1B;&#x5373;ArrayList&#x6709;&#x5B9E;&#x73B0;java.io.Serializable&#x63A5;&#x53E3;&#xFF0C;&#x800C;Vector&#x6CA1;&#x6709;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x3002;</li>
+<li>&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2A;&#x6570;&#x4E0D;&#x540C;,ArrayList&#x6709;3&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x800C;Vector&#x6709;4&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;Vector&#x9664;&#x4E86;&#x5305;&#x62EC;&#x548C;ArrayList&#x7C7B;&#x4F3C;&#x7684;3&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E4B;&#x5916;&#xFF0C;&#x53E6;&#x5916;&#x7684;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x5BB9;&#x91CF;&#x589E;&#x52A0;&#x7CFB;&#x6570;&#x3002;</li>
+<li>&#x5BB9;&#x91CF;&#x589E;&#x52A0;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;,&#x9010;&#x4E2A;&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x65F6;&#xFF0C;&#x82E5;ArrayList&#x5BB9;&#x91CF;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x201C;&#x65B0;&#x7684;&#x5BB9;&#x91CF;&#x201D;=&#x201C;(&#x539F;&#x59CB;&#x5BB9;&#x91CF;x3)/2 + 1&#x201D;&#x3002;&#x800C;Vector&#x7684;&#x5BB9;&#x91CF;&#x589E;&#x957F;&#x4E0E;&#x201C;&#x589E;&#x957F;&#x7CFB;&#x6570;&#x6709;&#x5173;&#x201D;&#xFF0C;&#x82E5;&#x6307;&#x5B9A;&#x4E86;&#x201C;&#x589E;&#x957F;&#x7CFB;&#x6570;&#x201D;&#xFF0C;&#x4E14;&#x201C;&#x589E;&#x957F;&#x7CFB;&#x6570;&#x6709;&#x6548;(&#x5373;&#xFF0C;&#x5927;&#x4E8E;0)&#x201D;&#xFF1B;&#x90A3;&#x4E48;&#xFF0C;&#x6BCF;&#x6B21;&#x5BB9;&#x91CF;&#x4E0D;&#x8DB3;&#x65F6;&#xFF0C;&#x201C;&#x65B0;&#x7684;&#x5BB9;&#x91CF;&#x201D;=&#x201C;&#x539F;&#x59CB;&#x5BB9;&#x91CF;+&#x589E;&#x957F;&#x7CFB;&#x6570;&#x201D;&#x3002;&#x82E5;&#x589E;&#x957F;&#x7CFB;&#x6570;&#x65E0;&#x6548;(&#x5373;&#xFF0C;&#x5C0F;&#x4E8E;/&#x7B49;&#x4E8E;0)&#xFF0C;&#x5219;&#x201C;&#x65B0;&#x7684;&#x5BB9;&#x91CF;&#x201D;=&#x201C;&#x539F;&#x59CB;&#x5BB9;&#x91CF; x 2&#x201D;&#x3002;</li>
+<li>&#x5BF9;Enumeration&#x7684;&#x652F;&#x6301;&#x4E0D;&#x540C;&#x3002;Vector&#x652F;&#x6301;&#x901A;&#x8FC7;Enumeration&#x53BB;&#x904D;&#x5386;&#xFF0C;&#x800C;ArrayList&#x4E0D;&#x652F;&#x6301;.</li>
+</ul>
+<h1 id="2-abstractlist">2 AbstractList</h1>
+<p>&#x200B;        AbstractList&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractList</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractCollection</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">E</span>&gt; </span>{}
+</code></pre>
+<p>&#x200B;        AbstractList&#x662F;&#x4E00;&#x4E2A;&#x7EE7;&#x627F;&#x4E8E;AbstractCollection&#xFF0C;&#x5E76;&#x4E14;&#x5B9E;&#x73B0;List&#x63A5;&#x53E3;&#x7684;&#x62BD;&#x8C61;&#x7C7B;&#x3002;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;List&#x4E2D;&#x9664;size()&#x3001;get(int location)&#x4E4B;&#x5916;&#x7684;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x200B;        AbstractList&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#xFF1A;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;List&#x63A5;&#x53E3;&#x4E2D;&#x7684;&#x5927;&#x90E8;&#x5206;&#x51FD;&#x6570;&#x3002;&#x4ECE;&#x800C;&#x65B9;&#x4FBF;&#x5176;&#x5B83;&#x7C7B;&#x7EE7;&#x627F;List&#x3002;</p>
+<p>&#x200B;        &#x53E6;&#x5916;&#xFF0C;&#x548C;AbstractCollection&#x76F8;&#x6BD4;&#xFF0C;AbstractList&#x62BD;&#x8C61;&#x7C7B;&#x4E2D;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;iterator()&#x63A5;&#x53E3;&#x3002;</p>
+<h2 id="21-&#x5185;&#x90E8;&#x7C7B;">2.1 &#x5185;&#x90E8;&#x7C7B;</h2>
+<h3 id="211-itr&#x8FED;&#x4EE3;&#x5668;&#x57FA;&#x7840;&#x7C7B;">2.1.1 Itr&#x8FED;&#x4EE3;&#x5668;&#x57FA;&#x7840;&#x7C7B;</h3>
+<p>&#x200B;        Itr&#x53EA;&#x662F;&#x7B80;&#x5355;&#x5B9E;&#x73B0;&#x4E86;Iterator&#x7684;next, remove&#x65B9;&#x6CD5;&#x3002;&#x53EA;&#x80FD;&#x5411;&#x540E;&#x904D;&#x5386;&#x3002;</p>
+<p>&#x6E90;&#x7801;&#xFF08;&#x7565;&#xFF09;</p>
+<h3 id="212-listitr&#x5217;&#x8868;&#x8FED;&#x4EE3;&#x5668;">2.1.2 ListItr&#x5217;&#x8868;&#x8FED;&#x4EE3;&#x5668;</h3>
+<p>&#x200B;        ListItr&#x662F;Itr&#x7684;&#x589E;&#x5F3A;&#x7248;&#xFF0C;&#x5728;Itr&#x57FA;&#x7840;&#x4E0A;&#x591A;&#x4E86;&#x5411;&#x524D;&#x548C;set&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x6E90;&#x7801;&#xFF08;&#x7565;&#xFF09;</p>
+<h3 id="213-sublist">2.1.3 subList</h3>
+<p>&#x200B;        subList&#x8FD8;&#x662F;&#x4F7F;&#x7528;&#x7684;&#x5916;&#x90E8;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x548C;&#x6570;&#x636E;&#xFF0C;&#x6539;&#x52A8;&#x5B50;&#x5217;&#x8868;&#x4E2D;&#x6570;&#x636E;&#xFF0C;&#x5B9E;&#x9645;&#x5916;&#x90E8;List&#x4E5F;&#x4F1A;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x3002;</p>
+<h3 id="214-randomaccesssublist">2.1.4 RandomAccessSubList</h3>
+<p>&#x200B;        RandomAccessSubList&#x53EA;&#x4E0D;&#x8FC7;&#x662F;&#x5728;SubList&#x4E4B;&#x5916;&#x52A0;&#x4E86;&#x4E2A;RandomAccess&#x7684;&#x6807;&#x8BC6;&#xFF0C;&#x8868;&#x660E;&#x4ED6;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x800C;&#x5DF2;&#x3002;</p>
+<h3 id="215-randomaccess">2.1.5 RandomAccess</h3>
+<p>&#x200B;        RandomAccess &#x662F;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x5B83;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x67D0;&#x4E2A;&#x7C7B;&#x662F;&#x5426;&#x652F;&#x6301; &#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF08;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF0C;&#x76F8;&#x5BF9;&#x6BD4;&#x201C;&#x6309;&#x987A;&#x5E8F;&#x8BBF;&#x95EE;&#x201D;&#xFF09;&#x3002;&#x4E00;&#x4E2A;&#x652F;&#x6301;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x7684;&#x7C7B;&#x660E;&#x663E;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x66F4;&#x52A0;&#x9AD8;&#x6548;&#x7684;&#x7B97;&#x6CD5;&#x3002;</p>
+<p>&#x200B;        List &#x4E2D;&#x652F;&#x6301;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x6700;&#x4F73;&#x7684;&#x4F8B;&#x5B50;&#x5C31;&#x662F; ArrayList, &#x5B83;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4F7F;&#x5F97; get(), set(), add()&#x7B49;&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x662F; O(1);&#x53CD;&#x4F8B;&#x5C31;&#x662F; LinkedList, &#x94FE;&#x8868;&#x7ED3;&#x6784;&#x4F7F;&#x5F97;&#x5B83;&#x4E0D;&#x652F;&#x6301;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF0C;&#x53EA;&#x80FD;&#x6309;&#x5E8F;&#x8BBF;&#x95EE;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#x4E0A;&#x6027;&#x80FD;&#x7565;&#x900A;&#x4E00;&#x7B79;&#x3002;</p>
+<p>&#x200B;        &#x901A;&#x5E38;&#x5728;&#x64CD;&#x4F5C;&#x4E00;&#x4E2A; List &#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x901A;&#x5E38;&#x4F1A;&#x5224;&#x65AD;&#x662F;&#x5426;&#x652F;&#x6301; &#x968F;&#x673A;&#x8BBF;&#x95EE;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>&#x662F;&#x5426;&#x4E3A; RandomAccess &#x7684;&#x5B9E;&#x4F8B;</code>&#xFF0C;&#x4ECE;&#x800C;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x7B97;&#x6CD5;&#x3002;</p>
+<p>&#x200B;        &#x6BD4;&#x5982;&#x904D;&#x5386;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86; RandomAccess &#x7684;&#x96C6;&#x5408;&#x4F7F;&#x7528; get():</p>
+<pre><code class="lang-java"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>, n=list.size(); i &amp;lt; n; i++)
+    list.get(i);
+</code></pre>
+<p>&#x200B;        &#x6BD4;&#x7528;&#x8FED;&#x4EE3;&#x5668;&#x66F4;&#x5FEB;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">for</span> (Iterator i=list.iterator(); i.hasNext(); )
+      i.next();
+</code></pre>
+<p>&#x200B;        &#x5B9E;&#x73B0;&#x4E86; RandomAccess &#x63A5;&#x53E3;&#x7684;&#x7C7B;&#x6709;&#xFF1A; ArrayList, AttributeList, CopyOnWriteArrayList, Vector, Stack &#x7B49;&#x3002;</p>
+<h1 id="3-abstractsequentiallist">3 AbstractSequentialList</h1>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractSequentialList</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractList</span>&lt;<span class="hljs-title">E</span>&gt;()</span>;
+</code></pre>
+<p>&#x200B;        AbstractSequentialList &#x7EE7;&#x627F;&#x81EA; AbstractList&#xFF0C;&#x662F; LinkedList &#x7684;&#x7236;&#x7C7B;&#xFF0C;&#x662F; List &#x63A5;&#x53E3; &#x7684;&#x7B80;&#x5316;&#x7248;&#x5B9E;&#x73B0;&#x3002;&#x7B80;&#x5316;&#x5728; AbstractSequentialList&#x53EA;&#x652F;&#x6301;&#x6309;&#x6B21;&#x5E8F;&#x8BBF;&#x95EE;&#xFF0C;&#x800C;&#x4E0D;&#x50CF; AbstractList &#x90A3;&#x6837;&#x652F;&#x6301;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x3002;</p>
+<p>&#x200B;        &#x60F3;&#x8981;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x652F;&#x6301;&#x6309;&#x6B21;&#x5E8F;&#x8BBF;&#x95EE;&#x7684; List&#x7684;&#x8BDD;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7EE7;&#x627F;&#x8FD9;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x6307;&#x5B9A;&#x7684;&#x62BD;&#x8C61;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x5C31;&#x597D;&#x4E86;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="005-collection.html" class="navigation navigation-prev " aria-label="Previous page: 第5章 集合">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="007-arraylist.html" class="navigation navigation-next " aria-label="Next page: 第7章 集合之ArrayList">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第6章 集合之List架构","level":"1.3.6","depth":2,"next":{"title":"第7章 集合之ArrayList","level":"1.3.7","depth":2,"path":"javase/007-arraylist.md","ref":"javase/007-arraylist.md","articles":[]},"previous":{"title":"第5章 集合","level":"1.3.5","depth":2,"path":"javase/005-collection.md","ref":"javase/005-collection.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"javase/006-list.md","mtime":"2020-06-14T08:10:32.021Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-14T12:47:00.883Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
