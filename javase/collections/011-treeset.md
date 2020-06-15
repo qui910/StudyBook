@@ -315,3 +315,31 @@ public class TreeSet<E> extends AbstractSet<E>
 
 # 7 循环迭代
 
+## 7.1 Iterator顺序遍历
+
+```java
+for(Iterator iter = set.iterator(); iter.hasNext(); ) { 
+    iter.next();
+}   
+```
+
+## 7.2 Iterator顺序遍历
+
+```java
+// 假设set是TreeSet对象
+for(Iterator iter = set.descendingIterator(); iter.hasNext(); ) { 
+    iter.next();
+}
+```
+
+## 7.3 for-each遍历HashSet
+
+```java
+// 假设set是TreeSet对象，并且set中元素是String类型
+String[] arr = (String[])set.toArray(new String[0]);
+for (String str:arr)
+    System.out.printf("for each : %s\n", str);
+```
+
+
+​		**TreeSet不支持快速随机遍历，只能通过迭代器进行遍历！**
