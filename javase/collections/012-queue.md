@@ -37,9 +37,106 @@ public abstract class AbstractQueue<E> extends AbstractCollection<E>
 
 ## 4.1 非阻塞
 
-​		`PriorityQueue` 和 `ConcurrentLinkedQueue` 类在 Collection Framework 中加入两个具体集合实现。 
+​		`PriorityQueue` 和 `ConcurrentLinkedQueue` 类在 `Collection Framework`中加入两个具体集合实现。 
+
+### 4.1.1 PriorityQueue
 
 ​		PriorityQueue 类实质上维护了一个有序列表。加入到 Queue 中的元素根据它们的天然排序（通过其 java.util.Comparable 实现）或者根据传递给构造函数的 java.util.Comparator 实现来定位。
+
+​		在任何时候调用`remove()`，总会删除并获得当前优先级队列中的最小元素。可以理解 PriorityQueue对于队列的意义来说，和TreeSet对于列表的意义一样。是在普通队列外，提供一个可以排序的队列。
+
+​		优先级队列使用了一个优雅且高效的数据结构，称为堆（heap)，小顶堆。堆是一个可以自我调整的二叉树，对树执行添加 （add) 和删除（remore) 操作， 可以让最小的元素移动到根，而不必花费时间对元素进行排序。
+
+​		与 TreeSet—样，一个优先级队列既可以保存实现了 Comparable 接口的类对象， 也可以保存在构造器中提供的 Comparator 对象。   
+
+#### 4.1.1.1 源码解析
+
+```java
+//从插入最后一个元素的父节点位置开始建堆
+private void heapify() {
+    for (int i = (size >>> 1) - 1; i >= 0; i--)
+        siftDown(i, (E) queue[i]);
+}
+
+private void siftDownUsingComparator(int k, E x) {
+    // 计算非叶子节点元素的最大位置
+    int half = size >>> 1;
+    // 如果不是叶子节点则一直循环
+    while (k < half) {
+    	//首先找到左右孩子中较小的那个，记录到c里，并用child记录其下标
+        int child = (k << 1) + 1;//leftNo = parentNo*2+1
+        Object c = queue[child];
+        int right = child + 1;
+        if (right < size &&
+            comparator.compare((E) c, (E) queue[right]) > 0)
+            c = queue[child = right];
+        if (comparator.compare(x, (E) c) <= 0)
+            break;
+        queue[k] = c;//然后用c取代原来的值
+        k = child;
+    }
+    queue[k] = x;
+}
+
+//新加入的元素可能会破坏小顶堆的性质，因此需要进行必要的调整。
+public boolean offer(E e) {
+    if (e == null)//不允许放入null元素
+        throw new NullPointerException();
+    modCount++;
+    int i = size;
+    if (i >= queue.length)
+        grow(i + 1);//自动扩容
+    size = i + 1;
+    if (i == 0)//队列原来为空，这是插入的第一个元素
+        queue[0] = e;
+    else
+        siftUp(i, e);//调整
+    return true;
+}
+
+// 用于插入元素x并维持堆的特性。
+private void siftUpUsingComparator(int k, E x) {
+    while (k > 0) {
+        int parent = (k - 1) >>> 1;//parentNo = (nodeNo-1)/2
+        Object e = queue[parent];
+        if (comparator.compare(x, (E) e) >= 0)//调用比较器的比较方法
+            break;
+        queue[k] = e;
+        k = parent;
+    }
+    queue[k] = x;
+}
+```
+
+完全二叉树的父子节点编号的取值，`leftNo = parentNo*2+1`，`rightNo = parentNo*2+2`，`parentNo = (nodeNo-1)/2`，而且
+在整个二叉树中非叶子节点的个数为`size>>1`。
+
+**参考资料：**
+
+[深入理解Java PriorityQueue](https://www.cnblogs.com/CarpenterLee/p/5488070.html)
+
+[深入Java集合系列之五：PriorityQueue](https://blog.csdn.net/u011116672/article/details/50997622)
+
+#### 4.1.1.2 应用场景
+
+​		使用优先级队列的典型示例是任务调度。每一个任务有一个优先级，任务以随机顺序添加到队列中。每当启动一个新的任务时，都将优先级最高的任务从队列中删除（由于习惯上将 1 设为“ 最高” 优先级，所以会将最小的元素删除 )。 
+
+​		可以应用到获取TopN等场景：[PriorityQueue的实际应用场景](https://blog.csdn.net/a909301740/article/details/104183769/)
+
+​		比方说我们有一个每日交易时段生成股票报告的应用程序，需要处理大量数据并且花费很多处理时间。客户向这个应用程序发送请求时，实际上就进入了队列。我们需要首先处理优先客户再处理普通用户。
+
+​		比如一个电商网站搞特卖或抢购，用户登录下单提交后，考虑这个时间段用户访问下单提交量很大，通常表单提交到服务器后端后，后端程序一般不直接进行扣库存处理，将请求放到队列列，异步消费处理，用普通队列是FIFO的，这里有个需求是，用户会员级别高的，可以优先抢购到商品，可能这个时间段的级别较高的会员用户下单时间在普通用户之后，这个时候使用优先队列代替普通队列，基本能满足我们的需求。
+
+
+
+#### 4.1.1.3 并发问题
+
+* 10000个线程同时写入队列，并发情况下会造成数据丢失。在多线程情况下，可以考虑使用`PriorityBlockingQueue`
+* 并发场景下也会出现fast-fast事件
+
+
+
+### 4.1.2 ConcurrentLinkedQueue 
 
 ​		ConcurrentLinkedQueue 是基于链接节点的、线程安全的队列。并发访问不需要同步。因为它在队列的尾部添加元素并从头部删除它们，所以只要不需要知道队列的大小。		
 
