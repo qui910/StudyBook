@@ -134,6 +134,14 @@ private void siftUpUsingComparator(int k, E x) {
 * 10000个线程同时写入队列，并发情况下会造成数据丢失。在多线程情况下，可以考虑使用`PriorityBlockingQueue`
 * 并发场景下也会出现fast-fast事件
 
+代码示例：
+
+```
+JavaLearning：com.prd.colletctions.PriorityQueueTest
+```
+
+
+
 
 
 ### 4.1.2 ConcurrentLinkedQueue 

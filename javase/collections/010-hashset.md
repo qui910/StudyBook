@@ -118,7 +118,16 @@ int hashCode( )
         }).start();
         Thread.sleep(20000);
         log.info("HashSet 最后大小为:{}",set1.size());
+
 ```
+
+代码示例：
+
+```
+JavaLearning：com.prd.colletctions.HashSetTest
+```
+
+
 
 # 7 循环迭代
 
