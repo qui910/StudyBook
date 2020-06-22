@@ -1,0 +1,868 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第11章 集合之TreeSet · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="012-queue.html" />
+    
+    
+    <link rel="prev" href="010-hashset.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../common/">
+            
+                <a href="../../common/">
+            
+                    
+                    常用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../common/git&github/git&github.html">
+            
+                <a href="../../common/git&github/git&github.html">
+            
+                    
+                    GIT&GITHUB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../common/gitbook/gitbook.html">
+            
+                <a href="../../common/gitbook/gitbook.html">
+            
+                    
+                    GITBOOK
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../JavaSE.html">
+            
+                <a href="../JavaSE.html">
+            
+                    
+                    JavaSE
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../001-interfaces.html">
+            
+                <a href="../001-interfaces.html">
+            
+                    
+                    第1章 接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002-innerClass.html">
+            
+                <a href="../002-innerClass.html">
+            
+                    
+                    第2章 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../003-proxy.html">
+            
+                <a href="../003-proxy.html">
+            
+                    
+                    第3章 反射与代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../004-generic.html">
+            
+                <a href="../004-generic.html">
+            
+                    
+                    第4章 泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="005-collection.html">
+            
+                <a href="005-collection.html">
+            
+                    
+                    第5章 集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="006-list.html">
+            
+                <a href="006-list.html">
+            
+                    
+                    第6章 集合之List架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="007-arraylist.html">
+            
+                <a href="007-arraylist.html">
+            
+                    
+                    第7章 集合之ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="008-linkedlist.html">
+            
+                <a href="008-linkedlist.html">
+            
+                    
+                    第8章 集合之LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="009-set.html">
+            
+                <a href="009-set.html">
+            
+                    
+                    第9章 集合之Set
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="010-hashset.html">
+            
+                <a href="010-hashset.html">
+            
+                    
+                    第10章 集合之HashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.11" data-path="011-treeset.html">
+            
+                <a href="011-treeset.html">
+            
+                    
+                    第11章 集合之TreeSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="012-queue.html">
+            
+                <a href="012-queue.html">
+            
+                    
+                    第12章 集合之Queue
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.13" data-path="013-deque.html">
+            
+                <a href="013-deque.html">
+            
+                    
+                    第13章 集合之Deque
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.14" data-path="014-map.html">
+            
+                <a href="014-map.html">
+            
+                    
+                    第14章 集合之Map
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.15" data-path="015-hashmap.html">
+            
+                <a href="015-hashmap.html">
+            
+                    
+                    第15章 集合之HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.16" data-path="016-treemap.html">
+            
+                <a href="016-treemap.html">
+            
+                    
+                    第16章 集合之TreeMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.17" data-path="017-weakhashmap.html">
+            
+                <a href="017-weakhashmap.html">
+            
+                    
+                    第17章 集合之WeakHashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.18" data-path="018-linkedhashmap.html">
+            
+                <a href="018-linkedhashmap.html">
+            
+                    
+                    第18章 集合之LinkedHashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../mysql/MySQL.html">
+            
+                <a href="../../mysql/MySQL.html">
+            
+                    
+                    MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../microservices/MicroServices.html">
+            
+                <a href="../../microservices/MicroServices.html">
+            
+                    
+                    MicroServices
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >第11章 集合之TreeSet</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="1-&#x6982;&#x8FF0;">1 &#x6982;&#x8FF0;</h1>
+<ul>
+<li>&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x5E8F;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x63D0;&#x4F9B;&#x6709;&#x5E8F;&#x7684;Set&#x96C6;&#x5408;&#x3002;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;AbstractSet&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;NavigableSet<e>, Cloneable, java.io.Serializable&#x63A5;&#x53E3;&#x3002;</e></li>
+<li>&#x7EE7;&#x627F;&#x4E8E;AbstractSet&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x662F;&#x4E00;&#x4E2A;Set&#x96C6;&#x5408;&#xFF0C;&#x5177;&#x6709;Set&#x7684;&#x5C5E;&#x6027;&#x548C;&#x65B9;&#x6CD5;&#x3002;</li>
+<li>&#x5B9E;&#x73B0;&#x4E86;NavigableSet&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x652F;&#x6301;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x5BFC;&#x822A;&#x65B9;&#x6CD5;&#x3002;&#x6BD4;&#x5982;&#x67E5;&#x627E;&#x4E0E;&#x6307;&#x5B9A;&#x76EE;&#x6807;&#x6700;&#x5339;&#x914D;&#x9879;&#x3002;</li>
+<li>&#x5B9E;&#x73B0;&#x4E86;Cloneable&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x80FD;&#x88AB;&#x514B;&#x9686;&#x3002;</li>
+<li>java.io.Serializable&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x652F;&#x6301;&#x5E8F;&#x5217;&#x5316;&#x3002;</li>
+</ul>
+<p>&#x200B;        TreeSet&#x662F;&#x57FA;&#x4E8E;TreeMap&#x5B9E;&#x73B0;&#x7684;&#x3002;TreeSet&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x652F;&#x6301;2&#x79CD;&#x6392;&#x5E8F;&#x65B9;&#x5F0F;&#xFF1A;&#x81EA;&#x7136;&#x6392;&#x5E8F; &#x6216;&#x8005; &#x6839;&#x636E;&#x521B;&#x5EFA;TreeSet &#x65F6;&#x63D0;&#x4F9B;&#x7684; Comparator &#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;&#x8FD9;&#x53D6;&#x51B3;&#x4E8E;&#x4F7F;&#x7528;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x200B;        TreeSet&#x4E3A;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#xFF08;add&#x3001;remove &#x548C; contains&#xFF09;&#x63D0;&#x4F9B;&#x53D7;&#x4FDD;&#x8BC1;&#x7684; log(n) &#x65F6;&#x95F4;&#x5F00;&#x9500;&#x3002;</p>
+<p>&#x200B;        &#x53E6;&#x5916;&#xFF0C;TreeSet&#x662F;&#x975E;&#x540C;&#x6B65;&#x7684;&#x3002; &#x5B83;&#x7684;iterator &#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x662F;fail-fast&#x7684;&#x3002;</p>
+<h1 id="2-&#x6210;&#x5458;&#x53D8;&#x91CF;">2 &#x6210;&#x5458;&#x53D8;&#x91CF;</h1>
+<pre><code class="lang-java">    <span class="hljs-comment">// NavigableMap&#x5BF9;&#x8C61;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> NavigableMap&lt;E,Object&gt; m;
+
+    <span class="hljs-comment">// TreeSet&#x662F;&#x901A;&#x8FC7;TreeMap&#x5B9E;&#x73B0;&#x7684;&#xFF0C;</span>
+    <span class="hljs-comment">// PRESENT&#x662F;&#x952E;-&#x503C;&#x5BF9;&#x4E2D;&#x7684;&#x503C;&#x3002;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Object PRESENT = <span class="hljs-keyword">new</span> Object();
+</code></pre>
+<h1 id="3-&#x5E38;&#x7528;api">3 &#x5E38;&#x7528;API</h1>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x6784;&#x9020;&#x4E00;&#x4E2A;&#x7A7A;&#x6811;&#x96C6;&#x3002;</span>
+TreeSet()
+<span class="hljs-comment">// &#x5E26;&#x6BD4;&#x8F83;&#x5668;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</span>
+TreeSet(Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; comparator)
+<span class="hljs-comment">// &#x6784;&#x9020;&#x4E00;&#x4E2A;&#x6811;&#x96C6;&#xFF0C; &#x5E76;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x6216;&#x6709;&#x5E8F;&#x96C6;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#xFF08;&#x5BF9;&#x4E8E;&#x540E;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#xFF0C; &#x8981;&#x4F7F;&#x7528;&#x540C;&#x6837;&#x7684;&#x987A;&#x5E8F;&#x3002;)</span>
+TreeSet(Collection&lt;? extends E&gt; elements)
+TreeSet(SortedSet&lt;E&gt; s)
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x7528;&#x4E8E;&#x5BF9;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#x3002; &#x5982;&#x679C;&#x5143;&#x7D20;&#x7528; Comparable &#x63A5;&#x53E3;&#x7684; compareTo&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x5219;&#x8FD4;&#x56DE; null&#x3002;</span>
+Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; comparator()
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x6709;&#x5E8F;&#x96C6;&#x4E2D;&#x7684;&#x6700;&#x5C0F;&#x5143;&#x7D20;&#x6216;&#x6700;&#x5927;&#x5143;&#x7D20;&#x3002;</span>
+E firstO
+E <span class="hljs-number">1</span>ast()
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x5927;&#x4E8E; value &#x7684;&#x6700;&#x5C0F;&#x5143;&#x7D20;&#x6216;&#x5C0F;&#x4E8E; value &#x7684;&#x6700;&#x5927;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x5143;&#x7D20;&#x5219;&#x8FD4;&#x56DE; null&#x3002;</span>
+<span class="hljs-function">E <span class="hljs-title">higher</span><span class="hljs-params">(E value)</span>
+E <span class="hljs-title">lower</span><span class="hljs-params">(E value)</span>
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x5927;&#x4E8E;&#x7B49;&#x4E8E; value &#x7684;&#x6700;&#x5C0F;&#x5143;&#x7D20;&#x6216;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; value &#x7684;&#x6700;&#x5927;&#x5143;&#x7D20;&#xFF0C; &#x5982;&#x679C;&#x6CA1;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x5143;&#x7D20;&#x5219;&#x8FD4;&#x56DE; null&#x3002;</span>
+E <span class="hljs-title">ceiling</span><span class="hljs-params">(E value)</span>
+E <span class="hljs-title">floor</span><span class="hljs-params">(E value)</span>
+<span class="hljs-comment">// &#x5220;&#x9664;&#x5E76;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A;&#x96C6;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x5143;&#x7D20;&#x6216;&#x6700;&#x5C0F;&#x5143;&#x7D20;&#xFF0C; &#x8FD9;&#x4E2A;&#x96C6;&#x4E3A;&#x7A7A;&#x65F6;&#x8FD4;&#x56DE; null&#x3002;</span>
+E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span>
+E pol 1Last
+<span class="hljs-comment">// &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6309;&#x7167;&#x9012;&#x51CF;&#x987A;&#x5E8F;&#x904D;&#x5386;&#x96C6;&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x3002;</span>
+Iterator&lt;E&gt; <span class="hljs-title">descendingIterator</span><span class="hljs-params">()</span>
+</span></code></pre>
+<h1 id="4-&#x6E90;&#x7801;&#x89E3;&#x6790;">4 &#x6E90;&#x7801;&#x89E3;&#x6790;</h1>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeSet</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSet</span>&lt;<span class="hljs-title">E</span>&gt;
+    <span class="hljs-keyword">implements</span> <span class="hljs-title">NavigableSet</span>&lt;<span class="hljs-title">E</span>&gt;, <span class="hljs-title">Cloneable</span>, <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span>
+</span>{
+    <span class="hljs-comment">// NavigableMap&#x5BF9;&#x8C61;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> NavigableMap&lt;E,Object&gt; m;
+
+    <span class="hljs-comment">// TreeSet&#x662F;&#x901A;&#x8FC7;TreeMap&#x5B9E;&#x73B0;&#x7684;&#xFF0C;</span>
+    <span class="hljs-comment">// PRESENT&#x662F;&#x952E;-&#x503C;&#x5BF9;&#x4E2D;&#x7684;&#x503C;&#x3002;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Object PRESENT = <span class="hljs-keyword">new</span> Object();
+
+    <span class="hljs-comment">// &#x4E0D;&#x5E26;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;TreeMap</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>(<span class="hljs-keyword">new</span> TreeMap&lt;E,Object&gt;());
+    }
+
+    <span class="hljs-comment">// &#x5C06;TreeMap&#x8D4B;&#x503C;&#x7ED9; &quot;NavigableMap&#x5BF9;&#x8C61;m&quot;</span>
+    TreeSet(NavigableMap&lt;E,Object&gt; m) {
+        <span class="hljs-keyword">this</span>.m = m;
+    }
+
+    <span class="hljs-comment">// &#x5E26;&#x6BD4;&#x8F83;&#x5668;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">(Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; comparator)</span> </span>{
+        <span class="hljs-keyword">this</span>(<span class="hljs-keyword">new</span> TreeMap&lt;E,Object&gt;(comparator));
+    }
+
+    <span class="hljs-comment">// &#x521B;&#x5EFA;TreeSet&#xFF0C;&#x5E76;&#x5C06;&#x96C6;&#x5408;c&#x4E2D;&#x7684;&#x5168;&#x90E8;&#x5143;&#x7D20;&#x90FD;&#x6DFB;&#x52A0;&#x5230;TreeSet&#x4E2D;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>{
+        <span class="hljs-keyword">this</span>();
+        <span class="hljs-comment">// &#x5C06;&#x96C6;&#x5408;c&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5168;&#x90E8;&#x6DFB;&#x52A0;&#x5230;TreeSet&#x4E2D;</span>
+        addAll(c);
+    }
+
+    <span class="hljs-comment">// &#x521B;&#x5EFA;TreeSet&#xFF0C;&#x5E76;&#x5C06;s&#x4E2D;&#x7684;&#x5168;&#x90E8;&#x5143;&#x7D20;&#x90FD;&#x6DFB;&#x52A0;&#x5230;TreeSet&#x4E2D;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TreeSet</span><span class="hljs-params">(SortedSet&lt;E&gt; s)</span> </span>{
+        <span class="hljs-keyword">this</span>(s.comparator());
+        addAll(s);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;TreeSet&#x7684;&#x987A;&#x5E8F;&#x6392;&#x5217;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x3002;</span>
+    <span class="hljs-comment">// &#x56E0;&#x4E3A;TreeSet&#x65F6;TreeMap&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x5B9E;&#x9645;&#x4E0A;&#x65F6;&#x8FD4;&#x56DE;TreeMap&#x7684;&#x201C;&#x952E;&#x96C6;&#x201D;&#x5BF9;&#x5E94;&#x7684;&#x8FED;&#x4EE3;&#x5668;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.navigableKeySet().iterator();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;TreeSet&#x7684;&#x9006;&#x5E8F;&#x6392;&#x5217;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x3002;</span>
+    <span class="hljs-comment">// &#x56E0;&#x4E3A;TreeSet&#x65F6;TreeMap&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x5B9E;&#x9645;&#x4E0A;&#x65F6;&#x8FD4;&#x56DE;TreeMap&#x7684;&#x201C;&#x952E;&#x96C6;&#x201D;&#x5BF9;&#x5E94;&#x7684;&#x8FED;&#x4EE3;&#x5668;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Iterator&lt;E&gt; <span class="hljs-title">descendingIterator</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.descendingKeySet().iterator();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;TreeSet&#x7684;&#x5927;&#x5C0F;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.size();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;TreeSet&#x662F;&#x5426;&#x4E3A;&#x7A7A;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.isEmpty();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;TreeSet&#x662F;&#x5426;&#x5305;&#x542B;&#x5BF9;&#x8C61;(o)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">contains</span><span class="hljs-params">(Object o)</span> </span>{
+        <span class="hljs-keyword">return</span> m.containsKey(o);
+    }
+
+    <span class="hljs-comment">// &#x6DFB;&#x52A0;e&#x5230;TreeSet&#x4E2D;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>{
+        <span class="hljs-keyword">return</span> m.put(e, PRESENT)==<span class="hljs-keyword">null</span>;
+    }
+
+    <span class="hljs-comment">// &#x5220;&#x9664;TreeSet&#x4E2D;&#x7684;&#x5BF9;&#x8C61;o</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span> </span>{
+        <span class="hljs-keyword">return</span> m.remove(o)==PRESENT;
+    }
+
+    <span class="hljs-comment">// &#x6E05;&#x7A7A;TreeSet</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span> </span>{
+        m.clear();
+    }
+
+    <span class="hljs-comment">// &#x5C06;&#x96C6;&#x5408;c&#x4E2D;&#x7684;&#x5168;&#x90E8;&#x5143;&#x7D20;&#x6DFB;&#x52A0;&#x5230;TreeSet&#x4E2D;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span>  <span class="hljs-keyword">boolean</span> <span class="hljs-title">addAll</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>{
+        <span class="hljs-comment">// Use linear-time version if applicable</span>
+        <span class="hljs-keyword">if</span> (m.size()==<span class="hljs-number">0</span> &amp;&amp; c.size() &gt; <span class="hljs-number">0</span> &amp;&amp;
+            c <span class="hljs-keyword">instanceof</span> SortedSet &amp;&amp;
+            m <span class="hljs-keyword">instanceof</span> TreeMap) {
+            SortedSet&lt;? extends E&gt; set = (SortedSet&lt;? extends E&gt;) c;
+            TreeMap&lt;E,Object&gt; map = (TreeMap&lt;E, Object&gt;) m;
+            Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; cc = (Comparator&lt;? <span class="hljs-keyword">super</span> E&gt;) set.comparator();
+            Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; mc = map.comparator();
+            <span class="hljs-keyword">if</span> (cc==mc || (cc != <span class="hljs-keyword">null</span> &amp;&amp; cc.equals(mc))) {
+                map.addAllForTreeSet(set, PRESENT);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.addAll(c);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;&#x5B50;Set&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x901A;&#x8FC7;TreeMap&#x7684;subMap()&#x5B9E;&#x73B0;&#x7684;&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> NavigableSet&lt;E&gt; <span class="hljs-title">subSet</span><span class="hljs-params">(E fromElement, <span class="hljs-keyword">boolean</span> fromInclusive,
+                                  E toElement,   <span class="hljs-keyword">boolean</span> toInclusive)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeSet&lt;E&gt;(m.subMap(fromElement, fromInclusive,
+                                       toElement,   toInclusive));
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x8303;&#x56F4;&#x662F;&#xFF1A;&#x4ECE;&#x5934;&#x90E8;&#x5230;toElement&#x3002;</span>
+    <span class="hljs-comment">// inclusive&#x662F;&#x662F;&#x5426;&#x5305;&#x542B;toElement&#x7684;&#x6807;&#x5FD7;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> NavigableSet&lt;E&gt; <span class="hljs-title">headSet</span><span class="hljs-params">(E toElement, <span class="hljs-keyword">boolean</span> inclusive)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeSet&lt;E&gt;(m.headMap(toElement, inclusive));
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x5C3E;&#x90E8;&#xFF0C;&#x8303;&#x56F4;&#x662F;&#xFF1A;&#x4ECE;fromElement&#x5230;&#x7ED3;&#x5C3E;&#x3002;</span>
+    <span class="hljs-comment">// inclusive&#x662F;&#x662F;&#x5426;&#x5305;&#x542B;fromElement&#x7684;&#x6807;&#x5FD7;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> NavigableSet&lt;E&gt; <span class="hljs-title">tailSet</span><span class="hljs-params">(E fromElement, <span class="hljs-keyword">boolean</span> inclusive)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeSet&lt;E&gt;(m.tailMap(fromElement, inclusive));
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;&#x5B50;Set&#x3002;&#x8303;&#x56F4;&#x662F;&#xFF1A;&#x4ECE;fromElement(&#x5305;&#x62EC;)&#x5230;toElement(&#x4E0D;&#x5305;&#x62EC;)&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> SortedSet&lt;E&gt; <span class="hljs-title">subSet</span><span class="hljs-params">(E fromElement, E toElement)</span> </span>{
+        <span class="hljs-keyword">return</span> subSet(fromElement, <span class="hljs-keyword">true</span>, toElement, <span class="hljs-keyword">false</span>);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x8303;&#x56F4;&#x662F;&#xFF1A;&#x4ECE;&#x5934;&#x90E8;&#x5230;toElement(&#x4E0D;&#x5305;&#x62EC;)&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> SortedSet&lt;E&gt; <span class="hljs-title">headSet</span><span class="hljs-params">(E toElement)</span> </span>{
+        <span class="hljs-keyword">return</span> headSet(toElement, <span class="hljs-keyword">false</span>);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x5C3E;&#x90E8;&#xFF0C;&#x8303;&#x56F4;&#x662F;&#xFF1A;&#x4ECE;fromElement&#x5230;&#x7ED3;&#x5C3E;(&#x4E0D;&#x5305;&#x62EC;)&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> SortedSet&lt;E&gt; <span class="hljs-title">tailSet</span><span class="hljs-params">(E fromElement)</span> </span>{
+        <span class="hljs-keyword">return</span> tailSet(fromElement, <span class="hljs-keyword">true</span>);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x6BD4;&#x8F83;&#x5668;</span>
+    <span class="hljs-keyword">public</span> Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; comparator() {
+        <span class="hljs-keyword">return</span> m.comparator();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">first</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.firstKey();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">first</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">last</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> m.lastKey();
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x4E2D;&#x5C0F;&#x4E8E;e&#x7684;&#x6700;&#x5927;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">lower</span><span class="hljs-params">(E e)</span> </span>{
+        <span class="hljs-keyword">return</span> m.lowerKey(e);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x4E2D;&#x5C0F;&#x4E8E;/&#x7B49;&#x4E8E;e&#x7684;&#x6700;&#x5927;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">floor</span><span class="hljs-params">(E e)</span> </span>{
+        <span class="hljs-keyword">return</span> m.floorKey(e);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x4E2D;&#x5927;&#x4E8E;/&#x7B49;&#x4E8E;e&#x7684;&#x6700;&#x5C0F;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">ceiling</span><span class="hljs-params">(E e)</span> </span>{
+        <span class="hljs-keyword">return</span> m.ceilingKey(e);
+    }
+
+    <span class="hljs-comment">// &#x8FD4;&#x56DE;Set&#x4E2D;&#x5927;&#x4E8E;e&#x7684;&#x6700;&#x5C0F;&#x5143;&#x7D20;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">higher</span><span class="hljs-params">(E e)</span> </span>{
+        <span class="hljs-keyword">return</span> m.higherKey(e);
+    }
+
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x5143;&#x7D20;&#x4ECE;TreeMap&#x4E2D;&#x5220;&#x9664;&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span> </span>{
+        Map.Entry&lt;E,?&gt; e = m.pollFirstEntry();
+        <span class="hljs-keyword">return</span> (e == <span class="hljs-keyword">null</span>)? <span class="hljs-keyword">null</span> : e.getKey();
+    }
+
+    <span class="hljs-comment">// &#x83B7;&#x53D6;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x5143;&#x7D20;&#x4ECE;TreeMap&#x4E2D;&#x5220;&#x9664;&#x3002;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollLast</span><span class="hljs-params">()</span> </span>{
+        Map.Entry&lt;E,?&gt; e = m.pollLastEntry();
+        <span class="hljs-keyword">return</span> (e == <span class="hljs-keyword">null</span>)? <span class="hljs-keyword">null</span> : e.getKey();
+    }
+
+    <span class="hljs-comment">// &#x514B;&#x9686;&#x4E00;&#x4E2A;TreeSet&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;Object&#x5BF9;&#x8C61;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">clone</span><span class="hljs-params">()</span> </span>{
+        TreeSet&lt;E&gt; clone = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">try</span> {
+            clone = (TreeSet&lt;E&gt;) <span class="hljs-keyword">super</span>.clone();
+        } <span class="hljs-keyword">catch</span> (CloneNotSupportedException e) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InternalError();
+        }
+
+        clone.m = <span class="hljs-keyword">new</span> TreeMap&lt;E,Object&gt;(m);
+        <span class="hljs-keyword">return</span> clone;
+    }
+
+    <span class="hljs-comment">// java.io.Serializable&#x7684;&#x5199;&#x5165;&#x51FD;&#x6570;</span>
+    <span class="hljs-comment">// &#x5C06;TreeSet&#x7684;&#x201C;&#x6BD4;&#x8F83;&#x5668;&#x3001;&#x5BB9;&#x91CF;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x5143;&#x7D20;&#x503C;&#x201D;&#x90FD;&#x5199;&#x5165;&#x5230;&#x8F93;&#x51FA;&#x6D41;&#x4E2D;</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">writeObject</span><span class="hljs-params">(java.io.ObjectOutputStream s)</span>
+        <span class="hljs-keyword">throws</span> java.io.IOException </span>{
+        s.defaultWriteObject();
+
+        <span class="hljs-comment">// &#x5199;&#x5165;&#x6BD4;&#x8F83;&#x5668;</span>
+        s.writeObject(m.comparator());
+
+        <span class="hljs-comment">// &#x5199;&#x5165;&#x5BB9;&#x91CF;</span>
+        s.writeInt(m.size());
+
+        <span class="hljs-comment">// &#x5199;&#x5165;&#x201C;TreeSet&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x201D;</span>
+        <span class="hljs-keyword">for</span> (Iterator i=m.keySet().iterator(); i.hasNext(); )
+            s.writeObject(i.next());
+    }
+
+    <span class="hljs-comment">// java.io.Serializable&#x7684;&#x8BFB;&#x53D6;&#x51FD;&#x6570;&#xFF1A;&#x6839;&#x636E;&#x5199;&#x5165;&#x65B9;&#x5F0F;&#x8BFB;&#x51FA;</span>
+    <span class="hljs-comment">// &#x5148;&#x5C06;TreeSet&#x7684;&#x201C;&#x6BD4;&#x8F83;&#x5668;&#x3001;&#x5BB9;&#x91CF;&#x3001;&#x6240;&#x6709;&#x7684;&#x5143;&#x7D20;&#x503C;&#x201D;&#x4F9D;&#x6B21;&#x8BFB;&#x51FA;</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readObject</span><span class="hljs-params">(java.io.ObjectInputStream s)</span>
+        <span class="hljs-keyword">throws</span> java.io.IOException, ClassNotFoundException </span>{
+        <span class="hljs-comment">// Read in any hidden stuff</span>
+        s.defaultReadObject();
+
+        <span class="hljs-comment">// &#x4ECE;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;TreeSet&#x7684;&#x201C;&#x6BD4;&#x8F83;&#x5668;&#x201D;</span>
+        Comparator&lt;? <span class="hljs-keyword">super</span> E&gt; c = (Comparator&lt;? <span class="hljs-keyword">super</span> E&gt;) s.readObject();
+
+        TreeMap&lt;E,Object&gt; tm;
+        <span class="hljs-keyword">if</span> (c==<span class="hljs-keyword">null</span>)
+            tm = <span class="hljs-keyword">new</span> TreeMap&lt;E,Object&gt;();
+        <span class="hljs-keyword">else</span>
+            tm = <span class="hljs-keyword">new</span> TreeMap&lt;E,Object&gt;(c);
+        m = tm;
+
+        <span class="hljs-comment">// &#x4ECE;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;TreeSet&#x7684;&#x201C;&#x5BB9;&#x91CF;&#x201D;</span>
+        <span class="hljs-keyword">int</span> size = s.readInt();
+
+        <span class="hljs-comment">// &#x4ECE;&#x8F93;&#x5165;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;TreeSet&#x7684;&#x201C;&#x5168;&#x90E8;&#x5143;&#x7D20;&#x201D;</span>
+        tm.readTreeSet(size, s, PRESENT);
+    }
+
+    <span class="hljs-comment">// TreeSet&#x7684;&#x5E8F;&#x5217;&#x7248;&#x672C;&#x53F7;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">2479143000061671589L</span>;
+}
+</code></pre>
+<ul>
+<li>TreeSet&#x5B9E;&#x9645;&#x4E0A;&#x662F;TreeMap&#x5B9E;&#x73B0;&#x7684;&#x3002;&#x5F53;&#x6211;&#x4EEC;&#x6784;&#x9020;TreeSet&#x65F6;&#xFF1B;&#x82E5;&#x4F7F;&#x7528;&#x4E0D;&#x5E26;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5219;TreeSet&#x7684;&#x4F7F;&#x7528;&#x81EA;&#x7136;&#x6BD4;&#x8F83;&#x5668;&#xFF1B;&#x82E5;&#x7528;&#x6237;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x5E26;&#x6BD4;&#x8F83;&#x5668;&#x7684;&#x53C2;&#x6570;&#x3002;</li>
+<li>TreeSet&#x662F;&#x975E;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#x3002;</li>
+<li>TreeSet&#x5B9E;&#x73B0;java.io.Serializable&#x7684;&#x65B9;&#x5F0F;&#x3002;&#x5F53;&#x5199;&#x5165;&#x5230;&#x8F93;&#x51FA;&#x6D41;&#x65F6;&#xFF0C;&#x4F9D;&#x6B21;&#x5199;&#x5165;&#x201C;&#x6BD4;&#x8F83;&#x5668;&#x3001;&#x5BB9;&#x91CF;&#x3001;&#x5168;&#x90E8;&#x5143;&#x7D20;&#x201D;&#xFF1B;&#x5F53;&#x8BFB;&#x51FA;&#x8F93;&#x5165;&#x6D41;&#x65F6;&#xFF0C;&#x518D;&#x4F9D;&#x6B21;&#x8BFB;&#x53D6;&#x3002;</li>
+</ul>
+<h1 id="5-&#x5E94;&#x7528;&#x573A;&#x666F;">5 &#x5E94;&#x7528;&#x573A;&#x666F;</h1>
+<h1 id="6-&#x5E76;&#x53D1;&#x95EE;&#x9898;">6 &#x5E76;&#x53D1;&#x95EE;&#x9898;</h1>
+<p>&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code>JavaLearning&#xFF1A;com.prd.colletctions.TreeSetTest
+</code></pre><h1 id="7-&#x5FAA;&#x73AF;&#x8FED;&#x4EE3;">7 &#x5FAA;&#x73AF;&#x8FED;&#x4EE3;</h1>
+<h2 id="71-iterator&#x987A;&#x5E8F;&#x904D;&#x5386;">7.1 Iterator&#x987A;&#x5E8F;&#x904D;&#x5386;</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">for</span>(Iterator iter = set.iterator(); iter.hasNext(); ) { 
+    iter.next();
+}
+</code></pre>
+<h2 id="72-iterator&#x987A;&#x5E8F;&#x904D;&#x5386;">7.2 Iterator&#x987A;&#x5E8F;&#x904D;&#x5386;</h2>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x5047;&#x8BBE;set&#x662F;TreeSet&#x5BF9;&#x8C61;</span>
+<span class="hljs-keyword">for</span>(Iterator iter = set.descendingIterator(); iter.hasNext(); ) { 
+    iter.next();
+}
+</code></pre>
+<h2 id="73-for-each&#x904D;&#x5386;hashset">7.3 for-each&#x904D;&#x5386;HashSet</h2>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x5047;&#x8BBE;set&#x662F;TreeSet&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;set&#x4E2D;&#x5143;&#x7D20;&#x662F;String&#x7C7B;&#x578B;</span>
+String[] arr = (String[])set.toArray(<span class="hljs-keyword">new</span> String[<span class="hljs-number">0</span>]);
+<span class="hljs-keyword">for</span> (String str:arr)
+    System.out.printf(<span class="hljs-string">&quot;for each : %s\n&quot;</span>, str);
+</code></pre>
+<p>&#x200B;        <strong>TreeSet&#x4E0D;&#x652F;&#x6301;&#x5FEB;&#x901F;&#x968F;&#x673A;&#x904D;&#x5386;&#xFF0C;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x8FED;&#x4EE3;&#x5668;&#x8FDB;&#x884C;&#x904D;&#x5386;&#xFF01;</strong></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="010-hashset.html" class="navigation navigation-prev " aria-label="Previous page: 第10章 集合之HashSet">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="012-queue.html" class="navigation navigation-next " aria-label="Next page: 第12章 集合之Queue">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第11章 集合之TreeSet","level":"1.3.11","depth":2,"next":{"title":"第12章 集合之Queue","level":"1.3.12","depth":2,"path":"javase/collections/012-queue.md","ref":"javase/collections/012-queue.md","articles":[]},"previous":{"title":"第10章 集合之HashSet","level":"1.3.10","depth":2,"path":"javase/collections/010-hashset.md","ref":"javase/collections/010-hashset.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"javase/collections/011-treeset.md","mtime":"2020-06-18T12:34:37.151Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-22T10:24:17.718Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

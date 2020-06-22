@@ -1,0 +1,866 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第14章 集合之Map · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="015-hashmap.html" />
+    
+    
+    <link rel="prev" href="013-deque.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../common/">
+            
+                <a href="../../common/">
+            
+                    
+                    常用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../common/git&github/git&github.html">
+            
+                <a href="../../common/git&github/git&github.html">
+            
+                    
+                    GIT&GITHUB
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../common/gitbook/gitbook.html">
+            
+                <a href="../../common/gitbook/gitbook.html">
+            
+                    
+                    GITBOOK
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../JavaSE.html">
+            
+                <a href="../JavaSE.html">
+            
+                    
+                    JavaSE
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../001-interfaces.html">
+            
+                <a href="../001-interfaces.html">
+            
+                    
+                    第1章 接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002-innerClass.html">
+            
+                <a href="../002-innerClass.html">
+            
+                    
+                    第2章 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../003-proxy.html">
+            
+                <a href="../003-proxy.html">
+            
+                    
+                    第3章 反射与代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../004-generic.html">
+            
+                <a href="../004-generic.html">
+            
+                    
+                    第4章 泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="005-collection.html">
+            
+                <a href="005-collection.html">
+            
+                    
+                    第5章 集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="006-list.html">
+            
+                <a href="006-list.html">
+            
+                    
+                    第6章 集合之List架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="007-arraylist.html">
+            
+                <a href="007-arraylist.html">
+            
+                    
+                    第7章 集合之ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="008-linkedlist.html">
+            
+                <a href="008-linkedlist.html">
+            
+                    
+                    第8章 集合之LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="009-set.html">
+            
+                <a href="009-set.html">
+            
+                    
+                    第9章 集合之Set
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="010-hashset.html">
+            
+                <a href="010-hashset.html">
+            
+                    
+                    第10章 集合之HashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="011-treeset.html">
+            
+                <a href="011-treeset.html">
+            
+                    
+                    第11章 集合之TreeSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="012-queue.html">
+            
+                <a href="012-queue.html">
+            
+                    
+                    第12章 集合之Queue
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.13" data-path="013-deque.html">
+            
+                <a href="013-deque.html">
+            
+                    
+                    第13章 集合之Deque
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.14" data-path="014-map.html">
+            
+                <a href="014-map.html">
+            
+                    
+                    第14章 集合之Map
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.15" data-path="015-hashmap.html">
+            
+                <a href="015-hashmap.html">
+            
+                    
+                    第15章 集合之HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.16" data-path="016-treemap.html">
+            
+                <a href="016-treemap.html">
+            
+                    
+                    第16章 集合之TreeMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.17" data-path="017-weakhashmap.html">
+            
+                <a href="017-weakhashmap.html">
+            
+                    
+                    第17章 集合之WeakHashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.18" data-path="018-linkedhashmap.html">
+            
+                <a href="018-linkedhashmap.html">
+            
+                    
+                    第18章 集合之LinkedHashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../mysql/MySQL.html">
+            
+                <a href="../../mysql/MySQL.html">
+            
+                    
+                    MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../microservices/MicroServices.html">
+            
+                <a href="../../microservices/MicroServices.html">
+            
+                    
+                    MicroServices
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >第14章 集合之Map</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="1&#x6982;&#x8FF0;">1.&#x6982;&#x8FF0;</h1>
+<p>&#x200B;        Java&#x4E2D;&#x7684;Map&#x63A5;&#x53E3;&#x662F;&#x548C;Collection&#x63A5;&#x53E3;&#x540C;&#x4E00;&#x7B49;&#x7EA7;&#x7684;&#x96C6;&#x5408;&#x6839;&#x63A5;&#x53E3;&#xFF0C;&#x5B83;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x952E;&#x503C;&#x5BF9;(key-value)&#x7684;&#x6620;&#x5C04;&#x3002;&#x7C7B;&#x4F3C;&#x6570;&#x5B66;&#x4E2D;&#x51FD;&#x6570;&#x7684;&#x6982;&#x5FF5;&#x3002;&#x4E00;&#x4E2A;Map&#x4E2D;&#xFF0C;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;key&#x90FD;&#x6709;&#x552F;&#x4E00;&#x786E;&#x5B9A;&#x7684;value&#x4E0E;&#x5176;&#x5BF9;&#x5E94;&#xFF0C;&#x8FD9;&#x4E2A;key-value&#x7684;&#x6620;&#x5C04;&#x5C31;&#x662F;map&#x3002;</p>
+<p>&#x200B;        Map &#x4E2D;&#x5143;&#x7D20;&#x7684;&#x987A;&#x5E8F;&#x53D6;&#x51B3;&#x4E8E;&#x8FED;&#x4EE3;&#x5668;&#x8FED;&#x4EE3;&#x65F6;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x6709;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x4FDD;&#x8BC1;&#x4E86;&#x5143;&#x7D20;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x65F6;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;TreeMap&#xFF1B;&#x6709;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x5219;&#x662F;&#x65E0;&#x5E8F;&#x7684;&#xFF0C;&#x6BD4;&#x5982;HashMap&#x3002;&#x5176;&#x67B6;&#x6784;&#x56FE;&#x53EF;&#x4EE5;&#x63CF;&#x8FF0;&#x5982;&#x4E0B;:</p>
+<p><img src="../images/014-1.png" alt="014-1"></p>
+<ul>
+<li>Map&#x662F;&#x6620;&#x5C04;&#x63A5;&#x53E3;&#xFF0C;Map&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x952E;&#x503C;&#x5BF9;(key-value)&#x3002;</li>
+<li>AbstractMap&#x662F;&#x7EE7;&#x627F;&#x4E8E;Map&#x7684;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;Map&#x4E2D;&#x7684;&#x5927;&#x90E8;&#x5206;API&#x3002;&#x5176;&#x5B83;Map&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EE7;&#x627F;AbstractMap&#x6765;&#x51CF;&#x5C11;&#x91CD;&#x590D;&#x7F16;&#x7801;&#x3002;</li>
+<li>SortedMap&#x662F;&#x7EE7;&#x627F;&#x4E8E;Map&#x7684;&#x63A5;&#x53E3;&#x3002;SortedMap&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x6392;&#x5E8F;&#x7684;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x6392;&#x5E8F;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x6BD4;&#x8F83;&#x5668;(Comparator)&#x3002;</li>
+<li>NavigableMap&#x662F;&#x7EE7;&#x627F;&#x4E8E;SortedMap&#x7684;&#x63A5;&#x53E3;&#x3002;&#x76F8;&#x6BD4;&#x4E8E;SortedMap&#xFF0C;NavigableMap&#x6709;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x5BFC;&#x822A;&#x65B9;&#x6CD5;&#xFF1B;&#x5982;&quot;&#x83B7;&#x53D6;&#x5927;&#x4E8E;/&#x7B49;&#x4E8E;&#x67D0;&#x5BF9;&#x8C61;&#x7684;&#x952E;&#x503C;&#x5BF9;&quot;&#x3001;&#x201C;&#x83B7;&#x53D6;&#x5C0F;&#x4E8E;/&#x7B49;&#x4E8E;&#x67D0;&#x5BF9;&#x8C61;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x7B49;&#x7B49;&#x3002; </li>
+<li>TreeMap&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x4E14;&#x5B9E;&#x73B0;&#x4E86;NavigableMap&#x63A5;&#x53E3;&#xFF1B;&#x56E0;&#x6B64;&#xFF0C;TreeMap&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x201C;&#x6709;&#x5E8F;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x201D;&#xFF01;</li>
+<li>HashMap&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x4F46;&#x6CA1;&#x5B9E;&#x73B0;NavigableMap&#x63A5;&#x53E3;&#xFF1B;&#x56E0;&#x6B64;&#xFF0C;HashMap&#x7684;&#x5185;&#x5BB9;&#x662F;&#x201C;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x4F46;&#x4E0D;&#x4FDD;&#x8BC1;&#x6B21;&#x5E8F;&#x201D;&#xFF01;</li>
+<li>Hashtable&#x867D;&#x7136;&#x4E0D;&#x662F;&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x4F46;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;Dictionary(Dictionary&#x4E5F;&#x662F;&#x952E;&#x503C;&#x5BF9;&#x7684;&#x63A5;&#x53E3;)&#xFF0C;&#x800C;&#x4E14;&#x4E5F;&#x5B9E;&#x73B0;Map&#x63A5;&#x53E3;&#xFF1B;&#x56E0;&#x6B64;&#xFF0C;Hashtable&#x7684;&#x5185;&#x5BB9;&#x4E5F;&#x662F;&#x201C;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x4E5F;&#x4E0D;&#x4FDD;&#x8BC1;&#x6B21;&#x5E8F;&#x201D;&#x3002;&#x4F46;&#x548C;HashMap&#x76F8;&#x6BD4;&#xFF0C;Hashtable&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x5B83;&#x652F;&#x6301;&#x901A;&#x8FC7;Enumeration&#x53BB;&#x904D;&#x5386;&#x3002;</li>
+<li>WeakHashMap&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#x3002;&#x5B83;&#x548C;HashMap&#x7684;&#x952E;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;WeakHashMap&#x7684;&#x952E;&#x662F;&#x201C;&#x5F31;&#x952E;&#x201D;&#x3002;</li>
+</ul>
+<p>&#x200B;        HashMap &#x662F;&#x57FA;&#x4E8E;&#x201C;&#x62C9;&#x94FE;&#x6CD5;&#x201D;&#x5B9E;&#x73B0;&#x7684;&#x6563;&#x5217;&#x8868;&#x3002;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x5355;&#x7EBF;&#x7A0B;&#x7A0B;&#x5E8F;&#x4E2D;&#x3002;Hashtable &#x4E5F;&#x662F;&#x57FA;&#x4E8E;&#x201C;&#x62C9;&#x94FE;&#x6CD5;&#x201D;&#x5B9E;&#x73B0;&#x7684;&#x6563;&#x5217;&#x8868;&#x3002;&#x5B83;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x591A;&#x7EBF;&#x7A0B;&#x7A0B;&#x5E8F;&#x4E2D;&#x3002;WeakHashMap &#x4E5F;&#x662F;&#x57FA;&#x4E8E;&#x201C;&#x62C9;&#x94FE;&#x6CD5;&#x201D;&#x5B9E;&#x73B0;&#x7684;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x5B83;&#x4E00;&#x822C;&#x4E5F;&#x7528;&#x4E8E;&#x5355;&#x7EBF;&#x7A0B;&#x7A0B;&#x5E8F;&#x4E2D;&#x3002;&#x76F8;&#x6BD4;HashMap&#xFF0C;WeakHashMap&#x4E2D;&#x7684;&#x952E;&#x662F;&#x201C;&#x5F31;&#x952E;&#x201D;&#xFF0C;&#x5F53;&#x201C;&#x5F31;&#x952E;&#x201D;&#x88AB;GC&#x56DE;&#x6536;&#x65F6;&#xFF0C;&#x5B83;&#x5BF9;&#x5E94;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x4E5F;&#x4F1A;&#x88AB;&#x4ECE;WeakHashMap&#x4E2D;&#x5220;&#x9664;&#xFF1B;&#x800C;HashMap&#x4E2D;&#x7684;&#x952E;&#x662F;&#x5F3A;&#x952E;&#x3002;TreeMap &#x662F;&#x6709;&#x5E8F;&#x7684;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x5B83;&#x662F;&#x901A;&#x8FC7;&#x7EA2;&#x9ED1;&#x6811;&#x5B9E;&#x73B0;&#x7684;&#x3002;&#x5B83;&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x5355;&#x7EBF;&#x7A0B;&#x4E2D;&#x5B58;&#x50A8;&#x6709;&#x5E8F;&#x7684;&#x6620;&#x5C04;&#x3002;</p>
+<h1 id="2map">2.Map</h1>
+<p>&#x200B;        Map&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Map</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>{ }
+</code></pre>
+<ul>
+<li>Map&#x662F;&#x4E00;&#x4E2A;&#x952E;&#x503C;&#x5BF9;(key-value)&#x6620;&#x5C04;&#x63A5;&#x53E3;&#x3002;Map&#x6620;&#x5C04;&#x4E2D;&#x4E0D;&#x80FD;&#x5305;&#x542B;&#x91CD;&#x590D;&#x7684;&#x952E;&#xFF1B;&#x6BCF;&#x4E2A;&#x952E;&#x6700;&#x591A;&#x53EA;&#x80FD;&#x6620;&#x5C04;&#x5230;&#x4E00;&#x4E2A;&#x503C;&#x3002;</li>
+<li>Map&#x63A5;&#x53E3;&#x63D0;&#x4F9B;&#x4E09;&#x79CD;collection&#x89C6;&#x56FE;&#xFF0C;&#x5141;&#x8BB8;&#x4EE5;&#x952E;&#x96C6;&#x3001;&#x503C;&#x96C6;&#x6216;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x96C6;&#x7684;&#x5F62;&#x5F0F;&#x67E5;&#x770B;&#x67D0;&#x4E2A;&#x6620;&#x5C04;&#x7684;&#x5185;&#x5BB9;&#x3002;</li>
+<li>Map&#x6620;&#x5C04;&#x987A;&#x5E8F;&#x3002;&#x6709;&#x4E9B;&#x5B9E;&#x73B0;&#x7C7B;&#xFF0C;&#x53EF;&#x4EE5;&#x660E;&#x786E;&#x4FDD;&#x8BC1;&#x5176;&#x987A;&#x5E8F;&#xFF0C;&#x5982;TreeMap&#xFF1B;&#x53E6;&#x4E00;&#x4E9B;&#x6620;&#x5C04;&#x5B9E;&#x73B0;&#x5219;&#x4E0D;&#x4FDD;&#x8BC1;&#x987A;&#x5E8F;&#xFF0C;&#x5982;HashMap &#x7C7B;&#x3002;</li>
+<li>Map&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x5E94;&#x8BE5;&#x63D0;&#x4F9B;2&#x4E2A;&#x201C;&#x6807;&#x51C6;&#x7684;&#x201D;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF1A;&#x7B2C;&#x4E00;&#x4E2A;&#xFF0C;void&#xFF08;&#x65E0;&#x53C2;&#x6570;&#xFF09;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x7528;&#x4E8E;&#x521B;&#x5EFA;&#x7A7A;&#x6620;&#x5C04;&#xFF1B;&#x7B2C;&#x4E8C;&#x4E2A;&#xFF0C;&#x5E26;&#x6709;&#x5355;&#x4E2A;Map&#x7C7B;&#x578B;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x7528;&#x4E8E;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x4E0E;&#x5176;&#x53C2;&#x6570;&#x5177;&#x6709;&#x76F8;&#x540C;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x7684;&#x65B0;&#x6620;&#x5C04;&#x3002;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x540E;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x590D;&#x5236;&#x4EFB;&#x610F;&#x6620;&#x5C04;&#xFF0C;&#x751F;&#x6210;&#x6240;&#x9700;&#x7C7B;&#x7684;&#x4E00;&#x4E2A;&#x7B49;&#x4EF7;&#x6620;&#x5C04;&#x3002;&#x5C3D;&#x7BA1;&#x65E0;&#x6CD5;&#x5F3A;&#x5236;&#x6267;&#x884C;&#x6B64;&#x5EFA;&#x8BAE;&#xFF08;&#x56E0;&#x4E3A;&#x63A5;&#x53E3;&#x4E0D;&#x80FD;&#x5305;&#x542B;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF09;&#xFF0C;&#x4F46;&#x662F; JDK&#x4E2D;&#x6240;&#x6709;&#x901A;&#x7528;&#x7684;&#x6620;&#x5C04;&#x5B9E;&#x73B0;&#x90FD;&#x9075;&#x4ECE;&#x5B83;&#x3002;</li>
+</ul>
+<h2 id="21-api">2.1 API</h2>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x4ECE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x79FB;&#x9664;&#x6240;&#x6709;&#x6620;&#x5C04;&#x5173;&#x7CFB;</span>
+<span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span>                 <span class="hljs-title">clear</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x5982;&#x679C;&#x6B64;&#x6620;&#x5C04;&#x5305;&#x542B;&#x6307;&#x5B9A;&#x952E;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; true    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsKey</span><span class="hljs-params">(Object key)</span>    
+<span class="hljs-comment">//&#x5982;&#x679C;&#x6B64;&#x6620;&#x5C04;&#x5C06;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x952E;&#x6620;&#x5C04;&#x5230;&#x6307;&#x5B9A;&#x503C;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; true    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsValue</span><span class="hljs-params">(Object value)</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x7684;Set&#x89C6;&#x56FE;    </span>
+<span class="hljs-keyword">abstract</span> Set&lt;Entry&lt;K, V&gt;&gt;     <span class="hljs-title">entrySet</span><span class="hljs-params">()</span>        
+<span class="hljs-comment">//&#x6BD4;&#x8F83;&#x6307;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#x4E0E;&#x6B64;&#x6620;&#x5C04;&#x662F;&#x5426;&#x76F8;&#x7B49;    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">equals</span><span class="hljs-params">(Object object)</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6307;&#x5B9A;&#x952E;&#x6240;&#x6620;&#x5C04;&#x7684;&#x503C;&#xFF1B;&#x5982;&#x679C;&#x6B64;&#x6620;&#x5C04;&#x4E0D;&#x5305;&#x542B;&#x8BE5;&#x952E;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; null    </span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x7684;&#x54C8;&#x5E0C;&#x7801;&#x503C;    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">int</span>                  <span class="hljs-title">hashCode</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x5982;&#x679C;&#x6B64;&#x6620;&#x5C04;&#x672A;&#x5305;&#x542B;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; true    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span>        
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x952E;&#x7684;Set&#x89C6;&#x56FE;    </span>
+<span class="hljs-keyword">abstract</span> Set&lt;K&gt;               <span class="hljs-title">keySet</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x5C06;&#x6307;&#x5B9A;&#x7684;&#x503C;&#x4E0E;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x7684;&#x6307;&#x5B9A;&#x952E;&#x5173;&#x8054;    </span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span>    
+<span class="hljs-comment">//&#x4ECE;&#x6307;&#x5B9A;&#x6620;&#x5C04;&#x4E2D;&#x5C06;&#x6240;&#x6709;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x590D;&#x5236;&#x5230;&#x6B64;&#x6620;&#x5C04;&#x4E2D;    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span>                 <span class="hljs-title">putAll</span><span class="hljs-params">(Map&lt;? extends K, ? extends V&gt; map)</span>    
+<span class="hljs-comment">//&#x5982;&#x679C;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x952E;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x5219;&#x5C06;&#x5176;&#x4ECE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x79FB;&#x9664;    </span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">remove</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x7684;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x6570;    </span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">int</span>                  <span class="hljs-title">size</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x503C;&#x7684;Collection&#x89C6;&#x56FE;    </span>
+<span class="hljs-keyword">abstract</span> Collection&lt;V&gt;        <span class="hljs-title">values</span><span class="hljs-params">()</span>
+</span></code></pre>
+<h2 id="22-mapentry">2.2 Map.Entry</h2>
+<p>&#x200B;        Map.Entry&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>{ }
+</code></pre>
+<p>&#x200B;        Map.Entry&#x662F;Map&#x4E2D;&#x5185;&#x90E8;&#x7684;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;Map.Entry&#x662F;&#x952E;&#x503C;&#x5BF9;&#xFF0C;Map&#x901A;&#x8FC7; entrySet() &#x83B7;&#x53D6;Map.Entry&#x7684;&#x952E;&#x503C;&#x5BF9;&#x96C6;&#x5408;&#xFF0C;&#x4ECE;&#x800C;&#x901A;&#x8FC7;&#x8BE5;&#x96C6;&#x5408;&#x5B9E;&#x73B0;&#x5BF9;&#x952E;&#x503C;&#x5BF9;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+<h3 id="221-api">2.2.1 API</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x6BD4;&#x8F83;&#x6307;&#x5B9A;&#x5BF9;&#x8C61;&#x4E0E;&#x6B64;&#x9879;&#x7684;&#x76F8;&#x7B49;&#x6027;</span>
+<span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>         <span class="hljs-title">equals</span><span class="hljs-params">(Object object)</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x4E0E;&#x6B64;&#x9879;&#x5BF9;&#x5E94;&#x7684;&#x952E;</span>
+<span class="hljs-keyword">abstract</span> K                 <span class="hljs-title">getKey</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x4E0E;&#x6B64;&#x9879;&#x5BF9;&#x5E94;&#x7684;&#x503C;</span>
+<span class="hljs-keyword">abstract</span> V                 <span class="hljs-title">getValue</span><span class="hljs-params">()</span>
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x9879;&#x7684;&#x54C8;&#x5E0C;&#x7801;&#x503C;</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">int</span>             <span class="hljs-title">hashCode</span><span class="hljs-params">()</span>        
+<span class="hljs-comment">//&#x7528;&#x6307;&#x5B9A;&#x7684;&#x503C;&#x66FF;&#x6362;&#x4E0E;&#x6B64;&#x9879;&#x5BF9;&#x5E94;&#x7684;&#x503C;</span>
+<span class="hljs-keyword">abstract</span> V                 <span class="hljs-title">setValue</span><span class="hljs-params">(V object)</span>
+</span></code></pre>
+<h1 id="3-abstractmap">3 AbstractMap</h1>
+<p>&#x200B;        AbstractMap&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>{}
+</code></pre>
+<p>&#x200B;        AbstractMap&#x7C7B;&#x63D0;&#x4F9B;Map&#x63A5;&#x53E3;&#x7684;&#x9AA8;&#x5E72;&#x5B9E;&#x73B0;&#xFF0C;&#x4EE5;&#x6700;&#x5927;&#x9650;&#x5EA6;&#x5730;&#x51CF;&#x5C11;&#x5B9E;&#x73B0;&#x6B64;&#x63A5;&#x53E3;&#x6240;&#x9700;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</p>
+<p>&#x200B;        &#x8981;&#x5B9E;&#x73B0;&#x4E0D;&#x53EF;&#x4FEE;&#x6539;&#x7684;&#x6620;&#x5C04;&#xFF0C;&#x7F16;&#x7A0B;&#x4EBA;&#x5458;&#x53EA;&#x9700;&#x6269;&#x5C55;&#x6B64;&#x7C7B;&#x5E76;&#x63D0;&#x4F9B;entrySet&#x65B9;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x5373;&#x53EF;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x5C06;&#x8FD4;&#x56DE;&#x6620;&#x5C04;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;set&#x89C6;&#x56FE;&#x3002;&#x901A;&#x5E38;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;set&#x5C06;&#x4F9D;&#x6B21;&#x5728; AbstractSet&#x4E0A;&#x5B9E;&#x73B0;&#x3002;&#x6B64;set&#x4E0D;&#x652F;&#x6301;add()&#x6216;remove()&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x8FED;&#x4EE3;&#x5668;&#x4E5F;&#x4E0D;&#x652F;&#x6301;remove()&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x200B;        &#x8981;&#x5B9E;&#x73B0;&#x53EF;&#x4FEE;&#x6539;&#x7684;&#x6620;&#x5C04;&#xFF0C;&#x7F16;&#x7A0B;&#x4EBA;&#x5458;&#x5FC5;&#x987B;&#x53E6;&#x5916;&#x91CD;&#x5199;&#x6B64;&#x7C7B;&#x7684;put&#x65B9;&#x6CD5;&#xFF08;&#x5426;&#x5219;&#x5C06;&#x629B;&#x51FA; UnsupportedOperationException&#xFF09;&#xFF0C;entrySet().iterator() &#x8FD4;&#x56DE;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#x4E5F;&#x5FC5;&#x987B;&#x53E6;&#x5916;&#x5B9E;&#x73B0;&#x5176;remove&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="31-&#x6210;&#x5458;&#x53D8;&#x91CF;">3.1 &#x6210;&#x5458;&#x53D8;&#x91CF;</h2>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x4FDD;&#x5B58;map&#x4E2D;&#x6240;&#x6709;&#x952E;&#x7684;Set</span>
+<span class="hljs-keyword">transient</span> Set&lt;K&gt;        keySet;
+<span class="hljs-comment">//&#x4FDD;&#x5B58;map&#x4E2D;&#x6240;&#x6709;&#x503C;&#x7684;&#x96C6;&#x5408;</span>
+<span class="hljs-keyword">transient</span> Collection&lt;V&gt; values;
+</code></pre>
+<p>&#x200B;        &#x90FD;&#x662F; <code>transient</code>,, &#x5206;&#x522B;&#x8868;&#x793A;&#x4E0D;&#x53EF;&#x5E8F;&#x5217;&#x5316;&#x3002;</p>
+<p>&#x200B;        &#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F; volatile &#x53EA;&#x80FD;&#x4FDD;&#x8BC1;&#x53EF;&#x89C1;&#x6027;&#xFF0C;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x539F;&#x5B50;&#x6027;&#xFF0C;<strong>&#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x64CD;&#x4F5C;&#x662F;&#x539F;&#x5B50;&#x6027;&#x64CD;&#x4F5C;&#xFF0C;&#x624D;&#x80FD;&#x4FDD;&#x8BC1;&#x4F7F;&#x7528; volatile &#x5173;&#x952E;&#x5B57;&#x7684;&#x7A0B;&#x5E8F;&#x5728;&#x5E76;&#x53D1;&#x65F6;&#x80FD;&#x591F;&#x6B63;&#x786E;&#x6267;&#x884C;</strong>&#x3002;</p>
+<h2 id="32-api">3.2 API</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">abstract</span> Set&lt;Entry&lt;K, V&gt;&gt;     entrySet()
+<span class="hljs-function"><span class="hljs-keyword">void</span>                 <span class="hljs-title">clear</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsKey</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsValue</span><span class="hljs-params">(Object value)</span>
+<span class="hljs-keyword">boolean</span>              <span class="hljs-title">equals</span><span class="hljs-params">(Object object)</span>
+V                    <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">int</span>                  <span class="hljs-title">hashCode</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">boolean</span>              <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span>
+Set&lt;K&gt;               <span class="hljs-title">keySet</span><span class="hljs-params">()</span>
+V                    <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span>
+<span class="hljs-keyword">void</span>                 <span class="hljs-title">putAll</span><span class="hljs-params">(Map&lt;? extends K, ? extends V&gt; map)</span>
+V                    <span class="hljs-title">remove</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">int</span>                  <span class="hljs-title">size</span><span class="hljs-params">()</span>
+String               <span class="hljs-title">toString</span><span class="hljs-params">()</span>
+Collection&lt;V&gt;        <span class="hljs-title">values</span><span class="hljs-params">()</span>
+Object               <span class="hljs-title">clone</span><span class="hljs-params">()</span>
+</span></code></pre>
+<h2 id="33-&#x5185;&#x90E8;&#x7C7B;">3.3 &#x5185;&#x90E8;&#x7C7B;</h2>
+<h3 id="331-simpleentry&#x53EF;&#x53D8;&#x7684;&#x952E;&#x503C;&#x5BF9;">3.3.1 SimpleEntry&#x53EF;&#x53D8;&#x7684;&#x952E;&#x503C;&#x5BF9;</h3>
+<h3 id="332-simpleimmutableentry&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#x952E;&#x503C;&#x5BF9;">3.3.2 SimpleImmutableEntry&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#x952E;&#x503C;&#x5BF9;</h3>
+<p><code>SimpleEntry</code>&#x4E0E; <code>SimpleImmutableEntry</code> &#x552F;&#x4E00;&#x7684;&#x533A;&#x522B;&#x5C31;&#x662F;&#x652F;&#x6301; setValue() &#x64CD;&#x4F5C;</p>
+<h1 id="4-sortedmap">4 SortedMap</h1>
+<p>&#x200B;        SortedMap&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">SortedMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Map</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>{ }
+</code></pre>
+<p>&#x200B;        SortedMap&#x662F;&#x4E00;&#x4E2A;&#x7EE7;&#x627F;&#x4E8E;Map&#x63A5;&#x53E3;&#x7684;&#x63A5;&#x53E3;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x5E8F;&#x7684;SortedMap&#x952E;&#x503C;&#x6620;&#x5C04;&#x3002;</p>
+<p>&#x200B;        SortedMap&#x7684;&#x6392;&#x5E8F;&#x65B9;&#x5F0F;&#x6709;&#x4E24;&#x79CD;&#xFF1A;&#x81EA;&#x7136;&#x6392;&#x5E8F; &#x6216;&#x8005; &#x7528;&#x6237;&#x6307;&#x5B9A;&#x6BD4;&#x8F83;&#x5668;&#x3002; &#x63D2;&#x5165;&#x6709;&#x5E8F; SortedMap &#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#x90FD;&#x5FC5;&#x987B;&#x5B9E;&#x73B0; Comparable &#x63A5;&#x53E3;&#xFF08;&#x6216;&#x8005;&#x88AB;&#x6307;&#x5B9A;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#x6240;&#x63A5;&#x53D7;&#xFF09;&#x3002;</p>
+<p>&#x200B;        &#x53E6;&#x5916;&#xFF0C;&#x6240;&#x6709;SortedMap &#x5B9E;&#x73B0;&#x7C7B;&#x90FD;&#x5E94;&#x8BE5;&#x63D0;&#x4F9B; 4 &#x4E2A;&#x201C;&#x6807;&#x51C6;&#x201D;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>void&#xFF08;&#x65E0;&#x53C2;&#x6570;&#xFF09;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;&#x6709;&#x5E8F;&#x6620;&#x5C04;&#xFF0C;&#x6309;&#x7167;&#x952E;&#x7684;&#x81EA;&#x7136;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;</li>
+<li>&#x5E26;&#x6709;&#x4E00;&#x4E2A; Comparator &#x7C7B;&#x578B;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;&#x6709;&#x5E8F;&#x6620;&#x5C04;&#xFF0C;&#x6839;&#x636E;&#x6307;&#x5B9A;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;</li>
+<li>&#x5E26;&#x6709;&#x4E00;&#x4E2A; Map &#x7C7B;&#x578B;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6709;&#x5E8F;&#x6620;&#x5C04;&#xFF0C;&#x5176;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x4E0E;&#x53C2;&#x6570;&#x76F8;&#x540C;&#xFF0C;&#x6309;&#x7167;&#x952E;&#x7684;&#x81EA;&#x7136;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;</li>
+<li>&#x5E26;&#x6709;&#x4E00;&#x4E2A; SortedMap &#x7C7B;&#x578B;&#x53C2;&#x6570;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6709;&#x5E8F;&#x6620;&#x5C04;&#xFF0C;&#x5176;&#x952E;-&#x503C;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x548C;&#x6392;&#x5E8F;&#x65B9;&#x6CD5;&#x4E0E;&#x8F93;&#x5165;&#x7684;&#x6709;&#x5E8F;&#x6620;&#x5C04;&#x76F8;&#x540C;&#x3002;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x5F3A;&#x5236;&#x5B9E;&#x65BD;&#x6B64;&#x5EFA;&#x8BAE;&#xFF0C;&#x56E0;&#x4E3A;&#x63A5;&#x53E3;&#x4E0D;&#x80FD;&#x5305;&#x542B;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x3002;</li>
+</ul>
+<h2 id="41-api">4.1 API</h2>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x7EE7;&#x627F;&#x4E8E;Map&#x7684;API</span>
+<span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span>                 <span class="hljs-title">clear</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsKey</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">containsValue</span><span class="hljs-params">(Object value)</span>
+<span class="hljs-keyword">abstract</span> Set&lt;Entry&lt;K, V&gt;&gt;     <span class="hljs-title">entrySet</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">equals</span><span class="hljs-params">(Object object)</span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">get</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">int</span>                  <span class="hljs-title">hashCode</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">boolean</span>              <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> Set&lt;K&gt;               <span class="hljs-title">keySet</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span>                 <span class="hljs-title">putAll</span><span class="hljs-params">(Map&lt;? extends K, ? extends V&gt; map)</span>
+<span class="hljs-keyword">abstract</span> V                    <span class="hljs-title">remove</span><span class="hljs-params">(Object key)</span>
+<span class="hljs-keyword">abstract</span> <span class="hljs-keyword">int</span>                  <span class="hljs-title">size</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> Collection&lt;V&gt;        <span class="hljs-title">values</span><span class="hljs-params">()</span>
+<span class="hljs-comment">// SortedMap&#x65B0;&#x589E;&#x7684;API </span>
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5BF9;&#x6B64;&#x6620;&#x5C04;&#x4E2D;&#x7684;&#x952E;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x7684;&#x6BD4;&#x8F83;&#x5668;&#xFF1B;&#x5982;&#x679C;&#x6B64;&#x6620;&#x5C04;&#x4F7F;&#x7528;&#x952E;&#x7684;&#x81EA;&#x7136;&#x987A;&#x5E8F;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; null</span>
+<span class="hljs-keyword">abstract</span> Comparator&lt;? <span class="hljs-keyword">super</span> K&gt;     <span class="hljs-title">comparator</span><span class="hljs-params">()</span> 
+<span class="hljs-keyword">abstract</span> K                         <span class="hljs-title">firstKey</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x7684;&#x90E8;&#x5206;&#x89C6;&#x56FE;&#xFF0C;&#x5176;&#x952E;&#x503C;&#x4E25;&#x683C;&#x5C0F;&#x4E8E; endKey</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;           <span class="hljs-title">headMap</span><span class="hljs-params">(K endKey)</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6620;&#x5C04;&#x4E2D;&#x5F53;&#x524D;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#xFF08;&#x6700;&#x9AD8;&#xFF09;&#x952E;</span>
+<span class="hljs-keyword">abstract</span> K                         <span class="hljs-title">lastKey</span><span class="hljs-params">()</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x7684;&#x90E8;&#x5206;&#x89C6;&#x56FE;&#xFF0C;&#x5176;&#x952E;&#x503C;&#x7684;&#x8303;&#x56F4;&#x4ECE; startKey&#xFF08;&#x5305;&#x62EC;&#xFF09;&#x5230; endKey&#xFF08;&#x4E0D;&#x5305;&#x62EC;&#xFF09;</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;           <span class="hljs-title">subMap</span><span class="hljs-params">(K startKey, K endKey)</span>    
+<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6B64;&#x6620;&#x5C04;&#x7684;&#x90E8;&#x5206;&#x89C6;&#x56FE;&#xFF0C;&#x5176;&#x952E;&#x5927;&#x4E8E;&#x7B49;&#x4E8E; startKey</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;           <span class="hljs-title">tailMap</span><span class="hljs-params">(K startKey)</span>
+</span></code></pre>
+<h1 id="5-navigablemap">5 NavigableMap</h1>
+<p>&#x200B;        NavigableMap&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">NavigableMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">SortedMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>{ }
+</code></pre>
+<p>&#x200B;        NavigableMap&#x662F;&#x7EE7;&#x627F;&#x4E8E;SortedMap&#x7684;&#x63A5;&#x53E3;&#x3002;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x5BFC;&#x822A;&#x7684;&#x952E;-&#x503C;&#x5BF9;&#x96C6;&#x5408;&#xFF0C;&#x5177;&#x6709;&#x4E86;&#x4E3A;&#x7ED9;&#x5B9A;&#x641C;&#x7D22;&#x76EE;&#x6807;&#x62A5;&#x544A;&#x6700;&#x63A5;&#x8FD1;&#x5339;&#x914D;&#x9879;&#x7684;&#x5BFC;&#x822A;&#x65B9;&#x6CD5;&#x3002;
+NavigableMap&#x5206;&#x522B;&#x63D0;&#x4F9B;&#x4E86;&#x83B7;&#x53D6;&#x201C;&#x952E;&#x201D;&#x3001;&#x201C;&#x952E;-&#x503C;&#x5BF9;&#x201D;&#x3001;&#x201C;&#x952E;&#x96C6;&#x201D;&#x3001;&#x201C;&#x952E;-&#x503C;&#x5BF9;&#x96C6;&#x201D;&#x7684;&#x76F8;&#x5173;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="51-api">5.1 API</h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">ceilingEntry</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">firstEntry</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">floorEntry</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">higherEntry</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">lastEntry</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">lowerEntry</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">pollFirstEntry</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> Entry&lt;K, V&gt;             <span class="hljs-title">pollLastEntry</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> K                       <span class="hljs-title">ceilingKey</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> K                       <span class="hljs-title">floorKey</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> K                       <span class="hljs-title">higherKey</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> K                       <span class="hljs-title">lowerKey</span><span class="hljs-params">(K key)</span>
+<span class="hljs-keyword">abstract</span> NavigableSet&lt;K&gt;         <span class="hljs-title">descendingKeySet</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> NavigableSet&lt;K&gt;         <span class="hljs-title">navigableKeySet</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> NavigableMap&lt;K, V&gt;      <span class="hljs-title">descendingMap</span><span class="hljs-params">()</span>
+<span class="hljs-keyword">abstract</span> NavigableMap&lt;K, V&gt;      <span class="hljs-title">headMap</span><span class="hljs-params">(K toKey, <span class="hljs-keyword">boolean</span> inclusive)</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;         <span class="hljs-title">headMap</span><span class="hljs-params">(K toKey)</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;         <span class="hljs-title">subMap</span><span class="hljs-params">(K fromKey, K toKey)</span>
+<span class="hljs-keyword">abstract</span> NavigableMap&lt;K, V&gt;      <span class="hljs-title">subMap</span><span class="hljs-params">(K fromKey, <span class="hljs-keyword">boolean</span> fromInclusive, K toKey, <span class="hljs-keyword">boolean</span> toInclusive)</span>
+<span class="hljs-keyword">abstract</span> SortedMap&lt;K, V&gt;         <span class="hljs-title">tailMap</span><span class="hljs-params">(K fromKey)</span>
+<span class="hljs-keyword">abstract</span> NavigableMap&lt;K, V&gt;      <span class="hljs-title">tailMap</span><span class="hljs-params">(K fromKey, <span class="hljs-keyword">boolean</span> inclusive)</span>
+</span></code></pre>
+<p>&#x200B;        NavigableMap&#x9664;&#x4E86;&#x7EE7;&#x627F;SortedMap&#x7684;&#x7279;&#x6027;&#x5916;&#xFF0C;&#x5B83;&#x7684;&#x63D0;&#x4F9B;&#x7684;&#x529F;&#x80FD;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;4&#x7C7B;&#xFF1A;</p>
+<ul>
+<li>&#x7B2C;1&#x7C7B;&#xFF0C;&#x63D0;&#x4F9B;&#x64CD;&#x4F5C;&#x952E;-&#x503C;&#x5BF9;&#x7684;&#x65B9;&#x6CD5;&#x3002;<pre><code>           `lowerEntry`&#x3001;`floorEntry`&#x3001;`ceilingEntry` &#x548C; `higherEntry` &#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x5206;&#x522B;&#x8FD4;&#x56DE;&#x4E0E;&#x5C0F;&#x4E8E;&#x3001;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x3001;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x3001;&#x5927;&#x4E8E;&#x7ED9;&#x5B9A;&#x952E;&#x7684;&#x952E;&#x5173;&#x8054;&#x7684; Map.Entry &#x5BF9;&#x8C61;&#x3002;
+           `firstEntry&#x3001;`pollFirstEntry`&#x3001;`lastEntry` &#x548C; `pollLastEntry` &#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x8FD4;&#x56DE;&#x548C;/&#x6216;&#x79FB;&#x9664;&#x6700;&#x5C0F;&#x548C;&#x6700;&#x5927;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF08;&#x5982;&#x679C;&#x5B58;&#x5728;&#xFF09;&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE; null&#x3002;
+</code></pre></li>
+<li>&#x7B2C;2&#x7C7B;&#xFF0C;&#x63D0;&#x4F9B;&#x64CD;&#x4F5C;&#x952E;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x8FD9;&#x4E2A;&#x548C;&#x7B2C;1&#x7C7B;&#x6BD4;&#x8F83;&#x7C7B;&#x4F3C;<pre><code>           `lowerKey`&#x3001;`floorKey`&#x3001;`ceilingKey` &#x548C; `higherKey` &#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x4EEC;&#x5206;&#x522B;&#x8FD4;&#x56DE;&#x4E0E;&#x5C0F;&#x4E8E;&#x3001;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x3001;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x3001;&#x5927;&#x4E8E;&#x7ED9;&#x5B9A;&#x952E;&#x7684;&#x952E;&#x3002;
+</code></pre></li>
+<li>&#x7B2C;3&#x7C7B;&#xFF0C;&#x83B7;&#x53D6;&#x952E;&#x96C6;&#x3002;<pre><code>          `navigableKeySet`&#x3001;`descendingKeySet`&#x5206;&#x522B;&#x83B7;&#x53D6;&#x6B63;&#x5E8F;/&#x53CD;&#x5E8F;&#x7684;&#x952E;&#x96C6;&#x3002;
+</code></pre></li>
+<li>&#x7B2C;4&#x7C7B;&#xFF0C;&#x83B7;&#x53D6;&#x952E;-&#x503C;&#x5BF9;&#x7684;&#x5B50;&#x96C6;&#x3002;</li>
+</ul>
+<h1 id="6-&#x904D;&#x5386;">6 &#x904D;&#x5386;</h1>
+<p>&#x200B;        &#x6839;&#x636E; Map &#x63D0;&#x4F9B;&#x7684;&#x4E09;&#x79CD;&#x89C6;&#x56FE;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x4E09;&#x79CD; map &#x904D;&#x5386;&#x65B9;&#x5F0F; :</p>
+<ol>
+<li>&#x4F7F;&#x7528;keySet&#x904D;&#x5386;&#xFF1A;</li>
+</ol>
+<pre><code class="lang-java">Set set = map.keySet();
+<span class="hljs-keyword">for</span> (Object key : set) {
+    System.out.println(map.get(key));
+}
+</code></pre>
+<ol>
+<li>&#x4F7F;&#x7528;values &#x904D;&#x5386;&#xFF1A;</li>
+</ol>
+<pre><code class="lang-java"> Collection values = map.values();
+ Iterator iterator = values.iterator();
+ <span class="hljs-keyword">while</span> (iterator.hasNext()){
+     System.out.println(<span class="hljs-string">&quot;value &quot;</span> + iterator.next());
+ }
+</code></pre>
+<ol>
+<li>&#x4F7F;&#x7528; Entry &#x904D;&#x5386;</li>
+</ol>
+<pre><code class="lang-java">Set entrySet = map.entrySet();
+<span class="hljs-keyword">for</span> (Object o : entrySet) {
+    Map.Entry entry = (Map.Entry) o;
+    <span class="hljs-comment">//key=value</span>
+    System.out.println(entry);      
+    System.out.println(entry.getKey() + <span class="hljs-string">&quot; / &quot;</span> + entry.getValue());
+}
+</code></pre>
+<h1 id="7-hashmap&#x548C;hashtable&#x5F02;&#x540C;">7 HashMap&#x548C;Hashtable&#x5F02;&#x540C;</h1>
+<h1 id="71-hashmap&#x548C;hashtable&#x7684;&#x76F8;&#x540C;&#x70B9;">7.1 HashMap&#x548C;Hashtable&#x7684;&#x76F8;&#x540C;&#x70B9;</h1>
+<p>&#x200B;        HashMap&#x548C;Hashtable&#x90FD;&#x662F;&#x5B58;&#x50A8;&#x201C;&#x952E;&#x503C;&#x5BF9;(key-value)&#x201D;&#x7684;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x800C;&#x4E14;&#x90FD;&#x662F;&#x91C7;&#x7528;&#x62C9;&#x94FE;&#x6CD5;&#x5B9E;&#x73B0;&#x7684;&#x3002;</p>
+<p>&#x200B;        &#x5B58;&#x50A8;&#x7684;&#x601D;&#x60F3;&#x90FD;&#x662F;&#xFF1A;&#x901A;&#x8FC7;table&#x6570;&#x7EC4;&#x5B58;&#x50A8;&#xFF0C;&#x6570;&#x7EC4;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x90FD;&#x662F;&#x4E00;&#x4E2A;Entry&#xFF1B;&#x800C;&#x4E00;&#x4E2A;Entry&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x5411;&#x94FE;&#x8868;&#xFF0C;Entry&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x5C31;&#x4FDD;&#x5B58;&#x4E86;key-value&#x952E;&#x503C;&#x5BF9;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x200B;        <strong>&#x6DFB;&#x52A0;key-value&#x952E;&#x503C;&#x5BF9;&#xFF1A;</strong></p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x6839;&#x636E;key&#x503C;&#x8BA1;&#x7B97;&#x51FA;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;&#x51FA;&#x6570;&#x7EC4;&#x7D22;&#x5F15;(&#x5373;&#xFF0C;&#x8BE5;key-value&#x5728;table&#x4E2D;&#x7684;&#x7D22;&#x5F15;)&#x3002;</p>
+<p>&#x7136;&#x540E;&#xFF0C;&#x6839;&#x636E;&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#x627E;&#x5230;Entry(&#x5373;&#xFF0C;&#x5355;&#x5411;&#x94FE;&#x8868;)&#xFF0C;&#x518D;&#x904D;&#x5386;&#x5355;&#x5411;&#x94FE;&#x8868;&#xFF0C;&#x5C06;key&#x548C;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;key&#x8FDB;&#x884C;&#x5BF9;&#x6BD4;&#x3002;&#x82E5;key&#x5DF2;&#x7ECF;&#x5B58;&#x5728;Entry&#x94FE;&#x8868;&#x4E2D;&#xFF0C;&#x5219;&#x7528;&#x8BE5;value&#x503C;&#x53D6;&#x4EE3;&#x65E7;&#x7684;value&#x503C;&#xFF1B;&#x82E5;key&#x4E0D;&#x5B58;&#x5728;Entry&#x94FE;&#x8868;&#x4E2D;&#xFF0C;&#x5219;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;key-value&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x5C06;&#x8BE5;&#x8282;&#x70B9;&#x63D2;&#x5165;Entry&#x94FE;&#x8868;&#x7684;&#x8868;&#x5934;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x200B;        <strong>&#x5220;&#x9664;key-value&#x952E;&#x503C;&#x5BF9;&#xFF1A;</strong></p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x8FD8;&#x662F;&#x6839;&#x636E;key&#x8BA1;&#x7B97;&#x51FA;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;&#x51FA;&#x6570;&#x7EC4;&#x7D22;&#x5F15;(&#x5373;&#xFF0C;&#x8BE5;key-value&#x5728;table&#x4E2D;&#x7684;&#x7D22;&#x5F15;)&#x3002;</p>
+<p>&#x7136;&#x540E;&#xFF0C;&#x6839;&#x636E;&#x7D22;&#x5F15;&#x627E;&#x51FA;Entry(&#x5373;&#xFF0C;&#x5355;&#x5411;&#x94FE;&#x8868;)&#x3002;&#x82E5;&#x8282;&#x70B9;key-value&#x5B58;&#x5728;&#x4E0E;&#x94FE;&#x8868;Entry&#x4E2D;&#xFF0C;&#x5219;&#x5220;&#x9664;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x8282;&#x70B9;&#x5373;&#x53EF;&#x3002;</p>
+<h2 id="72-hashmap&#x548C;hashtable&#x7684;&#x4E0D;&#x540C;&#x70B9;">7.2 HashMap&#x548C;Hashtable&#x7684;&#x4E0D;&#x540C;&#x70B9;</h2>
+<h3 id="721-&#x7EE7;&#x627F;&#x548C;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;">7.2.1 &#x7EE7;&#x627F;&#x548C;&#x5B9E;&#x73B0;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        HashMap &#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;Map&#x3001;Cloneable&#x3001;java.io.Serializable&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x200B;        Hashtable &#x7EE7;&#x627F;&#x4E8E;Dictionary&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;Map&#x3001;Cloneable&#x3001;java.io.Serializable&#x63A5;&#x53E3;&#x3002;</p>
+<h4 id="7211-hashmap&#x548C;hashtable&#x90FD;&#x5B9E;&#x73B0;&#x4E86;map&#x3001;cloneable&#x3001;javaioserializable&#x63A5;&#x53E3;&#x3002;">7.2.1.1 HashMap&#x548C;Hashtable&#x90FD;&#x5B9E;&#x73B0;&#x4E86;Map&#x3001;Cloneable&#x3001;java.io.Serializable&#x63A5;&#x53E3;&#x3002;</h4>
+<p>&#x200B;        &#x5B9E;&#x73B0;&#x4E86;Map&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x4EEC;&#x90FD;&#x652F;&#x6301;key-value&#x952E;&#x503C;&#x5BF9;&#x64CD;&#x4F5C;&#x3002;&#x652F;&#x6301;&#x201C;&#x6DFB;&#x52A0;key-value&#x952E;&#x503C;&#x5BF9;&#x201D;&#x3001;&#x201C;&#x83B7;&#x53D6;key&#x201D;&#x3001;&#x201C;&#x83B7;&#x53D6;value&#x201D;&#x3001;&#x201C;&#x83B7;&#x53D6;map&#x5927;&#x5C0F;&#x201D;&#x3001;&#x201C;&#x6E05;&#x7A7A;map&#x201D;&#x7B49;&#x57FA;&#x672C;&#x7684;key-value&#x952E;&#x503C;&#x5BF9;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x200B;        &#x5B9E;&#x73B0;&#x4E86;Cloneable&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x80FD;&#x88AB;&#x514B;&#x9686;&#x3002;</p>
+<p>&#x200B;        &#x5B9E;&#x73B0;&#x4E86;java.io.Serializable&#x63A5;&#x53E3;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x4EEC;&#x652F;&#x6301;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x80FD;&#x901A;&#x8FC7;&#x5E8F;&#x5217;&#x5316;&#x53BB;&#x4F20;&#x8F93;&#x3002;</p>
+<h4 id="7212-hashmap&#x7EE7;&#x627F;&#x4E8E;abstractmap&#xFF0C;&#x800C;hashtable&#x7EE7;&#x627F;&#x4E8E;dictionary">7.2.1.2 HashMap&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x800C;Hashtable&#x7EE7;&#x627F;&#x4E8E;Dictionary</h4>
+<p>&#x200B;        <code>Dictionary</code>&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B83;&#x76F4;&#x63A5;&#x7EE7;&#x627F;&#x4E8E;Object&#x7C7B;&#xFF0C;&#x6CA1;&#x6709;&#x5B9E;&#x73B0;&#x4EFB;&#x4F55;&#x63A5;&#x53E3;&#x3002;Dictionary&#x7C7B;&#x662F;JDK 1.0&#x7684;&#x5F15;&#x5165;&#x7684;&#x3002;&#x867D;&#x7136;<code>Dictionary</code>&#x4E5F;&#x652F;&#x6301;&#x201C;&#x6DFB;&#x52A0;key-value&#x952E;&#x503C;&#x5BF9;&#x201D;&#x3001;&#x201C;&#x83B7;&#x53D6;value&#x201D;&#x3001;&#x201C;&#x83B7;&#x53D6;&#x5927;&#x5C0F;&#x201D;&#x7B49;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#xFF0C;&#x4F46;&#x5B83;&#x7684;API&#x51FD;&#x6570;&#x6BD4;Map&#x5C11;&#xFF1B;&#x800C;&#x4E14;<code>Dictionary</code>&#x4E00;&#x822C;&#x662F;&#x901A;&#x8FC7;<code>Enumeration</code>(&#x679A;&#x4E3E;&#x7C7B;)&#x53BB;&#x904D;&#x5386;&#xFF0C;Map&#x5219;&#x662F;&#x901A;&#x8FC7;Iterator(&#x8FED;&#x4EE3;&#x5668;)&#x53BB;&#x904D;&#x5386;&#x3002; &#x7136;&#x800C;&#x2018;&#x7531;&#x4E8E;Hashtable&#x4E5F;&#x5B9E;&#x73B0;&#x4E86;Map&#x63A5;&#x53E3;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x5B83;&#x5373;&#x652F;&#x6301;<code>Enumeration</code>&#x904D;&#x5386;&#xFF0C;&#x4E5F;&#x652F;&#x6301;Iterator&#x904D;&#x5386;&#x3002;&#x5173;&#x4E8E;&#x8FD9;&#x70B9;&#xFF0C;&#x540E;&#x9762;&#x8FD8;&#x4F1A;&#x8FDB;&#x4E00;&#x6B65;&#x8BF4;&#x660E;&#x3002;</p>
+<p>&#x200B;        AbstractMap&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;Map&#x63A5;&#x53E3;&#x7684;&#x7EDD;&#x5927;&#x90E8;&#x5206;API&#x51FD;&#x6570;&#xFF1B;&#x4E3A;Map&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x6781;&#x5927;&#x7684;&#x4FBF;&#x5229;&#x3002;&#x5B83;&#x662F;JDK 1.2&#x65B0;&#x589E;&#x7684;&#x7C7B;&#x3002;</p>
+<h3 id="722-&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x4E0D;&#x540C;">7.2.2 &#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        Hashtable&#x7684;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x51FD;&#x6570;&#x90FD;&#x662F;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x5373;&#x5B83;&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x652F;&#x6301;&#x591A;&#x7EBF;&#x7A0B;&#x3002;</p>
+<p>&#x200B;        &#x800C;HashMap&#x7684;&#x51FD;&#x6570;&#x5219;&#x662F;&#x975E;&#x540C;&#x6B65;&#x7684;&#xFF0C;&#x5B83;&#x4E0D;&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#x3002;&#x82E5;&#x8981;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x4E2D;&#x4F7F;&#x7528;HashMap&#xFF0C;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x989D;&#x5916;&#x7684;&#x8FDB;&#x884C;&#x540C;&#x6B65;&#x5904;&#x7406;&#x3002; &#x5BF9;HashMap&#x7684;&#x540C;&#x6B65;&#x5904;&#x7406;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Collections&#x7C7B;&#x63D0;&#x4F9B;&#x7684;synchronizedMap&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x6216;&#x8005;&#x76F4;&#x63A5;&#x4F7F;&#x7528;JDK 5.0&#x4E4B;&#x540E;&#x63D0;&#x4F9B;&#x7684;java.util.concurrent&#x5305;&#x91CC;&#x7684;ConcurrentHashMap&#x7C7B;&#x3002;</p>
+<h3 id="723-&#x5BF9;null&#x503C;&#x7684;&#x5904;&#x7406;&#x4E0D;&#x540C;">7.2.3 &#x5BF9;null&#x503C;&#x7684;&#x5904;&#x7406;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        HashMap&#x7684;key&#x3001;value&#x90FD;&#x53EF;&#x4EE5;&#x4E3A;null&#x3002;</p>
+<p>&#x200B;        Hashtable&#x7684;key&#x3001;value&#x90FD;&#x4E0D;&#x53EF;&#x4EE5;&#x4E3A;null&#x3002;</p>
+<h3 id="724-&#x652F;&#x6301;&#x7684;&#x904D;&#x5386;&#x79CD;&#x7C7B;&#x4E0D;&#x540C;">7.2.4 &#x652F;&#x6301;&#x7684;&#x904D;&#x5386;&#x79CD;&#x7C7B;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        HashMap&#x53EA;&#x652F;&#x6301;Iterator(&#x8FED;&#x4EE3;&#x5668;)&#x904D;&#x5386;&#x3002;</p>
+<p>&#x200B;        &#x800C;Hashtable&#x652F;&#x6301;Iterator(&#x8FED;&#x4EE3;&#x5668;)&#x548C;Enumeration(&#x679A;&#x4E3E;&#x5668;)&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x904D;&#x5386;&#x3002;</p>
+<p>&#x200B;        Enumeration &#x662F;JDK 1.0&#x6DFB;&#x52A0;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x53EA;&#x6709;hasMoreElements(), nextElement() &#x4E24;&#x4E2A;API&#x63A5;&#x53E3;&#xFF0C;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;Enumeration()&#x5BF9;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x4FEE;&#x6539; &#x3002;</p>
+<p>&#x200B;        &#x800C;Iterator &#x662F;JDK 1.2&#x624D;&#x6DFB;&#x52A0;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x652F;&#x6301;hasNext(), next(), remove() &#x4E09;&#x4E2A;API&#x63A5;&#x53E3;&#x3002;HashMap&#x4E5F;&#x662F;JDK 1.2&#x7248;&#x672C;&#x624D;&#x6DFB;&#x52A0;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x7528;Iterator&#x53D6;&#x4EE3;Enumeration&#xFF0C;HashMap&#x53EA;&#x652F;&#x6301;Iterator&#x904D;&#x5386;&#x3002;</p>
+<h3 id="725-&#x901A;&#x8FC7;iterator&#x8FED;&#x4EE3;&#x5668;&#x904D;&#x5386;&#x65F6;&#xFF0C;&#x904D;&#x5386;&#x7684;&#x987A;&#x5E8F;&#x4E0D;&#x540C;">7.2.5 &#x901A;&#x8FC7;Iterator&#x8FED;&#x4EE3;&#x5668;&#x904D;&#x5386;&#x65F6;&#xFF0C;&#x904D;&#x5386;&#x7684;&#x987A;&#x5E8F;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        HashMap&#x662F;&#x201C;&#x4ECE;&#x524D;&#x5411;&#x540E;&#x201D;&#x7684;&#x904D;&#x5386;&#x6570;&#x7EC4;&#xFF1B;&#x518D;&#x5BF9;&#x6570;&#x7EC4;&#x5177;&#x4F53;&#x67D0;&#x4E00;&#x9879;&#x5BF9;&#x5E94;&#x7684;&#x94FE;&#x8868;&#xFF0C;&#x4ECE;&#x8868;&#x5934;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x3002;</p>
+<p>&#x200B;        Hashtabl&#x662F;&#x201C;&#x4ECE;&#x540E;&#x5F80;&#x524D;&#x201D;&#x7684;&#x904D;&#x5386;&#x6570;&#x7EC4;&#xFF1B;&#x518D;&#x5BF9;&#x6570;&#x7EC4;&#x5177;&#x4F53;&#x67D0;&#x4E00;&#x9879;&#x5BF9;&#x5E94;&#x7684;&#x94FE;&#x8868;&#xFF0C;&#x4ECE;&#x8868;&#x5934;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x3002;</p>
+<p>&#x200B;        HashMap&#x548C;Hashtable&#x90FD;&#x5B9E;&#x73B0;Map&#x63A5;&#x53E3;&#xFF0C;&#x6240;&#x4EE5;&#x652F;&#x6301;&#x83B7;&#x53D6;&#x5B83;&#x4EEC;&#x201C;key&#x7684;&#x96C6;&#x5408;&#x201D;&#x3001;&#x201C;value&#x7684;&#x96C6;&#x5408;&#x201D;&#x3001;&#x201C;key-value&#x7684;&#x96C6;&#x5408;&#x201D;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;Iterator&#x5BF9;&#x8FD9;&#x4E9B;&#x96C6;&#x5408;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x3002;&#x7531;&#x4E8E;&#x201C;key&#x7684;&#x96C6;&#x5408;&#x201D;&#x3001;&#x201C;value&#x7684;&#x96C6;&#x5408;&#x201D;&#x3001;&#x201C;key-value&#x7684;&#x96C6;&#x5408;&#x201D;&#x7684;&#x904D;&#x5386;&#x539F;&#x7406;&#x90FD;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF1B;&#x4E0B;&#x9762;&#xFF0C;&#x6211;&#x4EE5;&#x904D;&#x5386;&#x201C;key-value&#x7684;&#x96C6;&#x5408;&#x201D;&#x6765;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;</p>
+<p>&#x200B;        HashMap &#x548C;Hashtable &#x904D;&#x5386;&quot;key-value&#x96C6;&#x5408;&quot;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#xFF1A;(01) &#x901A;&#x8FC7;entrySet()&#x83B7;&#x53D6;&#x201C;Map.Entry&#x96C6;&#x5408;&#x201D;&#x3002; (02) &#x901A;&#x8FC7;iterator()&#x83B7;&#x53D6;&#x201C;Map.Entry&#x96C6;&#x5408;&#x201D;&#x7684;&#x8FED;&#x4EE3;&#x5668;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x3002;</p>
+<h3 id="726-&#x5BB9;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x503C;-&#x548C;-&#x589E;&#x52A0;&#x65B9;&#x5F0F;&#x90FD;&#x4E0D;&#x4E00;&#x6837;">7.2.6 &#x5BB9;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x503C; &#x548C; &#x589E;&#x52A0;&#x65B9;&#x5F0F;&#x90FD;&#x4E0D;&#x4E00;&#x6837;</h3>
+<p>&#x200B;        HashMap&#x9ED8;&#x8BA4;&#x7684;&#x201C;&#x52A0;&#x8F7D;&#x56E0;&#x5B50;&#x201D;&#x662F;0.75, &#x9ED8;&#x8BA4;&#x7684;&#x5BB9;&#x91CF;&#x5927;&#x5C0F;&#x662F;16&#xFF0C;&#x5F53;HashMap&#x7684; &#x201C;&#x5B9E;&#x9645;&#x5BB9;&#x91CF;&#x201D; &gt;= &#x201C;&#x9608;&#x503C;&#x201D;&#x65F6;&#xFF0C;(&#x9608;&#x503C; = &#x603B;&#x7684;&#x5BB9;&#x91CF; * &#x52A0;&#x8F7D;&#x56E0;&#x5B50;)&#xFF0C;&#x5C31;&#x5C06;HashMap&#x7684;&#x5BB9;&#x91CF;x2&#x3002;</p>
+<p>&#x200B;        Hashtable&#x9ED8;&#x8BA4;&#x7684;&#x201C;&#x52A0;&#x8F7D;&#x56E0;&#x5B50;&#x201D;&#x662F;0.75, &#x9ED8;&#x8BA4;&#x7684;&#x5BB9;&#x91CF;&#x5927;&#x5C0F;&#x662F;11&#xFF0C;&#x5F53;Hashtable&#x7684; &#x201C;&#x5B9E;&#x9645;&#x5BB9;&#x91CF;&#x201D; &gt;= &#x201C;&#x9608;&#x503C;&#x201D;&#x65F6;&#xFF0C;(&#x9608;&#x503C; = &#x603B;&#x7684;&#x5BB9;&#x91CF; x &#x52A0;&#x8F7D;&#x56E0;&#x5B50;)&#xFF0C;&#x5C31;&#x5C06;&#x53D8;&#x4E3A;&#x201C;&#x539F;&#x59CB;&#x5BB9;&#x91CF;x2 + 1&#x201D;&#x3002;</p>
+<h3 id="727-&#x6DFB;&#x52A0;key-value&#x65F6;&#x7684;hash&#x503C;&#x7B97;&#x6CD5;&#x4E0D;&#x540C;">7.2.7 &#x6DFB;&#x52A0;key-value&#x65F6;&#x7684;hash&#x503C;&#x7B97;&#x6CD5;&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        HashMap&#x6DFB;&#x52A0;&#x5143;&#x7D20;&#x65F6;&#xFF0C;&#x662F;&#x4F7F;&#x7528;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#x3002;</p>
+<p>&#x200B;        Hashtable&#x6CA1;&#x6709;&#x81EA;&#x5B9A;&#x4E49;&#x54C8;&#x5E0C;&#x7B97;&#x6CD5;&#xFF0C;&#x800C;&#x76F4;&#x63A5;&#x91C7;&#x7528;&#x7684;key&#x7684;hashCode()&#x3002;</p>
+<h3 id="728-&#x90E8;&#x5206;api&#x4E0D;&#x540C;">7.2.8 &#x90E8;&#x5206;API&#x4E0D;&#x540C;</h3>
+<p>&#x200B;        Hashtable&#x652F;&#x6301;contains(Object value)&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x4E14;&#x91CD;&#x5199;&#x4E86;toString()&#x65B9;&#x6CD5;&#xFF1B;</p>
+<p>&#x200B;        &#x800C;HashMap&#x4E0D;&#x652F;&#x6301;contains(Object value)&#x65B9;&#x6CD5;&#xFF0C;&#x6CA1;&#x6709;&#x91CD;&#x5199;toString()&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="73--hashmap&#x548C;hashtable&#x4F7F;&#x7528;&#x7684;&#x60C5;&#x666F;">7.3  HashMap&#x548C;Hashtable&#x4F7F;&#x7528;&#x7684;&#x60C5;&#x666F;</h2>
+<p>&#x200B;        &#x5176;&#x5B9E;&#xFF0C;&#x82E5;&#x4E86;&#x89E3;&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x7684;&#x533A;&#x5206;&#x6839;&#x636E;&#x60C5;&#x51B5;&#x8FDB;&#x884C;&#x53D6;&#x820D;&#x3002;&#x4F8B;&#x5982;&#xFF1A;(01) &#x82E5;&#x5728;&#x5355;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5F80;&#x5F80;&#x4F1A;&#x9009;&#x62E9;HashMap&#xFF1B;&#x800C;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x5219;&#x4F1A;&#x9009;&#x62E9;Hashtable&#x3002;(02)&#xFF0C;&#x82E5;&#x4E0D;&#x80FD;&#x63D2;&#x5165;null&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x9009;&#x62E9;Hashtable&#xFF1B;&#x5426;&#x5219;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;HashMap&#x3002;</p>
+<p>&#x200B;        &#x4F46;&#x8FD9;&#x4E2A;&#x4E0D;&#x662F;&#x7EDD;&#x5BF9;&#x7684;&#x6807;&#x51C6;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x5BF9;HashMap&#x8FDB;&#x884C;&#x540C;&#x6B65;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x9009;&#x62E9;ConcurrentHashMap&#x3002;&#x5F53;HashMap&#x548C;Hashtable&#x90FD;&#x4E0D;&#x80FD;&#x6EE1;&#x8DB3;&#x81EA;&#x5DF1;&#x7684;&#x9700;&#x6C42;&#x65F6;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x65B0;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7C7B;&#xFF0C;&#x7EE7;&#x627F;&#x6216;&#x91CD;&#x65B0;&#x5B9E;&#x73B0;&#x6563;&#x5217;&#x8868;&#xFF1B;&#x5F53;&#x7136;&#xFF0C;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x7684;&#x4E86;&#x3002;</p>
+<h1 id="8-hashmap&#x548C;weakhashmap&#x5F02;&#x540C;">8 HashMap&#x548C;WeakHashMap&#x5F02;&#x540C;</h1>
+<h2 id="81-hashmap&#x548C;weakhashmap&#x7684;&#x76F8;&#x540C;&#x70B9;">8.1 HashMap&#x548C;WeakHashMap&#x7684;&#x76F8;&#x540C;&#x70B9;</h2>
+<ul>
+<li><p>&#x90FD;&#x662F;&#x6563;&#x5217;&#x8868;&#xFF0C;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x201C;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x6620;&#x5C04;&#x3002;</p>
+</li>
+<li><p>&#x90FD;&#x7EE7;&#x627F;&#x4E8E;AbstractMap&#xFF0C;&#x5E76;&#x4E14;&#x5B9E;&#x73B0;Map&#x57FA;&#x7840;&#x3002;</p>
+</li>
+<li><p>&#x6784;&#x9020;&#x51FD;&#x6570;&#x90FD;&#x4E00;&#x6837;&#x3002;</p>
+</li>
+<li><p>&#x90FD;&#x5305;&#x62EC;4&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x800C;&#x4E14;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;&#x90FD;&#x4E00;&#x6837;&#x3002;</p>
+</li>
+<li><p>&#x9ED8;&#x8BA4;&#x7684;&#x5BB9;&#x91CF;&#x5927;&#x5C0F;&#x662F;16&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x52A0;&#x8F7D;&#x56E0;&#x5B50;&#x662F;0.75&#x3002;</p>
+</li>
+<li><p>&#x201C;&#x952E;&#x201D;&#x548C;&#x201C;&#x503C;&#x201D;&#x90FD;&#x5141;&#x8BB8;&#x4E3A;null&#x3002;</p>
+</li>
+<li><p>&#x90FD;&#x662F;&#x201C;&#x975E;&#x540C;&#x6B65;&#x7684;&#x201D;&#x3002;</p>
+</li>
+</ul>
+<h2 id="82-hashmap&#x548C;weakhashmap&#x7684;&#x4E0D;&#x540C;&#x70B9;">8.2 HashMap&#x548C;WeakHashMap&#x7684;&#x4E0D;&#x540C;&#x70B9;</h2>
+<h3 id="821hashmap&#x5B9E;&#x73B0;&#x4E86;cloneable&#x548C;serializable&#x63A5;&#x53E3;&#xFF0C;&#x800C;weakhashmap&#x6CA1;&#x6709;&#x3002;">8.2.1.HashMap&#x5B9E;&#x73B0;&#x4E86;Cloneable&#x548C;Serializable&#x63A5;&#x53E3;&#xFF0C;&#x800C;WeakHashMap&#x6CA1;&#x6709;&#x3002;</h3>
+<ul>
+<li>HashMap&#x5B9E;&#x73B0;Cloneable&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x80FD;&#x901A;&#x8FC7;clone()&#x514B;&#x9686;&#x81EA;&#x5DF1;&#x3002;</li>
+<li>HashMap&#x5B9E;&#x73B0;Serializable&#xFF0C;&#x610F;&#x5473;&#x7740;&#x5B83;&#x652F;&#x6301;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x80FD;&#x901A;&#x8FC7;&#x5E8F;&#x5217;&#x5316;&#x53BB;&#x4F20;&#x8F93;&#x3002;</li>
+</ul>
+<h3 id="822-hashmap&#x7684;&#x952E;&#x662F;&#x5F3A;&#x5F15;&#x7528;strongreference&#xFF0C;&#x800C;weakhashmap&#x7684;&#x952E;&#x662F;&#x5F31;&#x5F15;&#x7528;weakreference&#x3002;">8.2.2 HashMap&#x7684;&#x201C;&#x952E;&#x201D;&#x662F;&#x201C;&#x5F3A;&#x5F15;&#x7528;(StrongReference)&#x201D;&#xFF0C;&#x800C;WeakHashMap&#x7684;&#x952E;&#x662F;&#x201C;&#x5F31;&#x5F15;&#x7528;(WeakReference)&#x201D;&#x3002;</h3>
+<p>&#x200B;        WeakReference&#x7684;&#x201C;&#x5F31;&#x952E;&#x201D;&#x80FD;&#x5B9E;&#x73B0;WeakReference&#x5BF9;&#x201C;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x7684;&#x52A8;&#x6001;&#x56DE;&#x6536;&#x3002;&#x5F53;&#x201C;&#x5F31;&#x952E;&#x201D;&#x4E0D;&#x518D;&#x88AB;&#x4F7F;&#x7528;&#x5230;&#x65F6;&#xFF0C;GC&#x4F1A;&#x56DE;&#x6536;&#x5B83;&#xFF0C;WeakReference&#x4E5F;&#x4F1A;&#x5C06;&#x201C;&#x5F31;&#x952E;&#x201D;&#x5BF9;&#x5E94;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x5220;&#x9664;&#x3002;</p>
+<p>&#x200B;        &#x8FD9;&#x4E2A;&#x201C;&#x5F31;&#x952E;&#x201D;&#x5B9E;&#x73B0;&#x7684;&#x52A8;&#x6001;&#x56DE;&#x6536;&#x201C;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x7684;&#x539F;&#x7406;&#x5462;&#xFF1F;&#x5176;&#x5B9E;&#xFF0C;&#x901A;&#x8FC7;WeakReference(&#x5F31;&#x5F15;&#x7528;)&#x548C;ReferenceQueue(&#x5F15;&#x7528;&#x961F;&#x5217;)&#x5B9E;&#x73B0;&#x7684;&#x3002; &#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E86;&#x89E3;WeakHashMap&#x4E2D;&#xFF1A;
+      &#x7B2C;&#x4E00;&#xFF0C;&#x201C;&#x952E;&#x201D;&#x662F;WeakReference&#xFF0C;&#x5373;key&#x662F;&#x5F31;&#x952E;&#x3002;
+      &#x7B2C;&#x4E8C;&#xFF0C;ReferenceQueue&#x662F;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x961F;&#x5217;&#xFF0C;&#x5B83;&#x662F;&#x548C;WeakHashMap&#x8054;&#x5408;&#x4F7F;&#x7528;&#x7684;&#x3002;&#x5F53;&#x5F31;&#x5F15;&#x7528;&#x6240;&#x5F15;&#x7528;&#x7684;&#x5BF9;&#x8C61;&#x88AB;&#x5783;&#x573E;&#x56DE;&#x6536;&#xFF0C;Java&#x865A;&#x62DF;&#x673A;&#x5C31;&#x4F1A;&#x628A;&#x8FD9;&#x4E2A;&#x5F31;&#x5F15;&#x7528;&#x52A0;&#x5165;&#x5230;&#x4E0E;&#x4E4B;&#x5173;&#x8054;&#x7684;&#x5F15;&#x7528;&#x961F;&#x5217;&#x4E2D;&#x3002; WeakHashMap&#x4E2D;&#x7684;ReferenceQueue&#x662F;queue&#x3002;
+      &#x7B2C;&#x4E09;&#xFF0C;WeakHashMap&#x662F;&#x901A;&#x8FC7;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x5047;&#x8BBE;&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x662F;table&#x3002;</p>
+<h2 id="83-&#x52A8;&#x6001;&#x56DE;&#x6536;">8.3 &#x52A8;&#x6001;&#x56DE;&#x6536;</h2>
+<h3 id="831-&#x65B0;&#x5EFA;weakhashmap&#xFF0C;&#x5C06;&#x952E;&#x503C;&#x5BF9;&#x6DFB;&#x52A0;&#x5230;weakhashmap&#x4E2D;">8.3.1 &#x65B0;&#x5EFA;WeakHashMap&#xFF0C;&#x5C06;&#x201C;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x6DFB;&#x52A0;&#x5230;WeakHashMap&#x4E2D;</h3>
+<p>&#x200B;        &#x5C06;&#x201C;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x6DFB;&#x52A0;&#x5230;WeakHashMap&#x4E2D;&#x65F6;&#xFF0C;&#x6DFB;&#x52A0;&#x7684;&#x952E;&#x90FD;&#x662F;&#x5F31;&#x952E;&#x3002;</p>
+<p>&#x200B;        &#x5B9E;&#x9645;&#x4E0A;&#xFF0C;WeakHashMap&#x662F;&#x901A;&#x8FC7;&#x6570;&#x7EC4;table&#x4FDD;&#x5B58;Entry(&#x952E;&#x503C;&#x5BF9;)&#xFF1B;&#x6BCF;&#x4E00;&#x4E2A;Entry&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x5411;&#x94FE;&#x8868;&#xFF0C;&#x5373;Entry&#x662F;&#x952E;&#x503C;&#x5BF9;&#x94FE;&#x8868;&#x3002;</p>
+<h3 id="832&#x5F53;&#x67D0;&#x5F31;&#x952E;&#x4E0D;&#x518D;&#x88AB;&#x5176;&#x5B83;&#x5BF9;&#x8C61;&#x5F15;&#x7528;&#xFF0C;&#x5E76;&#x88AB;gc&#x56DE;&#x6536;&#x65F6;&#x3002;&#x5728;gc&#x56DE;&#x6536;&#x8BE5;&#x5F31;&#x952E;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x5F31;&#x952E;&#x4E5F;&#x540C;&#x65F6;&#x4F1A;&#x88AB;&#x6DFB;&#x52A0;&#x5230;queue&#x961F;&#x5217;&#x4E2D;">8.3.2.&#x5F53;&#x67D0;&#x201C;&#x5F31;&#x952E;&#x201D;&#x4E0D;&#x518D;&#x88AB;&#x5176;&#x5B83;&#x5BF9;&#x8C61;&#x5F15;&#x7528;&#xFF0C;&#x5E76;&#x88AB;GC&#x56DE;&#x6536;&#x65F6;&#x3002;&#x5728;GC&#x56DE;&#x6536;&#x8BE5;&#x201C;&#x5F31;&#x952E;&#x201D;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x201C;&#x5F31;&#x952E;&#x201D;&#x4E5F;&#x540C;&#x65F6;&#x4F1A;&#x88AB;&#x6DFB;&#x52A0;&#x5230;queue&#x961F;&#x5217;&#x4E2D;</h3>
+<p>&#x200B;        &#x4F8B;&#x5982;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x5C06;&#x201C;&#x5F31;&#x952E;&#x201D;key&#x6DFB;&#x52A0;&#x5230;WeakHashMap&#x4E4B;&#x540E;&#xFF1B;&#x540E;&#x6765;&#x5C06;key&#x8BBE;&#x4E3A;null&#x3002;&#x8FD9;&#x65F6;&#xFF0C;&#x4FBF;&#x6CA1;&#x6709;&#x5916;&#x90E8;&#x5916;&#x90E8;&#x5BF9;&#x8C61;&#x518D;&#x5F15;&#x7528;&#x8BE5;&#x4E86;key&#x3002;</p>
+<p>&#x200B;        &#x63A5;&#x7740;&#xFF0C;&#x5F53;Java&#x865A;&#x62DF;&#x673A;&#x7684;GC&#x56DE;&#x6536;&#x5185;&#x5B58;&#x65F6;&#xFF0C;&#x4F1A;&#x56DE;&#x6536;key&#x7684;&#x76F8;&#x5173;&#x5185;&#x5B58;&#xFF1B;&#x540C;&#x65F6;&#xFF0C;&#x5C06;key&#x6DFB;&#x52A0;&#x5230;queue&#x961F;&#x5217;&#x4E2D;&#x3002;</p>
+<h3 id="833-&#x5F53;&#x4E0B;&#x4E00;&#x6B21;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x64CD;&#x4F5C;weakhashmap&#x65F6;&#xFF0C;&#x4F1A;&#x5148;&#x540C;&#x6B65;table&#x548C;queue&#x3002;table&#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x5168;&#x90E8;&#x7684;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x800C;queue&#x4E2D;&#x4FDD;&#x5B58;&#x88AB;gc&#x56DE;&#x6536;&#x7684;&#x5F31;&#x952E;&#xFF1B;&#x540C;&#x6B65;&#x5B83;&#x4EEC;&#xFF0C;&#x5C31;&#x662F;&#x5220;&#x9664;table&#x4E2D;&#x88AB;gc&#x56DE;&#x6536;&#x7684;&#x5F31;&#x952E;&#x5BF9;&#x5E94;&#x7684;&#x952E;&#x503C;&#x5BF9;">8.3.3 &#x5F53;&#x4E0B;&#x4E00;&#x6B21;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x64CD;&#x4F5C;WeakHashMap&#x65F6;&#xFF0C;&#x4F1A;&#x5148;&#x540C;&#x6B65;table&#x548C;queue&#x3002;table&#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x5168;&#x90E8;&#x7684;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x800C;queue&#x4E2D;&#x4FDD;&#x5B58;&#x88AB;GC&#x56DE;&#x6536;&#x7684;&#x201C;&#x5F31;&#x952E;&#x201D;&#xFF1B;&#x540C;&#x6B65;&#x5B83;&#x4EEC;&#xFF0C;&#x5C31;&#x662F;&#x5220;&#x9664;table&#x4E2D;&#x88AB;GC&#x56DE;&#x6536;&#x7684;&#x201C;&#x5F31;&#x952E;&#x201D;&#x5BF9;&#x5E94;&#x7684;&#x952E;&#x503C;&#x5BF9;</h3>
+<p>&#x200B;        &#x4F8B;&#x5982;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x201C;&#x8BFB;&#x53D6;WeakHashMap&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x6216;&#x83B7;&#x53D6;WeakReference&#x7684;&#x5927;&#x5C0F;&#x65F6;&#x201D;&#xFF0C;&#x5B83;&#x4F1A;&#x5148;&#x540C;&#x6B65;table&#x548C;queue&#xFF0C;&#x76EE;&#x7684;&#x662F;&#x201C;&#x5220;&#x9664;table&#x4E2D;&#x88AB;GC&#x56DE;&#x6536;&#x7684;&#x2018;&#x5F31;&#x952E;&#x2019;&#x5BF9;&#x5E94;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x3002;&#x5220;&#x9664;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x9010;&#x4E2A;&#x6BD4;&#x8F83;&#x201C;table&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x2018;&#x952E;&#x2019;&#x548C;queue&#x4E2D;&#x7684;&#x2018;&#x952E;&#x2019;&#x201D;&#xFF0C;&#x82E5;&#x5B83;&#x4EEC;&#x76F8;&#x5F53;&#xFF0C;&#x5219;&#x5220;&#x9664;&#x201C;table&#x4E2D;&#x7684;&#x8BE5;&#x952E;&#x503C;&#x5BF9;&#x201D;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="013-deque.html" class="navigation navigation-prev " aria-label="Previous page: 第13章 集合之Deque">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="015-hashmap.html" class="navigation navigation-next " aria-label="Next page: 第15章 集合之HashMap">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第14章 集合之Map","level":"1.3.14","depth":2,"next":{"title":"第15章 集合之HashMap","level":"1.3.15","depth":2,"path":"javase/collections/015-hashmap.md","ref":"javase/collections/015-hashmap.md","articles":[]},"previous":{"title":"第13章 集合之Deque","level":"1.3.13","depth":2,"path":"javase/collections/013-deque.md","ref":"javase/collections/013-deque.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"javase/collections/014-map.md","mtime":"2020-06-20T06:02:59.533Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-22T10:24:17.718Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

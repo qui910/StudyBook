@@ -188,7 +188,7 @@ E             removeLast()
 
 # 6 并发问题
 
-## 6.1  fast-fast异常
+## 6.1  fast-fail异常
 
 ```java
         new Thread(()->{

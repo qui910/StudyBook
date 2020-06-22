@@ -322,6 +322,61 @@ final Node<K,V> getNode(int hash, Object key) {
     }
 ```
 
+## 5.5 HashIterator
+
+```java
+//  HashMap内部迭代器父类   
+abstract class HashIterator {
+        Node<K,V> next;        // 下个节点
+        Node<K,V> current;     //当前节点
+        int expectedModCount;  // fast-fail判断
+        int index;             // 索引
+
+       //  初始化时，找到hash表中不为空的项。next指向该项的first节点
+      //   这里利用了index的初始值为0，从0开始依次向后遍历，直到找到不为null的元素就退出循环。
+        HashIterator() {
+            expectedModCount = modCount;
+            Node<K,V>[] t = table;
+            current = next = null;
+            index = 0;
+            if (t != null && size > 0) { // advance to first entry
+                do {} while (index < t.length && (next = t[index++]) == null);
+            }
+        }
+
+        public final boolean hasNext() {
+            return next != null;
+        }
+
+        final Node<K,V> nextNode() {
+            Node<K,V>[] t;
+            Node<K,V> e = next;
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            if (e == null)
+                throw new NoSuchElementException();
+            // next = current.next 迭代某项的链表（或红黑数），直到该链表（或红黑树）遍历完
+            // 然后重新继续遍历hash表，找到下一个不为空的节点
+            if ((next = (current = e).next) == null && (t = table) != null) {
+                do {} while (index < t.length && (next = t[index++]) == null);
+            }
+            return e;
+        }
+
+        public final void remove() {
+            Node<K,V> p = current;
+            if (p == null)
+                throw new IllegalStateException();
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+            current = null;
+            K key = p.key;
+            removeNode(hash(key), key, null, false, false);
+            expectedModCount = modCount;
+        }
+    }
+```
+
 
 
 
@@ -435,6 +490,12 @@ final Node<K,V> getNode(int hash, Object key) {
       testMap.values().forEach(value->{
           log.info("values:{}",value);
       });
+```
+
+代码示例：
+
+```java
+JavaLearning：com.prd.colletctions.HashMapTest
 ```
 
 
