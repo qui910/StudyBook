@@ -22,6 +22,14 @@ public V get(Object key);
 public boolean containsKey(Object key);
 // 添加元素
 public V put(K key, V value);
+// 判断HashMap是否包含“值为value”的元素
+public boolean containsValue(Object value) ;
+// 返回“HashMap的Entry集合”
+public Set<Map.Entry<K,V>> entrySet();
+// 返回“HashMap的key集合”
+public Set<K> keySet();
+// 返回“HashMap的value集合”
+public Collection<V> values();
 ```
 
 
@@ -236,15 +244,91 @@ log.info("int 31&13={}，13%32={}",31&13,13%32);// 31&13=13，13%32=13
 log.info("int 31&29={}，29%32={}",31&29,29%32);// 31&29=29，29%32=29
 ```
 
+## 5.3 getNode
+
+```java
+// 根据key查找对应的数据节点
+final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            // 定位hash表下标
+            (first = tab[(n - 1) & hash]) != null) {
+            //  第一个元素
+            if (first.hash == hash && // always check first node
+                ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                // 红黑树模式
+                if (first instanceof TreeNode)
+                    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+                // 链表模式，比对每项的key值
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+
+```
+
+## 5.4 removeNode
+
+```java
+    final Node<K,V> removeNode(int hash, Object key, Object value,
+                               boolean matchValue, boolean movable) {
+        Node<K,V>[] tab; Node<K,V> p; int n, index;
+        // 根据key值查找待删除的节点node，p为first节点或待删除节点的上个节点。
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (p = tab[index = (n - 1) & hash]) != null) {
+            Node<K,V> node = null, e; K k; V v;
+            if (p.hash == hash &&
+                ((k = p.key) == key || (key != null && key.equals(k))))
+                node = p;
+            else if ((e = p.next) != null) {
+                if (p instanceof TreeNode)
+                    node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+                else {
+                    do {
+                        if (e.hash == hash &&
+                            ((k = e.key) == key ||
+                             (key != null && key.equals(k)))) {
+                            node = e;
+                            break;
+                        }
+                        p = e; // 待删除节点的上个节点
+                    } while ((e = e.next) != null);
+                }
+            }
+            // matchValue为true时需要同时比较value是否euqals
+            if (node != null && (!matchValue || (v = node.value) == value ||
+                                 (value != null && value.equals(v)))) {
+                if (node instanceof TreeNode)  // node为红黑树模式
+                    ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+                else if (node == p)  //  node为链表的头节点
+                    tab[index] = node.next;
+                else     //  p为待删除节点的上级，node为待删除节点
+                    p.next = node.next;
+                ++modCount;
+                --size;
+                // 该方法为空，在HashMap的子类LinkedHashMap中有实现，是指删除节点后的操作
+                afterNodeRemoval(node);
+                return node;
+            }
+        }
+        return null;
+    }
+```
 
 
 
 
-参考网址：
 
-[位运算总结 取模 取余](https://blog.csdn.net/black_ox/article/details/46411997)
 
-[[java位运算](https://www.cnblogs.com/highriver/archive/2011/08/15/2139600.html)]
+
+
 
 
 
@@ -284,9 +368,82 @@ log.info("int 31&29={}，29%32={}",31&29,29%32);// 31&29=29，29%32=29
 
 # 8 循环迭代
 
+## 8.1 keySet
+
+```java
+      Set<Integer> keysets = testMap.keySet();
+      for (Integer is:keysets) {
+          log.info("key {},values:{}",is,testMap.get(is));
+      }
+```
+
+```javascript
+      Iterator iter = testMap.keySet().iterator();
+      while (iter.hasNext()) {
+          Integer key = (Integer) iter.next();
+          log.info("key {},values:{}",key,testMap.get(key));
+      }
+```
+
+```
+      testMap.keySet().forEach(key->{
+          log.info("key {},values:{}",key,testMap.get(key));
+      });
+```
+
+## 8.2 entrySet
+
+```java
+      Set<Map.Entry<Integer,String>> entryets = testMap.entrySet();
+      for (Map.Entry entry:entryets) {
+          log.info("key {},values:{}",entry.getKey(),entry.getValue());
+      }
+```
+
+```java
+      Iterator iter = testMap.entrySet().iterator();
+      while (iter.hasNext()) {
+          Map.Entry<Integer,String> entry = (Map.Entry<Integer,String>) iter.next();
+          log.info("key {},values:{}",entry.getKey(),entry.getValue());
+      }
+```
+
+```java
+      testMap.entrySet().forEach(entry->{
+          log.info("key {},values:{}",entry.getKey(),entry.getValue());
+      });
+```
+
+## 8.3 values
+
+```java
+      Collection<String> vals= testMap.values();
+      for (String value:vals) {
+          log.info("values:{}",value);
+      }
+```
+
+```java
+      Collection<String> vals= testMap.values();
+      Iterator<String> iterator = vals.iterator();
+      while (iterator.hasNext()) {
+          log.info("values:{}",iterator.next());
+      }
+```
+
+```java
+      testMap.values().forEach(value->{
+          log.info("values:{}",value);
+      });
+```
 
 
 
 
 
+# 9 参考网址
+
+[位运算总结 取模 取余](https://blog.csdn.net/black_ox/article/details/46411997)
+
+[java位运算](https://www.cnblogs.com/highriver/archive/2011/08/15/2139600.html)
 
