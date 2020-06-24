@@ -9,13 +9,7 @@
 
 # 2 常用API
 
-```java
-
-```
-
-
-
-
+无特殊API，`put`,`get`都从HashMap继承
 
 # 3 成员变量
 
@@ -180,7 +174,7 @@ abstract class LinkedHashIterator {
 
 # 7 并发问题
 
-
+同理
 
 
 
