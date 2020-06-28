@@ -23,6 +23,8 @@
     * [第16章 集合之TreeMap](javase/collections/016-treemap.md)
     * [第17章 集合之WeakHashMap](javase/collections/017-weakhashmap.md)
     * [第18章 集合之LinkedHashMap](javase/collections/018-linkedhashmap.md)
+* [Java网络](javanet/JavaNet.md)
+    * [第1章 XML基础](javanet/xml/001-xml基础.md)
 * [MySQL](mysql/MySQL.md)
 * [MicroServices](microservices/MicroServices.md)
 
