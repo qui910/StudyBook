@@ -270,33 +270,174 @@ public class WeakReferenceTest {
 
 # 2 常用API
 
-
-
-
+```java
+void                   clear()
+Object                 clone()
+boolean                containsKey(Object key)
+boolean                containsValue(Object value)
+Set<Entry<K, V>>       entrySet()
+V                      get(Object key)
+boolean                isEmpty()
+Set<K>                 keySet()
+V                      put(K key, V value)
+void                   putAll(Map<? extends K, ? extends V> map)
+V                      remove(Object key)
+int                    size()
+Collection<V>          values()
+```
 
 
 
 # 3 成员变量
 
-
+```java
+// 初始容量
+private static final int DEFAULT_INITIAL_CAPACITY = 16;
+// 最大容量
+private static final int MAXIMUM_CAPACITY = 1 << 30;
+// 默认加载因子
+private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+// 底层数据存储数组，大小为2的N次方
+Entry<K,V>[] table;
+// 数组扩容阈值 =(capacity * load factor)
+private int threshold;
+// 存放被清除的弱引用的队列
+private final ReferenceQueue<Object> queue = new ReferenceQueue<>();
+// 变更次数，多线程情况下会引起fail-fast异常
+int modCount;
+```
 
 
 
 # 4 构造函数
 
+```java
+// 默认构造函数。
+WeakHashMap()
 
+// 指定“容量大小”的构造函数
+WeakHashMap(int capacity)
 
+// 指定“容量大小”和“加载因子”的构造函数
+WeakHashMap(int capacity, float loadFactor)
 
+// 包含“子Map”的构造函数
+WeakHashMap(Map<? extends K, ? extends V> map)
+```
 
 
 
 # 5 源码解析
 
+```java
+// 担心原Key的HashCode有冲突，对HashCode做二次处理。这里还是沿用的JDK1.7的做法，HashMap中JDK1.8后
 
+final int hash(Object k) {
+    int h = k.hashCode();
+
+    // This function ensures that hashCodes that differ only by
+    // constant multiples at each bit position have a bounded
+    // number of collisions (approximately 8 at default load factor).
+    h ^= (h >>> 20) ^ (h >>> 12);
+    return h ^ (h >>> 7) ^ (h >>> 4);
+}
+```
+
+```java
+    // 清空table中无用键值对。原理如下：
+    // (01) 当WeakHashMap中某个“弱引用的key”由于没有再被引用而被GC收回时，
+    //   被回收的“该弱引用key”也被会被添加到"ReferenceQueue(queue)"中。
+    // (02) 当我们执行expungeStaleEntries时，
+    //   就遍历"ReferenceQueue(queue)"中的所有key
+    //   然后就在“WeakReference的table”中删除与“ReferenceQueue(queue)中key”对应的键值对
+    private void expungeStaleEntries() {
+        Entry<K,V> e;
+        while ( (e = (Entry<K,V>) queue.poll()) != null) {
+            int h = e.hash;
+            int i = indexFor(h, table.length);
+
+            Entry<K,V> prev = table[i];
+            Entry<K,V> p = prev;
+            while (p != null) {
+                Entry<K,V> next = p.next;
+                if (p == e) {
+                    if (prev == e)
+                        table[i] = next;
+                    else
+                        prev.next = next;
+                    e.next = null;  // Help GC
+                    e.value = null; //  "   "
+                    size--;
+                    break;
+                }
+                prev = p;
+                p = next;
+            }
+        }
+    }
+```
+
+​		在Java中，WeakReference和ReferenceQueue 是联合使用的。在WeakHashMap中亦是如此：如果弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。 接着，WeakHashMap会根据“引用队列”，来删除“WeakHashMap中已被GC回收的‘弱键’对应的键值对”。
 
 
 
 # 6 应用场景
+
+代码示例：
+
+```java
+/**
+ * 弱引用HashMap测试
+ * -XX:+PrintGC
+ */
+@Slf4j
+public class WeakHashMapTest {
+  public static void main(String[] args) throws InterruptedException {
+
+      // 初始化3个“弱键”
+      String w1 = new String("one");
+      String w2 = new String("two");
+      String w3 = new String("three");
+
+      WeakHashMap weakHashMap = new WeakHashMap();
+      weakHashMap.put(w1,"w1");
+      weakHashMap.put(w2,"w2");
+      weakHashMap.put(w3,"w3");
+      log.info("WeakHashMap size：{}",weakHashMap.size());
+
+      // 将w1设置null。
+      // 这意味着“弱键”w1再没有被其它对象引用，调用gc时会回收WeakHashMap中与“w1”对应的键值对
+      w1=null;
+      Thread.sleep(1000);
+      System.gc();
+
+      // 在GC后进行诸如迭代等操作后，执行size方法就会调用expungeStaleEntries(); 进行清除弱建。
+//      Iterator iter = weakHashMap.entrySet().iterator();
+//      while (iter.hasNext()) {
+//          Map.Entry en = (Map.Entry)iter.next();
+//          System.out.printf("next : %s - %s\n",en.getKey(),en.getValue());
+//      }
+
+      // 这里在GC后马上调用size()方法，不一定能清除到弱建，因此此时ReferenceQueue队列中还不一定存在弱建对象。
+      // 等待1s后，在调用size2，则会清除弱建了。
+      log.info("WeakHashMap size1：{}",weakHashMap.size());
+      Thread.sleep(1000);
+      log.info("WeakHashMap size2：{}",weakHashMap.size());
+
+
+      // 这种添加方式，"2","3"等不是弱建，无法GC回收。只有new String("1") 才是弱建，原因：？？？
+      WeakHashMap weakHashMap1 = new WeakHashMap();
+      weakHashMap1.put(new String("1"),"w1");
+      weakHashMap1.put("2","w2");
+      weakHashMap1.put("3","w3");
+      log.info("WeakHashMap1 size：{}",weakHashMap1.size());
+      Thread.sleep(1000);
+      System.gc();
+      Thread.sleep(1000);
+      log.info("WeakHashMap1 size：{}",weakHashMap1.size());
+  }
+}
+```
 
 
 
@@ -310,9 +451,48 @@ public class WeakReferenceTest {
 
 # 8 循环迭代
 
+```java
+// 假设map是WeakHashMap对象
+// map中的key是String类型，value是Integer类型
+Integer integ = null;
+Iterator iter = map.entrySet().iterator();
+while(iter.hasNext()) {
+    Map.Entry entry = (Map.Entry)iter.next();
+    // 获取key
+    key = (String)entry.getKey();
+        // 获取value
+    integ = (Integer)entry.getValue();
+}
+```
 
 
 
+```java
+// 假设map是WeakHashMap对象
+// map中的key是String类型，value是Integer类型
+String key = null;
+Integer integ = null;
+Iterator iter = map.keySet().iterator();
+while (iter.hasNext()) {
+        // 获取key
+    key = (String)iter.next();
+        // 根据key，获取value
+    integ = (Integer)map.get(key);
+}
+```
+
+
+
+```java
+// 假设map是WeakHashMap对象
+// map中的key是String类型，value是Integer类型
+Integer value = null;
+Collection c = map.values();
+Iterator iter= c.iterator();
+while (iter.hasNext()) {
+    value = (Integer)iter.next();
+}
+```
 
 
 
