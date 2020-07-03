@@ -26,3 +26,9 @@ Java多线程之线程安全队列Queue与同步容器
 https://www.cnblogs.com/fulong133/p/12467625.html
 ```
 
+Java线程池中的核心线程是如何被重复利用的？
+
+https://blog.csdn.net/MingHuang2017/article/details/79571529
+
+
+

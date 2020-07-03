@@ -2,11 +2,17 @@
 
 ​		线程是并发的基础单元，这里从线程开始说明。实现多线程有以下两种方式：
 
-```
+```java
 class TestThreadStateA extends Thread {
     @Override
     public void run() {
 }
+```
+
+```java
+        new Thread(()->{
+            System.out.println("sub localVariable is "+localVariable.get());
+        }).start();
 ```
 
 
@@ -512,3 +518,707 @@ class ThreadB extends Thread {
 * 子线程结束之后，"会唤醒主线程"，父线程重新获取cpu执行权，继续运行
 
 * 在调用 join() 方法的程序中，原来的多个线程仍然多个线程，并没有发生“合并为一个单线程”。真正发生的是调用 join() 的线程进入 TIMED_WAITING 状态，等待 join() 所属线程运行结束后再继续运行。
+
+### 1.3.3 YIELD
+
+```java
+// 让出CPU执行权限
+public static native void yield();
+```
+
+​		当一个线程调用yield方法时，告知线程调度器此线程请求让出自己的CPU使用，但是线程调度器可以忽略此请求。当线程让出CPU使用权限后，就处理就绪状态。线程调度器会从线程的就绪队列中获取一个线程优先级最高的线程。
+
+# 2 线程通知与等待
+
+​		在Object.java中，定义了`wait()`, `notify()`和`notifyAll()`等接口。`wait()`的作用是让当前线程进入等待状态，同时，`wait()`也会让当前线程释放它所持有的锁。而`notify()`和`notifyAll()`的作用，则是唤醒当前对象上的等待线程；`notify()`是唤醒单个线程，而notifyAll()是唤醒所有的线程。
+
+​		调用任意对象的 `wait()` 方法导致线程等待，并且该对象上的锁被释放。而调用任意对象的notify()方法则导致因调用该对象的 wait() 方法而等待的线程中随机选择的一个解除等待（但要等到获得锁后才真正可执行）。 
+
+​		无论是`wait()`或`notify()`都必须首先获得该对象的监视器锁（synchronized）。
+
+​		Object类中关于等待/唤醒的API详细信息如下：		
+
+| 方法                          | 说明                                                         |
+| :---------------------------- | ------------------------------------------------------------ |
+| notify()                      | 唤醒在此对象监视器上等待的单个线程。                         |
+| notifyAll()                   | 唤醒在此对象监视器上等待的所有线程。                         |
+| wait()                        | 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒(进入“就绪状态”)。 |
+| wait(long timeout)            | 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量”，当前线程被唤醒(进入“就绪状态”)。 |
+| wait(long timeout, int nanos) | 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量”，当前线程被唤醒(进入“就绪状态”)。 |
+
+代码示例：
+
+```java
+/**
+ * 线程通信测试
+ */
+public class ThreadWaitNotifyTest {
+
+    // 生产者
+    class ThreadA extends Thread {
+
+        private Deque<String> queue;
+        private int maxSize;
+
+        public ThreadA(Deque<String> queue, int maxSize) {
+            this.queue = queue;
+            this.maxSize = maxSize;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                synchronized (queue) {
+                  // 队列超过100个后，停止生产，进入等待
+                  while (queue.size() == maxSize) {
+                    try {
+                        queue.notifyAll();
+                        queue.wait();
+                      System.out.println("Queue is Full");
+                    } catch (InterruptedException e) {
+                      e.printStackTrace();
+                    }
+                  }
+
+                  Random random = new Random();
+                  int i = random.nextInt();
+                  String msg = "test" + i;
+                  queue.add(msg);
+                  System.out.println("生产：" + msg);
+                }
+            }
+        }
+    }
+
+    class ThreadB extends Thread {
+
+        private Deque<String> queue;
+        private int maxSize;
+
+        public ThreadB(Deque<String> queue, int maxSize) {
+            this.queue = queue;
+            this.maxSize = maxSize;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                synchronized (queue) {
+                  // 队列空后，停止消费，进入等待
+                  while (queue.size() == 0) {
+                    try {
+                        queue.notifyAll();
+                        queue.wait();
+                      System.out.println("Queue is Empty");
+                    } catch (InterruptedException e) {
+                      e.printStackTrace();
+                    }
+                  }
+
+                  String msg = queue.remove();
+                  System.out.println("消费：" + msg);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        LinkedList<String> linkedList = new LinkedList<String>();
+        int maxSize=2;
+
+        ThreadA threadA = new ThreadWaitNotifyTest().new ThreadA(linkedList,maxSize);
+        ThreadB threadB = new ThreadWaitNotifyTest().new ThreadB(linkedList,maxSize);
+        threadA.start();
+        threadB.start();
+    }
+}
+```
+
+注意：`notifyAll()`必须在`wait()`操作前触发，示例中`notifyAll()`也可以改在每次生成或消费完元素之后（即`System.out.println`语句之后），效果是一样的。
+
+# 3 线程死锁
+
+​		死锁就是两个或两个以上的线程在执行过程中，因争夺资源而造成的互相等待的现象。在无外在处理的情况下，这些线程会一直相互等待而无法继续运行。
+
+​		死锁产生必备以下四个条件：
+
+* 互斥条件：指线程对已经获取到的资源进行排他使用，即该资源同时只由一个线程占用。如果此时还有其他线程请求获取该资源，则请求线程只能等待，直至占用资源的线程释放该资源。
+* 请求并持有条件：指一个线程已经持有了至少一个资源，但又提出了新的资源请求。而新的资源已经被其他线程所占用，所以当前线程会被阻塞，但阻塞的同时不会释放自己已经获取的资源。
+* 不可剥夺条件：指线程获取到的资源在自己使用完之前不能被其他线程抢占。只有在自己使用完毕后才由自己释放。
+* 环路等待条件：指在发生死锁时，必然存在一个线程--资源的环形链。即线程集合{T0，T1，T2....Tn} 中的T0正在等待一个T1占用的资源，T1 正在等待T2占用的资源，。。。Tn正在等待T0占用的资源。
+
+## 3.1 代码示例
+
+```java
+/**
+ * 线程死锁测试
+ */
+public class ThreadDeadLockTest {
+
+  public static void main(String[] args) {
+      Object resoureA = new Object();
+      Object resoureB = new Object();
+
+      new Thread(()->{
+          synchronized (resoureA) {
+              System.out.println(Thread.currentThread().getName()+" get resoureA");
+              try {
+                  TimeUnit.SECONDS.sleep(1);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+
+              synchronized (resoureB){
+                  System.out.println(Thread.currentThread().getName()+" get resoureB");
+              }
+          }
+      }).start();
+
+      new Thread(()->{
+          synchronized (resoureB) {
+              System.out.println(Thread.currentThread().getName()+" get resoureB");
+              try {
+                  TimeUnit.SECONDS.sleep(1);
+              } catch (InterruptedException e) {
+                  e.printStackTrace();
+              }
+
+              synchronized (resoureA){
+                  System.out.println(Thread.currentThread().getName()+" get resoureA");
+              }
+          }
+      }).start();
+  }
+}
+```
+
+运行结果：
+
+```shell
+Connected to the target VM, address: '127.0.0.1:35607', transport: 'socket'
+Thread-0 get resoureA
+Thread-1 get resoureB
+```
+
+程序一直等待，卡死。
+
+## 3.2 分析
+
+使用JVM中`jstack -l <pid>`来观察线程情况：
+
+```shell
+ull thread dump Java HotSpot(TM) 64-Bit Server VM (25.191-b12 mixed mode):
+
+"DestroyJavaVM" #14 prio=5 os_prio=0 tid=0x00007f079800f800 nid=0x2fe3 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Thread-1" #13 prio=5 os_prio=0 tid=0x00007f07982f1000 nid=0x3002 waiting for monitor entry [0x00007f07819dd000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.prd.concurrent.ThreadDeadLockTest.lambda$main$1(ThreadDeadLockTest.java:39)
+	- waiting to lock <0x0000000782427280> (a java.lang.Object)
+	- locked <0x0000000782427290> (a java.lang.Object)
+	at com.prd.concurrent.ThreadDeadLockTest$$Lambda$2/1360767589.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+"Thread-0" #12 prio=5 os_prio=0 tid=0x00007f07982ef000 nid=0x3001 waiting for monitor entry [0x00007f0781ade000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.prd.concurrent.ThreadDeadLockTest.lambda$main$0(ThreadDeadLockTest.java:24)
+	- waiting to lock <0x0000000782427290> (a java.lang.Object)
+	- locked <0x0000000782427280> (a java.lang.Object)
+	at com.prd.concurrent.ThreadDeadLockTest$$Lambda$1/2137211482.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+"Service Thread" #11 daemon prio=9 os_prio=0 tid=0x00007f079827f000 nid=0x2fff runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread2" #10 daemon prio=9 os_prio=0 tid=0x00007f079827b800 nid=0x2ffe waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #9 daemon prio=9 os_prio=0 tid=0x00007f0798279800 nid=0x2ffd waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #8 daemon prio=9 os_prio=0 tid=0x00007f0798272800 nid=0x2ffc waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Command Reader" #7 daemon prio=10 os_prio=0 tid=0x00007f075c001000 nid=0x2ffb runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Event Helper Thread" #6 daemon prio=10 os_prio=0 tid=0x00007f0798192800 nid=0x2ff9 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Transport Listener: dt_socket" #5 daemon prio=10 os_prio=0 tid=0x00007f079818f000 nid=0x2ff7 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=0 tid=0x00007f0798182800 nid=0x2ff6 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=0 tid=0x00007f0798150800 nid=0x2ff5 in Object.wait() [0x00007f07826ed000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x0000000782108ed0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+	- locked <0x0000000782108ed0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+
+"Reference Handler" #2 daemon prio=10 os_prio=0 tid=0x00007f079814e000 nid=0x2ff4 in Object.wait() [0x00007f07827ee000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x0000000782106bf8> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:502)
+	at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+	- locked <0x0000000782106bf8> (a java.lang.ref.Reference$Lock)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+"VM Thread" os_prio=0 tid=0x00007f0798144800 nid=0x2ff2 runnable 
+
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x00007f0798025000 nid=0x2fe7 runnable 
+
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x00007f0798027000 nid=0x2fe9 runnable 
+
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x00007f0798028800 nid=0x2feb runnable 
+
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x00007f079802a800 nid=0x2fec runnable 
+
+"VM Periodic Task Thread" os_prio=0 tid=0x00007f0798284000 nid=0x3000 waiting on condition 
+
+JNI global references: 2483
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-1":
+  waiting to lock monitor 0x00007f0764006528 (object 0x0000000782427280, a java.lang.Object),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x00007f07640039d8 (object 0x0000000782427290, a java.lang.Object),
+  which is held by "Thread-1"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-1":
+	at com.prd.concurrent.ThreadDeadLockTest.lambda$main$1(ThreadDeadLockTest.java:39)
+	- waiting to lock <0x0000000782427280> (a java.lang.Object)
+	- locked <0x0000000782427290> (a java.lang.Object)
+	at com.prd.concurrent.ThreadDeadLockTest$$Lambda$2/1360767589.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+"Thread-0":
+	at com.prd.concurrent.ThreadDeadLockTest.lambda$main$0(ThreadDeadLockTest.java:24)
+	- waiting to lock <0x0000000782427290> (a java.lang.Object)
+	- locked <0x0000000782427280> (a java.lang.Object)
+	at com.prd.concurrent.ThreadDeadLockTest$$Lambda$1/2137211482.run(Unknown Source)
+	at java.lang.Thread.run(Thread.java:748)
+
+Found 1 deadlock.
+
+Heap
+ PSYoungGen      total 55808K, used 10609K [0x0000000782100000, 0x0000000785f00000, 0x00000007c0000000)
+  eden space 48128K, 22% used [0x0000000782100000,0x0000000782b5c430,0x0000000785000000)
+  from space 7680K, 0% used [0x0000000785780000,0x0000000785780000,0x0000000785f00000)
+  to   space 7680K, 0% used [0x0000000785000000,0x0000000785000000,0x0000000785780000)
+ ParOldGen       total 126976K, used 0K [0x0000000706200000, 0x000000070de00000, 0x0000000782100000)
+  object space 126976K, 0% used [0x0000000706200000,0x0000000706200000,0x000000070de00000)
+ Metaspace       used 4233K, capacity 4784K, committed 4992K, reserved 1056768K
+  class space    used 478K, capacity 536K, committed 640K, reserved 1048576K
+```
+
+首先Thread1 和 Thread0 都在获得监视器对象锁是被阻塞，状态都为BLOCKED
+
+```shell
+"Thread-1" #13 prio=5 os_prio=0 tid=0x00007f07982f1000 nid=0x3002 waiting for monitor entry [0x00007f07819dd000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+   
+"Thread-0" #12 prio=5 os_prio=0 tid=0x00007f07982ef000 nid=0x3001 waiting for monitor entry [0x00007f0781ade000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+```
+
+其次`jstack`的日志中就已经检测出死锁的信息：
+
+```shell
+Found one Java-level deadlock:
+=============================
+"Thread-1":
+  waiting to lock monitor 0x00007f0764006528 (object 0x0000000782427280, a java.lang.Object),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x00007f07640039d8 (object 0x0000000782427290, a java.lang.Object),
+  which is held by "Thread-1"
+
+Java stack information for the threads listed above:
+===================================================
+```
+
+## 3.3  死锁的处理
+
+​		样例中会发生死锁，重要的原因就是线程A 先申请资源A，则申请资源B。而线程B则是先申请资源B，在申请资源A。发生了资源争抢所导致的。只要两个线程都先申请资源A，再申请资源B就可以解决（当然，这是在业务逻辑允许的情况下）
+
+# 4 ThreadLocal
+
+## 4.1 概述
+
+​		ThreadLocal类提供了线程局部 (thread-local) 变量。这些变量不同于它们的普通对应物，因为访问某个变量（通过其get或set方法）的每个线程都有自己的局部变量，它独立于变量的初始化副本。ThreadLocal实例通常是类中的 **private static**字段，它们希望将状态与某一个线程（例如，用户ID 或事务ID）相关联。
+
+​		ThreadLocal与线程同步机制不同，线程同步机制是多个线程共享同一个变量，而ThreadLocal是为**每一个线程创建一个单独的变量副本**，故而每个线程都可以独立地改变自己所拥有的变量副本，而不会影响其他线程所对应的副本。可以说ThreadLocal为多线程环境下变量问题提供了另外一种解决思路。
+
+​		ThreadLocal定义了四个方法：
+
+```java
+// 返回此线程局部变量的当前线程副本中的值。
+public T get();
+// 返回此线程局部变量的当前线程的“初始值”。
+protected T initialValue();
+// 移除此线程局部变量当前线程的值。
+public void remove();
+// 将此线程局部变量的当前线程副本中的值设置为指定值。
+public void set(T value);
+```
+
+
+​		ThreadLocal内部还有一个静态内部类ThreadLocalMap，该内部类才是实现线程隔离机制的关键，get()、set()、remove()都是基于该内部类操作。ThreadLocalMap提供了一种用键值对方式存储每一个线程的变量副本的方法，key为当前ThreadLocal对象，value则是对应线程的变量副本。
+
+​		对于ThreadLocal需要注意的有两点：
+
+* ThreadLocal实例本身是不存储值，它只是提供了一个在当前线程中找到副本值得key。
+* 是ThreadLocal包含在Thread中，而不是Thread包含在ThreadLocal中。
+  ThreadLocal，Thread，ThreadLocalMap 关系如下：实线表示强引用，虚线表示弱引用
+
+![thread-003](..\images\thread-003.png)
+
+* ThreadLocalMap类的定义在ThreadLocal，但是每个Thread维护一个ThreadLocalMap映射表，这个映射表的key是ThreadLocal实例本身，value是真正需要存储的Object。
+* ThreadLocal变量的活动范围为某线程，是该线程“专有的，独自霸占”的，对该变量的所有操作均由该线程完成！也就是说，ThreadLocal 不是用来解决共享对象的多线程访问的竞争问题的，因为ThreadLocal.set() 到线程中的对象是该线程自己使用的对象，其他线程是不需要访问的，也访问不到的。当线程终止后，这些值会作为垃圾回收。
+
+## 4.2 使用示例
+
+```java
+public class SeqCount {
+    private static ThreadLocal<Integer> seqCount = new ThreadLocal<Integer>(){
+        // 实现initialValue()
+        public Integer initialValue() {
+            return 0;
+        }
+    };
+    public int nextSeq(){
+        seqCount.set(seqCount.get() + 1);
+        return seqCount.get();
+    }
+    public static void main(String[] args){
+        SeqCount seqCount = new SeqCount();
+        SeqThread thread1 = new SeqThread(seqCount);
+        SeqThread thread2 = new SeqThread(seqCount);
+        SeqThread thread3 = new SeqThread(seqCount);
+        SeqThread thread4 = new SeqThread(seqCount);
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+    }
+    private static class SeqThread extends Thread{
+        private SeqCount seqCount;
+        SeqThread(SeqCount seqCount){
+            this.seqCount = seqCount;
+        }
+        public void run() {
+            for(int i = 0 ; i < 3 ; i++){
+                System.out.println(Thread.currentThread().getName() + " seqCount :" + seqCount.nextSeq());
+            }
+        }
+    }
+}
+```
+
+运行结果：
+
+```shell
+Thread-1 seqCount :1
+Thread-1 seqCount :2
+Thread-1 seqCount :3
+Thread-2 seqCount :1
+Thread-2 seqCount :2
+Thread-2 seqCount :3
+Thread-3 seqCount :1
+Thread-3 seqCount :2
+Thread-3 seqCount :3
+Thread-0 seqCount :1
+Thread-0 seqCount :2
+Thread-0 seqCount :3
+```
+
+从运行结果可以看出，ThreadLocal确实是可以达到线程隔离机制，确保变量的安全性。
+
+## 4.3 源码解析
+
+### 4.3.1 ThreadLocalMap
+
+​		ThreadLocalMap是实现ThreadLocal的关键，其内部利用Entry来实现key-value的存储。
+
+```java
+static class Entry extends WeakReference<ThreadLocal> {
+	/** The value associated with this ThreadLocal. */
+	Object value;
+
+	Entry(ThreadLocal k, Object v) {
+		super(k);
+		value = v;
+	}
+}
+```
+
+​		从上面代码中可以看出Entry的key就是ThreadLocal，而value就是值。同时，Entry也继承WeakReference，所以说Entry所对应key（ThreadLocal实例）的引用为一个弱引用（这里使用弱引用就是防止内存溢出，在GC时优先回收这部分数据，具体请参考[用弱引用堵住内存泄漏](https://www.ibm.com/developerworks/cn/java/j-jtp11225/)）
+
+​		ThreadLocalMap的源码最核心的方法getEntry()、set(ThreadLocal> key, Object value)。
+
+####  4.3.1.1 set方法
+
+​		这个set()操作和我们在集合了解的put()方式有点儿不一样，虽然他们都是key-value结构，不同在于他们解决散列冲突的方式不同。集合Map的put()采用的是拉链法，而ThreadLocalMap的set()则是采用开放定址法（具体请参考[散列冲突处理系列博客](http://www.nowamagic.net/academy/detail/3008015)）。掌握了开放地址法该方法就一目了然了。
+
+```java
+private void set(ThreadLocal<?> key, Object value) {
+	ThreadLocal.ThreadLocalMap.Entry[] tab = table;
+	int len = tab.length;
+	// 根据ThreadLocal的散列值，查找对应元素在数组中的位置
+	int i = key.threadLocalHashCode & (len-1);
+
+	// 采用“线性探测法”，寻找合适位置
+	for (ThreadLocal.ThreadLocalMap.Entry e = tab[i];
+		e != null;
+		e = tab[i = nextIndex(i, len)]) {
+	
+		ThreadLocal<?> k = e.get();
+	
+		// key 存在，直接覆盖
+		if (k == key) {
+			e.value = value;
+			return;
+		}
+	
+		// key == null，但是存在值（因为此处的e != null），说明之前的ThreadLocal对象已经被回收了
+		if (k == null) {
+			// 用新元素替换陈旧的元素
+			replaceStaleEntry(key, value, i);
+			return;
+		}
+	}
+	
+	// ThreadLocal对应的key实例不存在也没有陈旧元素，new 一个
+	tab[i] = new ThreadLocal.ThreadLocalMap.Entry(key, value);
+	
+	int sz = ++size;
+	
+	// cleanSomeSlots 清除陈旧的Entry（key == null）
+	// 如果没有清理陈旧的 Entry 并且数组中的元素大于了阈值，则进行 rehash
+	if (!cleanSomeSlots(i, sz) && sz >= threshold)
+		rehash();
+
+}
+```
+
+​		set()操作除了存储元素外，还有一个很重要的作用，就是replaceStaleEntry()和cleanSomeSlots()，这两个方法可以清除掉key == null 的实例，防止内存泄漏。在set()方法中还有一个变量很重要：threadLocalHashCode，定义如下：
+
+```java
+private final int threadLocalHashCode = nextHashCode();
+```
+
+​		从名字上面我们可以看出threadLocalHashCode应该是ThreadLocal的散列值，定义为final，表示ThreadLocal一旦创建其散列值就已经确定了，生成过程则是调用`nextHashCode()`：
+
+```java
+private static AtomicInteger nextHashCode = new AtomicInteger();
+
+private static final int HASH_INCREMENT = 0x61c88647;
+
+private static int nextHashCode() {
+   return nextHashCode.getAndAdd(HASH_INCREMENT);
+}
+```
+
+​		`nextHashCode`表示分配下一个ThreadLocal实例的threadLocalHashCode的值，`HASH_INCREMENT`则表示分配两个ThradLocal实例的threadLocalHashCode的增量，从`nextHashCode`就可以看出他们的定义。
+
+####  4.3.1.2 getEntry()
+```java
+private Entry getEntry(ThreadLocal<?> key) {
+	int i = key.threadLocalHashCode & (table.length - 1);
+	Entry e = table[i];
+	if (e != null && e.get() == key)
+		return e;
+	else
+		return getEntryAfterMiss(key, i, e);
+}
+```
+
+​		由于采用了开放定址法，所以当前key的散列值和元素在数组的索引并不是完全对应的，首先取一个探测数（key的散列值），如果所对应的key就是我们所要找的元素，则返回，否则调用getEntryAfterMiss()，如下：
+
+```java
+private Entry getEntryAfterMiss(ThreadLocal<?> key, int i, Entry e) {
+	Entry[] tab = table;
+	int len = tab.length;
+
+	while (e != null) {
+		ThreadLocal<?> k = e.get();
+		if (k == key)
+			return e;
+		if (k == null)
+			expungeStaleEntry(i);
+		else
+			i = nextIndex(i, len);
+		e = tab[i];
+	}
+	return null;
+}
+```
+
+
+​		这里有一个重要的地方，当key == null时，调用了expungeStaleEntry()方法，该方法用于处理key == null，有利于GC回收，能够有效地避免内存泄漏。
+
+### 4.3.2.get()
+
+​	返回当前线程所对应的线程变量
+
+```java
+public T get() {
+	// 获取当前线程
+	Thread t = Thread.currentThread();
+
+	// 获取当前线程的成员变量 threadLocal
+	ThreadLocalMap map = getMap(t);
+	if (map != null) {
+		// 从当前线程的ThreadLocalMap获取相对应的Entry
+		ThreadLocalMap.Entry e = map.getEntry(this);
+		if (e != null) {
+			@SuppressWarnings("unchecked")
+	
+			// 获取目标值        
+			T result = (T)e.value;
+			return result;
+		}
+	}
+	return setInitialValue();
+}
+```
+
+​		首先通过当前线程获取所对应的成员变量ThreadLocalMap，然后通过ThreadLocalMap获取当前ThreadLocal的Entry，最后通过所获取的Entry获取目标值result。
+
+​		getMap()方法可以获取当前线程所对应的ThreadLocalMap，如下：
+
+```java
+ThreadLocalMap getMap(Thread t) {
+	return t.threadLocals;
+}
+```
+
+### 4.3.3 set(T value)
+​	设置当前线程的线程局部变量的值。
+
+```java
+public void set(T value) {
+	Thread t = Thread.currentThread();
+	ThreadLocalMap map = getMap(t);
+	if (map != null)
+		map.set(this, value);
+	else
+		createMap(t, value);
+}
+```
+
+​		获取当前线程所对应的ThreadLocalMap，如果不为空，则调用ThreadLocalMap的set()方法，key就是当前ThreadLocal，如果不存在，则调用createMap()方法新建一个，如下：
+
+```java
+void createMap(Thread t, T firstValue) {
+	t.threadLocals = new ThreadLocalMap(this, firstValue);
+}
+```
+
+### 4.3.4 initialValue()
+​	返回该线程局部变量的初始值。
+
+```
+protected T initialValue() {
+	return null;
+}
+```
+
+
+​		该方法定义为protected级别且返回为null，很明显是要子类实现它的，所以我们在使用ThreadLocal的时候一般都应该覆盖该方法。该方法不能显示调用，只有在第一次调用get()或者set()方法时才会被执行，并且仅执行1次。
+
+### 4.3.5 remove()
+​	将当前线程局部变量的值删除。
+
+```java
+public void remove() {
+	ThreadLocalMap m = getMap(Thread.currentThread());
+	if (m != null)
+		m.remove(this);
+}
+```
+
+
+​		该方法的目的是减少内存的占用。当然，我们不需要显示调用该方法，因为一个线程结束后，它所对应的局部变量就会被垃圾回收。
+
+## 4.4 ThreadLocal内存泄漏
+
+​		前面提到每个Thread都有一个ThreadLocal.ThreadLocalMap的map，该map的key为ThreadLocal实例，它为一个弱引用，我们知道弱引用有利于GC回收。当ThreadLocal的key == null时，GC就会回收这部分空间，但是value却不一定能够被回收，因为他还与Current Thread存在一个强引用关系。
+
+​		由于存在这个强引用关系，会导致value无法回收。如果这个线程对象不会销毁那么这个强引用关系则会一直存在，就会出现内存泄漏情况。所以说只要这个线程对象能够及时被GC回收，就不会出现内存泄漏。如果碰到线程池，那就更坑了。
+
+​		那么要怎么避免这个问题呢？**在前面提过，在ThreadLocalMap中的setEntry()、getEntry()，如果遇到key == null的情况，会对value设置为null。当然我们也可以显示调用ThreadLocal的remove()方法进行处理。**
+
+## 4.5 总结
+
+​		ThreadLocal 不是用于解决共享变量的问题的，也不是为了协调线程同步而存在，而是为了方便每个线程处理自己的状态而引入的一个机制。这点至关重要。
+
+​		每个Thread内部都有一个ThreadLocal.ThreadLocalMap类型的成员变量，该成员变量用来存储实际的ThreadLocal变量副本。
+
+​		ThreadLocal并不是为线程保存对象的副本，它仅仅只起到一个索引的作用。它的主要目的是为每一个线程隔离一个类的实例，这个实例的作用范围仅限于线程内部。
+
+​		最常见的ThreadLocal使用场景为 用来解决 数据库连接、Session管理等。
+
+## 4.6 InheritableThreadLocal
+
+​		ThreadLocal是不具备继承性质的，即父线程和子线程都使用一个ThreadLocal，但是各自的线程中是保留的各自的实例值。
+
+​		为解决这个问题，使子线程能访问到父线程的Local实例。特别引入`InheritableThreadLocal`。
+
+### 4.6.1 代码示例
+
+```java
+/**
+ * InheritableThreadLocal 测试
+ *
+ */
+public class InheritableThreadLocalTest {
+    private static ThreadLocal<String> localVariable = new ThreadLocal();
+
+    private static InheritableThreadLocal<String> inheritableLocalVariable = new InheritableThreadLocal();
+
+    public static void main(String[] args) {
+        localVariable.set("main thread");
+        inheritableLocalVariable.set("main thread");
+        System.out.println("main localVariable is "+localVariable.get());
+        System.out.println("main inheritableLocalVariable is "+inheritableLocalVariable.get());
+
+        testThreadLocal();
+
+        testInheritableThreadLocal();
+    }
+
+    public static void testThreadLocal() {
+        new Thread(()->{
+            System.out.println("sub localVariable is "+localVariable.get());
+        }).start();
+    }
+
+    public static void testInheritableThreadLocal() {
+        new Thread(()->{
+            System.out.println("sub inheritableLocalVariable is "+inheritableLocalVariable.get());
+        }).start();
+    }
+}
+```
+
+### 4.6.2 源码解析
+
+​		InheritableThreadLocal继承自ThreadLocal，其提供了一个特性，就是让子线程可以访问父线程设置的本地变量。
+
+见书《Java并发编程之美第一章》
+
+
+
