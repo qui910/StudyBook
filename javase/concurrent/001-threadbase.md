@@ -10,9 +10,9 @@ class TestThreadStateA extends Thread {
 ```
 
 ```java
-        new Thread(()->{
-            System.out.println("sub localVariable is "+localVariable.get());
-        }).start();
+new Thread(()->{
+    System.out.println("sub localVariable is "+localVariable.get());
+}).start();
 ```
 
 
@@ -49,6 +49,15 @@ class TestThreadStateA extends Thread {
 
 ![thread-001](..\images\thread-001.png)
 
+或者可以参考如下示例图：
+
+![thread-006](..\images\thread-006.png)
+
+**状态转化的特殊情况**：（这里要结合wait说明）
+
+* 从`Object.wait()`状态刚被唤醒时，通常不能立刻抢到monitor锁，那就会从Waiting先进入Blocked状态，抢到锁后再转换到Runnable状态
+* 如果发生异常，可以直接跳到Terminated状态，不必在遵循路径，比如可以从Waiting直接到Terminated
+
 ### 1.2.1 **初始状态**
 
 ​		实现Runnable接口和继承Thread可以得到一个线程类，new一个实例出来，线程就进入了初始状态。
@@ -76,6 +85,10 @@ class TestThreadStateA extends Thread {
 ### 1.2.6 超时等待
 
 ​		处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。
+
+
+
+​		一般习惯而言，把Blocked（1.2.4），Waiting（1.2.5），Timed_waiting(1.2.6）都称为阻塞状态。不仅仅是Blocked。
 
 ### 1.2.7 **终止状态**
 
@@ -202,15 +215,13 @@ class TestThreadStateA extends Thread {
 
 
 
-
-
 ##  1.3 线程方法
 
 ### 1.3.1 中断线程
 
 ```java
 // 向线程发送中断请求。线程的中断状态被设置为true。
-void interrupte();
+void interrupt();
 // 测试当前线程是否被中断。它将当前线程的中断状态重置为fasle。
 static boolean interrupted();
 // 测试线程是否被中断。这不会改变线程的中断状态。
@@ -426,6 +437,8 @@ public class ThreadInterruptedTest {
 
 ### 1.3.2 JOIN
 
+​		新的线程加入我们，所以我们要等他执行完成再出发。即main等待thread1执行完毕。
+
 ```java
 // 等待该线程终止，一直等待
 public final void join() throws InterruptedException;
@@ -516,8 +529,57 @@ class ThreadB extends Thread {
 **注意：**
 
 * 子线程结束之后，"会唤醒主线程"，父线程重新获取cpu执行权，继续运行
-
 * 在调用 join() 方法的程序中，原来的多个线程仍然多个线程，并没有发生“合并为一个单线程”。真正发生的是调用 join() 的线程进入 TIMED_WAITING 状态，等待 join() 所属线程运行结束后再继续运行。
+
+ #### 1.3.2.1 类似工具
+
+​		JUC中的CountDownLatch或CyclicBarrier类型也能带到线程等待的效果，而且使用JUC提供的工具类更安全，效率更高。
+
+#### 1.3.2.2 原理
+
+​		可以参考下 2.4.5节wait原理描述，原理示例代码
+
+```java
+    /**
+     * 测试Join的类似实现
+     * 其实Join的原理，就是用线程对象的wait实现
+     * 结果：
+     mainThread finished
+     mainThread started
+     mainThread waiting subThread finished
+     SubThread finished
+     */
+    private static void testJoinSameMethod() {
+        Thread subThread = new Thread(()->{
+            try {
+                Thread.sleep(4000);
+                System.out.println("SubThread finished");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread mainThread = new Thread(()->{
+            System.out.println("mainThread started");
+            subThread.start();
+            System.out.println("mainThread waiting subThread finished");
+
+            // join的同理代码
+//            subThread.join();
+            synchronized (subThread) {
+                try {
+                    subThread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        mainThread.start();
+        System.out.println("mainThread finished");
+    }
+```
+
+
 
 ### 1.3.3 YIELD
 
@@ -527,6 +589,366 @@ public static native void yield();
 ```
 
 ​		当一个线程调用yield方法时，告知线程调度器此线程请求让出自己的CPU使用，但是线程调度器可以忽略此请求。当线程让出CPU使用权限后，就处理就绪状态。线程调度器会从线程的就绪队列中获取一个线程优先级最高的线程。
+
+​		调用yield方法后，线程状态还是Runable，而且不会释放锁和资源。
+
+​		yield和sleep的区别就是yield可能随时会被在此调度。
+
+### 1.3.4 SLEEP
+
+* 让线程在预期的时间执行，其他时候不要占用CPU资源
+
+* sleep方法不释放锁  包括synchronized和lock。wait是要释放锁的。
+
+* sleep响应中断，抛出InterruptedException，并清除中断状态。
+
+**总结**：sleep方法可以让线程进入Waiting状态，并且不占用CPU资源，但是不释放锁，直到规定时间后再执行，休眠期间如果被中断，会抛出异常并清除中断状态。
+
+## 1.4 停止线程
+
+​		线程在两种情况下会停止：（1）线程run方法执行完成。（2）线程在运行中抛出异常。 停止线程的原理就是利用`interrupt`方法来通知线程，但不是强制必须停止线程，这里的设计原因就是充分给予线程自主控制。
+
+​		在使用`interrupt`停止线程时会遇到3种情况：
+
+* 普通情况下
+
+```java
+    /**
+     * 无sleep或wait等阻塞时停止线程,
+     * 需要在线程内部主动判断中断状态
+     */
+    private static void rigthStopThreadNoBlock() {
+        Thread test=new Thread(()->{
+            int num=0;
+            // 影响中断
+            while(!Thread.currentThread().isInterrupted() &&
+                    num<Integer.MAX_VALUE) {
+                if (num % 10000==0) {
+                    System.out.println(num+"是10000的倍数");
+                }
+                num++;
+            }
+            System.out.println("线程执行完成");
+        });
+        test.start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        test.interrupt();
+    }
+```
+
+
+
+* 线程被阻塞情况下
+
+```java
+    /**
+     * 线程在由sleep，wait，join等造成的阻塞情况下，停止线程时
+     * 阻塞方法会响应interrupt方法，并抛出InterruptedException异常
+     * 结果：
+     0是100的倍数
+     java.lang.InterruptedException: sleep interrupted
+     at java.lang.Thread.sleep(Native Method)
+     at com.prd.concurrent.ThreadStopTest.lambda$rigthStopThreadBlock$1(ThreadStopTest.java:56)
+     at java.lang.Thread.run(Thread.java:748)
+     */
+    private static void rigthStopThreadBlock() {
+        Runnable run = () -> {
+           int num=0;
+            try {
+               while(num<=300
+                       && !Thread.currentThread().isInterrupted()) {
+                   if (num % 100==0) {
+                       System.out.println(num+"是100的倍数");
+                   }
+                   num++;
+                   Thread.sleep(1000);
+               }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+        Thread thread = new Thread(run);
+        thread.start();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread.interrupt();
+    }
+```
+
+
+
+* 线程在每次迭代后都阻塞
+
+```java
+ /**
+     * 在执行过程中，每次循环中都会调用sleep等阻塞线程，停止线程时.
+     * 这里的Thread.currentThread().isInterrupted() 就显得多余，
+     * 线程停止是while循环内的sleep响应异常控制的。
+     * 结果：
+     0是100的倍数
+     100是100的倍数
+     200是100的倍数
+     300是100的倍数
+     400是100的倍数
+     java.lang.InterruptedException: sleep interrupted
+     */
+    private static void rigthStopThreadBlockEveryLoop() {
+        Runnable run = () -> {
+            int num=0;
+            try {
+                while(num<=10000) {
+                    if (num % 100==0) {
+                        System.out.println(num+"是100的倍数");
+                    }
+                    num++;
+                    Thread.sleep(10);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+        Thread thread = new Thread(run);
+        thread.start();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread.interrupt();
+    }
+```
+
+### 1.4.1 中断最佳实现
+
+​		上面讲解了中断时遇到的几种情况，本小节介绍下中断的最佳处理方法。**切记不能屏蔽中断**。
+
+* 优先选择：传递中断
+
+```java
+    /**
+     * 在生成环境中，最佳实践：catche了InterruptedException之后的优先选择：
+     * 在方法签名中抛出异常。那么在run()就会强制try/catch。
+     * 因为在run方法中只能catch，不能再往外抛出任何异常，因为run方法是重写的，在接口中run方法的定义中本来就没有抛出异常。
+     * 重写方法是不能破坏父类或接口方法的定义的。
+     */
+    private static void theFirstWayToStopThread() {
+        Runnable runA = () -> {
+            while (true) {
+                System.out.println("生产开始");
+                try {
+                    throwInMethod();
+                } catch (InterruptedException e) {
+                    // 保存日志，停止程序
+                    System.out.println("保存日志");
+                    e.printStackTrace();
+                }
+            }
+        };
+        Thread test1 = new Thread(runA);
+        test1.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        test1.interrupt();
+    }
+
+    /**
+     * 实际的生成方法
+     */
+    private static void throwInMethod() throws InterruptedException {
+        Thread.sleep(2000);
+    }
+```
+
+
+
+* 不想或无法传递：恢复中断
+
+```java
+    /**
+     * 在生产环境中，中断线程最佳实践2：在catch子句中调用Thread.currentThread().interrupt()
+     * 来恢复设置中断状态，以便于在后续的执行中，依然能否检查到刚才发生了中断。
+     */
+    private static void theSecondWayToStopThread() {
+        Runnable runA = () -> {
+            while (true) {
+                System.out.println("生产开始");
+                if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("Interrupted 程序运行结束");
+                    break;
+                }
+                reInterrupt();
+            }
+        };
+        Thread test1 = new Thread(runA);
+        test1.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        test1.interrupt();
+    }
+
+    /**
+     * 实际的生成方法
+     */
+    private static void reInterrupt() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
+    }
+```
+
+### 1.4.2 响应中断的方法
+
+```java
+Object.wait()/wait(long)/wait(long,int)
+Thread.sleep(long)/sleep(long,int)
+Thread.join()/join(long)/join(long,int)
+java.util.concurrent.BlockingQueue.take()/put(E)
+java.util.concurrent.locks.Lock.lockInterruptibly()
+java.util.concurrent.CountDownLatch.await()
+java.util.concurrent.CyclicBarrier.await()
+java.nio.channels.InterruptibleChannel相关方法
+java.nio.channels.Selector的相关方法    
+```
+
+### 1.4.3 错误方法
+
+#### 1.4.3.1 被弃用的stop，suspend和resume方法
+
+* 用stop()来停止线程，会导致线程运行一半突然停止，没办法完成一个基本单位的操作，会造成脏数据。
+
+[官网文档说明](https://docs.oracle.com/javase/7/docs/techenotes/guides/concurrency/threadPrimitiveDeprecation.html)
+
+* suspend和resume会造成死锁
+
+#### 1.4.3.2 用volatile设置boolean标记位
+
+```java
+    private volatile static boolean canceled = false;
+
+    /**
+     * 错误方法：使用volatile变量来控制线程中断.
+     * 结论：貌似看起来可行。
+     * 但是如果线程是阻塞状态时，volatile并不会起作用
+     */
+    private static void wangStopThreadByVolatile() {
+        new Thread(() -> {
+            int num = 0;
+            try {
+                while (num <= 10000 && !canceled) {
+                    if (num%100 == 0) {
+                        System.out.println(num + "是100的倍数");
+                    }
+                    num++;
+                    // 如果sleep时间过长，在阻塞状态时来改变canceled是无效的
+                    // 如果这是wait，则会导致线程长时间阻塞，无法中断了
+                    Thread.sleep(10);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        canceled = true;
+    }
+```
+
+### 1.4.4 源码解析
+
+```java
+    public void interrupt() {
+        if (this != Thread.currentThread())
+            checkAccess();
+
+        synchronized (blockerLock) {
+            Interruptible b = blocker;
+            if (b != null) {
+                interrupt0();           // Just to set the interrupt flag
+                b.interrupt(this);
+                return;
+            }
+        }
+        interrupt0();
+    }
+```
+
+这里最终调用的是本地方法 `interrupt0()`（C++编写）。需要通过OPEN JDK源码。
+
+阅读Open JDK源码有两种方式：
+
+（1） 通过GitHub直接阅读，适合大部分人员
+
+[GitHub-OpenJDK](https://github.com/openjdk-mirror/jdk7u-jdk)
+
+（2）访问OpenJDK官网，下载编译后来分析。
+
+
+
+## 1.5 线程异常
+
+​		首先，我们先了解下Java的异常体系。
+
+![thread-008](..\images\thread-008.png)
+
+​		在多线程运行过程中，主线程的异常可以直接try/catch或抛出。但是子线程程执行过程中产生的异常就只能通过`UncaughtExceptionHandler`来处理，是无法在主线程中try/catch或抛出。
+
+​		因为try/catch只能捕获所在线程内的异常，是无法捕捉子线程的异常。
+
+​		**处理子线程异常的方法**：
+
+* 手动在每个run方法里进行try/catch（不推荐）
+
+* 利用`UncaughtExceptionHandler`
+
+  **异常处理器的调用策略**：
+
+```java
+// ThreadGroup    
+public void uncaughtException(Thread t, Throwable e) {
+    	// 先调用父线程组的方法（递归）
+    	// 默认情况下parent是null
+        if (parent != null) {
+            parent.uncaughtException(t, e);
+        } else {
+            // 调用Thread.setDefaultUncaughtExceptionHandler(...)
+            // 方法设置的全局handler进行处理
+            Thread.UncaughtExceptionHandler ueh =
+                Thread.getDefaultUncaughtExceptionHandler();
+            if (ueh != null) {
+                ueh.uncaughtException(t, e);
+            } else if (!(e instanceof ThreadDeath)) {
+                // 全局handler也不存在就输出异常栈
+                System.err.print("Exception in thread \""
+                                 + t.getName() + "\" ");
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+```
+
+
+
+
 
 # 2 线程通知与等待
 
@@ -636,6 +1058,91 @@ public class ThreadWaitNotifyTest {
 ```
 
 注意：`notifyAll()`必须在`wait()`操作前触发，示例中`notifyAll()`也可以改在每次生成或消费完元素之后（即`System.out.println`语句之后），效果是一样的。
+
+## 2.1 阻塞阶段
+
+​		线程在调用`wait`相关方法后，当前线程进入阻塞状态。直到发下以下4种情况之一发生时，才会被唤醒
+
+* 另一个线程调用这个对象的notify()方法且刚好被唤醒的是本线程
+* 另一个线程调用这个对象的notifyAll()方法
+* 过了wait(long timeout)规定的超时时间，如果传入0就是永久等待
+
+* 线程自身调用了interrupt()
+
+## 2.2 唤醒阶段
+
+​		唤醒是通过`notify()`和`notifyAll()`实现的，唯一的区别就是唤醒一个线程，还是全部线程。
+
+## 2.3 遇到中断
+
+​		如果遇到中断请求，则当前被中断的线程释放获得的monitor锁。
+
+
+
+## 2.4 代码示例
+
+```java
+    /**
+     * 展示wait和monity的基本用法
+     * 1.研究代码执行顺序
+     * 2.证明wait释放锁
+     * 结果：
+     线程Thread-0开始执行
+     线程Thread-1调用了notify()
+     线程Thread-0重新获得锁
+     */
+    private static void testWaitNotifyNormalUsed() {
+        Object obj = new Object();
+
+        Thread thread1 = new Thread(()->{
+            synchronized (obj) {
+                System.out.println("线程"+Thread.currentThread().getName()+"开始执行");
+                try {
+                    obj.wait();
+                } catch (InterruptedException e) {
+                    // 响应中断
+                    e.printStackTrace();
+                }
+                System.out.println("线程"+Thread.currentThread().getName()+"重新获得锁");
+            }
+        });
+
+        Thread thread2 = new Thread(()->{
+            synchronized (obj) {
+                obj.notify();
+                System.out.println("线程"+Thread.currentThread().getName()+"调用了notify()");
+            }
+        });
+
+        //必须保证thread1先执行，否则先notify无意义
+        thread1.start();
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        thread2.start();
+    }
+```
+
+## 2.5 wait原理
+
+入口集 Entry Set，等待集 Wait Set。下图主要介绍在获得synchronized锁时，wait的原理。
+
+![thread-007](..\images\thread-007.png)
+
+* 线程启动，想要获取内置锁，但是锁已经被其他线程获取，则线程进入入口集（1）
+* 原持有内置锁的线程释放锁，等待线程取得锁，进入步骤（2）
+* 线程执行完成，释放锁并退出（6）
+* 或者线程调用wait方法，进入等待集（3）
+* 等待集中的线程被唤醒，进入获取锁Set中（4）
+* 线程获取到锁，执行（5）
+
+
+
+​		任何对象都是继承于Object，都会存在wait方法，同理Thread也会有wait方法，但是在平时却不能使用，那是因为Thread中的run方法在执行完成后，会自动notify，会打乱我们的控制。
+
+​		但是在分析JOIN的源码时，发现JOIN内部实际是调用的目标线程的wait方法，阻塞调用wait的当前线程，这里在目标线程run方法执行完成后，会自动调用notify，唤醒阻塞的当前线程（当然这些都是JVM内部实现的）。
 
 # 3 线程死锁
 

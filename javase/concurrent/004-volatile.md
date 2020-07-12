@@ -2,7 +2,51 @@
 
 ​		Java语言规范第三版中对volatile的定义如下： Java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致的更新，线程应该确保通过排他锁单独获得这个变量。Java语言提供了volatile，在某些情况下比锁更加方便。如果一个字段被声明成volatile，java线程内存模型确保所有线程看到这个变量的值是一致的。
 
-​		volatile经常用于两个场景：状态标记、double check。
+​		volatile是一种同步机制，比synchronized或者lock相关类更轻量，因为适用volatile并不会发生上下文切换等开销很大的行为。
+
+​		如果一个变量修饰为volatile，那么JVM就知道了这变量可能会被并发修改。
+
+​		但是开销小，相应的能力也小，虽然说volatile是用来同步的保证线程安全的，但是volatile做不到synchronized那样的**原子保护**，volatile仅在很有限的场景下才能发挥作用。
+
+
+
+## 1.1 适用场合
+
+不适用：a++
+
+**适用场合1（纯赋值操作）**：状态标记 boolean flag，如果一个共享变量自始至终只被**各个线程赋值**，而没有其他的操作，那么久可以用volatile来代替synchronized或者代替原子变量，因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全。这里的flag的改变不能依赖之前的旧值，否则即使是boolean也是有问题的。
+
+**适用场合2**：作为刷新之前变量的触发器。示例可以参考 第2章 6.3.2.1，volatile b
+
+```java
+Map configOptions;
+char[] configText;
+volatile booean initialized = fase;
+// Thread A
+configOptions = new HashMap();
+configText = readConfigFile(fileName);
+processConfigOptions(configText,configOptions);
+// Thread B
+while(!initialized)
+    sleep();
+// use configOptions
+```
+
+
+
+**适用场合3**：double check。
+
+
+
+## 1.2 volatile作用
+
+可见性：读一个volatile变量之前，需要先使相应的本地缓存失效，这样就必须到主内存读取最新值，写一个volatile属性会立即刷入到主内存。
+
+禁止指令重排序优化：解决单例双重锁乱序问题。
+
+## 1.3 volatile和synchronized
+
+volatile在这方面可以看做时轻量版的synchronized：如果一个共享变量自始至终只被各个线程赋值，而没有其他的操作，那么就可以用volatile来代替synchronized或者代替变量，因为赋值自身是有原子性的，而volatile又保证了可见性，所以就足以保证线程安全。
 
 # 2 内存模型
 
@@ -73,11 +117,9 @@ i = j + 1;    ---4
 
 ​		可见性是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。
 
-​		在上面已经分析了，在多线程环境下，一个线程对共享变量的操作对其他线程是不可见的。**Java提供了volatile来保证可见性**。
+​		在上面已经分析了，在多线程环境下，一个线程对共享变量的操作对其他线程是不可见的。**Java提供了volatile来保证可见性**。当一个变量被volatile修饰后，表示着线程本地内存无效，当一个线程修改共享变量后他会立即被更新到主内存中，当其他线程读取共享变量时，它会直接从主内存中读取。 
 
-​		当一个变量被volatile修饰后，表示着线程本地内存无效，当一个线程修改共享变量后他会立即被更新到主内存中，当其他线程读取共享变量时，它会直接从主内存中读取。 
-
-​		当然，**synchronize和锁都可以保证可见性**。
+​		除了volatile可以让变量保证可见性外，**synchronized，lock，并发集合，Thread.join和Thread.start**等都可以保证可见性（即happens-before的原则）。
 
 ### 2.3.3 有序性
 
@@ -103,9 +145,14 @@ public class Singleton {
 }
 ```
 
-# 3 volatile原理
+# 3 volatile小结
 
-
+* volatile修饰符适用于以下场景：某个属性被多个线程共享，其中有一个线程修改了此属性，其他线程可以立即得到修改后的值，比如boolean flag；或者作为触发器，实现轻量级同步。
+* volatile属性的读写操作都是无锁的，它不能替代synchronized，因为它没有提供原子性和互斥性。因为无锁，不需要花费时间在获取锁和释放锁上，所以它是第成本的。
+* volatile只能作用域属性，我们用volatile修饰属性，这样compilers就不会对这个属性做指令重排序。
+* volatile提供了可见性，任何一个线程堆其的修改将立刻对其他线程可见。volatile属性不会被线程缓存，始终从主内存中读取。
+* volatile提供了happens-before保证，对volatile变量v的写入Happens-Before所有其他线程后续对v的读取操作
+* volatile可以使得long和double的赋值是原子的。
 
 
 

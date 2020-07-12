@@ -32,3 +32,6 @@ https://blog.csdn.net/MingHuang2017/article/details/79571529
 
 
 
+慕课网悟空老师的《Java并发核心知识精讲》课，本文所涵盖的面试题，在课程中均有详细讲解。
+并发高频面试题（持续更新）在线文档地址：
+https://docs.qq.com/doc/DSVNyZ2FNWWFkeFpO  

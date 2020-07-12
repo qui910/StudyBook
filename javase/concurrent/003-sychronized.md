@@ -289,3 +289,12 @@ void wait(long millis,int nanos);
 
 https://www.cnblogs.com/nevermorewang/p/9864797.html
 
+
+
+# 8 synchronized可见性理解
+
+​		synchronized不仅保证了原子性，还保证了可见性。
+
+​		synchronized不仅让被保护的代码安全，还让synchronized之前的代码也可以被其他线程看到。
+
+​		
