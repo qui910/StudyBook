@@ -1,6 +1,6 @@
 # 1 线程基础
 
-​		线程是并发的基础单元，这里从线程开始说明。实现多线程有以下两种方式：
+线程是并发的基础单元，这里从线程开始说明。实现多线程有以下两种方式：
 
 ```java
 class TestThreadStateA extends Thread {
@@ -19,7 +19,7 @@ new Thread(()->{
 
 ## 1.1 线程属性
 
-​		线程的属性包括线程的编号（ID），线程的名称（Name）,线程的类别（Daemon）和优先级（Priority）。
+线程的属性包括线程的编号（ID），线程的名称（Name）,线程的类别（Daemon）和优先级（Priority）。
 
 | 属性             | 属性类型及用途                                               | 只读属性 | 重要注意事项                                                 |
 | ---------------- | ------------------------------------------------------------ | -------- | ------------------------------------------------------------ |
@@ -32,9 +32,9 @@ new Thread(()->{
 
 ## 1.2 线程状态
 
-​		Java线程的状态可以使用监控工具查看，也可以通过 Thread.getState（）调用来获取 。Thread.getState（）的返回值类型 Thread.State 是一个枚举类型（ Enum ） 。 
+Java线程的状态可以使用监控工具查看，也可以通过 Thread.getState（）调用来获取 。Thread.getState（）的返回值类型 Thread.State 是一个枚举类型（ Enum ） 。 
 
-​		Thread.State所定义的线程状态包括以下几种 :
+Thread.State所定义的线程状态包括以下几种 :
 
 | 状态                    | 说明                                                         |
 | ----------------------- | ------------------------------------------------------------ |
@@ -60,7 +60,7 @@ new Thread(()->{
 
 ### 1.2.1 **初始状态**
 
-​		实现Runnable接口和继承Thread可以得到一个线程类，new一个实例出来，线程就进入了初始状态。
+实现Runnable接口和继承Thread可以得到一个线程类，new一个实例出来，线程就进入了初始状态。
 
 ### 1.2.2 **就绪状态**
 
@@ -72,23 +72,21 @@ new Thread(()->{
 
 ### 1.2.3 **运行中状态**
 
-​		线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。
+线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。
 
 ### 1.2.4 **阻塞状态**
 
-​		阻塞状态是线程阻塞在进入synchronized关键字修饰的方法或代码块(获取锁)时的状态。
+阻塞状态是线程阻塞在进入synchronized关键字修饰的方法或代码块(获取锁)时的状态。
 
 ### 1.2.5 等待
 
-​		处于这种状态的线程不会被分配CPU执行时间，它们要等待被显式地唤醒，否则会处于无限期等待的状态。
+处于这种状态的线程不会被分配CPU执行时间，它们要等待被显式地唤醒，否则会处于无限期等待的状态。
 
 ### 1.2.6 超时等待
 
-​		处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。
+处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。
 
-
-
-​		一般习惯而言，把Blocked（1.2.4），Waiting（1.2.5），Timed_waiting(1.2.6）都称为阻塞状态。不仅仅是Blocked。
+一般习惯而言，把Blocked（1.2.4），Waiting（1.2.5），Timed_waiting(1.2.6）都称为阻塞状态。不仅仅是Blocked。
 
 ### 1.2.7 **终止状态**
 
@@ -97,7 +95,7 @@ new Thread(()->{
 
 ### 1.2.8 方法调用与线程状态
 
-​		每个锁对象都有两个队列，一个是同步队列（即就绪队列），一个是等待队列（即阻塞队列）。就绪队列存储了已就绪（将要竞争锁）的线程，阻塞队列存储了被阻塞的线程。当一个阻塞线程被唤醒后，才会进入就绪队列，进而等待CPU的调度；反之，当一个线程被wait后，就会进入阻塞队列，等待被唤醒。
+每个锁对象都有两个队列，一个是同步队列（即就绪队列），一个是等待队列（即阻塞队列）。就绪队列存储了已就绪（将要竞争锁）的线程，阻塞队列存储了被阻塞的线程。当一个阻塞线程被唤醒后，才会进入就绪队列，进而等待CPU的调度；反之，当一个线程被wait后，就会进入阻塞队列，等待被唤醒。
 
 #### 1.2.8.1 等待队列
 
@@ -1144,16 +1142,133 @@ public class ThreadWaitNotifyTest {
 
 ​		但是在分析JOIN的源码时，发现JOIN内部实际是调用的目标线程的wait方法，阻塞调用wait的当前线程，这里在目标线程run方法执行完成后，会自动调用notify，唤醒阻塞的当前线程（当然这些都是JVM内部实现的）。
 
+## 2.6 管道通信
+
+​		Java中提供了IO流使我们很方便的对数据进行操作，pipeStream是一种特殊的流，用于不同线程间直接传送数据。一个线程将数据发送到输出管道，另一个线程从输入管道读取数据。通过管道实现通信不需要借助临时文件这类东西。
+java中提供了四个类使得线程间可以通信：
+①字节流：PipeInputStream，PipedOutputStream
+②字符流：PipedReader，PipedWriter
+
+代码示例：
+
+```java
+/**
+ * 线程间管道通信测试
+ */
+public class ThreadPipIOTest {
+
+    private static class Writer extends Thread {
+
+        private PipedOutputStream out;
+
+        public Writer(String name, PipedOutputStream out) {
+            super(name);
+            this.out = out;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("线程"+getName()+"进入");
+            try {
+                Thread.sleep(6000);
+                System.out.println("线程"+getName()+"开始运行");
+                for (int i=0;i<10;i++) {
+                    out.write(("线程"+getName()+"输出数据到Reader"+i).getBytes());
+                    //out.write("\n".getBytes());
+                    out.flush();
+                    System.out.println("线程"+getName()+"状态"+i+getState().name());
+                    Thread.sleep(1000);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally{
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    private static class Reader extends Thread {
+
+        private PipedInputStream in;
+
+        public Reader(String name, PipedInputStream in) {
+            super(name);
+            this.in = in;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("线程"+getName()+"进入");
+            int ch=0;
+            byte[] bytes = new byte[1024];
+            try {
+                System.out.println("线程"+getName()+"开始运行");
+                // 进入线程后，因为要等待输出流准备完毕，这里被输入流阻塞
+                while((ch = in.read(bytes)) !=-1){
+                    byte[] bytestmp = new byte[ch];
+                    System.arraycopy(bytes,0,bytestmp,0,ch);
+                    System.out.println("线程"+getName()+"状态"+getState().name());
+                    System.out.println("线程"+getName()+"读取数据:"+new String(bytestmp));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally{
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+
+        PipedOutputStream out = new PipedOutputStream();
+        PipedInputStream in = new PipedInputStream(out);
+        Writer writer = new Writer("A",out);
+        Reader reader = new Reader("B",in);
+
+        // 因为这里的输入流是通过输出流创建的，虽然reader线程先执行，
+        // 但是只要out不关闭，则reader就会阻塞，一致到有数据送来。
+        reader.start();
+        Thread.sleep(1000);
+        writer.start();
+        Thread.sleep(1000);
+        System.out.println("线程"+reader.getName()+"状态为："+reader.getState().name());
+        System.out.println("线程"+writer.getName()+"状态为："+writer.getState().name());
+    }
+}
+```
+
+​		Java中有关IO的在单独章节讲解。
+
 # 3 线程死锁
 
-​		死锁就是两个或两个以上的线程在执行过程中，因争夺资源而造成的互相等待的现象。在无外在处理的情况下，这些线程会一直相互等待而无法继续运行。
+死锁就是两个或两个以上的线程在执行过程中，因争夺资源而造成的互相等待的现象。在无外在处理的情况下，这些线程会一直相互等待而无法继续运行。
 
-​		死锁产生必备以下四个条件：
+死锁产生必备以下四个条件：
 
 * 互斥条件：指线程对已经获取到的资源进行排他使用，即该资源同时只由一个线程占用。如果此时还有其他线程请求获取该资源，则请求线程只能等待，直至占用资源的线程释放该资源。
 * 请求并持有条件：指一个线程已经持有了至少一个资源，但又提出了新的资源请求。而新的资源已经被其他线程所占用，所以当前线程会被阻塞，但阻塞的同时不会释放自己已经获取的资源。
 * 不可剥夺条件：指线程获取到的资源在自己使用完之前不能被其他线程抢占。只有在自己使用完毕后才由自己释放。
 * 环路等待条件：指在发生死锁时，必然存在一个线程--资源的环形链。即线程集合{T0，T1，T2....Tn} 中的T0正在等待一个T1占用的资源，T1 正在等待T2占用的资源，。。。Tn正在等待T0占用的资源。
+
+## 3.1 死锁的影响
+
+死锁的影响在不同系统中是不一样的，这取决于系统对死锁的处理能力。
+
+* 数据库中：检测并放弃事务
+* JVM中：无法自动处理
+
+
 
 ## 3.1 代码示例
 

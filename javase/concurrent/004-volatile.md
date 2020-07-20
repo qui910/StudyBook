@@ -156,7 +156,212 @@ public class Singleton {
 
 
 
+# 4 单例模式
 
+## 4.1 为什么需要单例
 
+​		节省内存和计算，保证结果正确，方便管理
 
+## 4.2 单例模式适用场景
 
+*  无状态的工具类：比如日志工具类，不管是在哪里适用，我们需要的只是它帮我们记录日志信息，除此之外，并不需要在它的实例对象上存储任何状态，这时我们就只需要一个实例对象即可
+* 全局信息类：比如我们在一个类上记录网站的访问次数，我们不希望有的访问被记录在对象A上，有的去记录在对象B上，这时候我们就让这个类成为单例。
+
+## 4.3 单例模式的写法
+
+### 4.3.1 饿汉式（静态常量）【可用】
+
+因为是在类加载时初始化的，故而是线程安全的（线程安全的保证由JVM在类加载时控制）。
+
+```java
+/**
+ * 饿汉式（静态常量）【可用】
+ */
+public class SingleTon1 {
+    private  final static SingleTon1 INSTANCE = new SingleTon1();
+
+    private SingleTon1() {
+    }
+
+    public static SingleTon1 getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+### 4.3.2 饿汉式（静态代码块）【可用】
+
+特性与4.3.1 一样
+
+```java
+/**
+ * 饿汉式（静态代码块）【可用】
+ */
+public class SingleTon2 {
+    private  final static SingleTon2 INSTANCE;
+
+    static {
+        INSTANCE = new SingleTon2();
+    }
+
+    private SingleTon2() {
+    }
+
+    public static SingleTon2 getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+### 4.3.3 懒汉式（线程不安全）【不可用】
+
+```java
+/**
+ * 懒汉式（线程不安全）【不可用】
+ */
+public class SingleTon3 {
+    private  static SingleTon3 instance;
+
+    private SingleTon3() {
+    }
+
+    public static SingleTon3 getInstance() {
+        if (instance==null) {
+            instance = new SingleTon3();
+        }
+        return instance;
+    }
+}
+
+```
+
+### 4.3.4 懒汉式（线程安全,同步方法）【不推荐用】
+
+虽然实现了线程安装，但是却是性能较低，不推荐使用。
+
+```java
+/**
+ * 懒汉式（线程安全）【不推荐】
+ */
+public class SingleTon4 {
+    private  static SingleTon4 instance;
+
+    private SingleTon4() {
+    }
+
+    public synchronized static SingleTon4 getInstance() {
+        if (instance==null) {
+            instance = new SingleTon4();
+        }
+        return instance;
+    }
+}
+```
+
+### 4.3.5 懒汉式（线程不安全,同步代码块）【不可用】
+
+```java
+/**
+ * 懒汉式（线程不安全,同步代码块）【不可用】
+ */
+public class SingleTon5 {
+    private  static SingleTon5 instance;
+
+    private SingleTon5() {
+    }
+
+    public static SingleTon5 getInstance() {
+        if (instance==null) {
+            synchronized (SingleTon5.class) {
+                instance = new SingleTon5();
+            }
+        }
+        return instance;
+    }
+}
+```
+
+### 4.3.6  双重检查【推荐】
+
+**优点**：线程安全，延迟加载，效率较高
+
+为何要double-check?
+
+​	线程安全
+
+​	单check行不行
+
+​	性能问题
+
+为何要volatile？
+
+1. 新建对象实际上有3个步骤 （ 创建空对象，调用构造器，引用赋值给变量）
+2. 如果不设置volatile，则上述3个步骤可能发生重排序，这样可能会导致变量引用到空对象。
+
+```java
+/**
+ * 双重检查（推荐）
+ */
+public class SingleTon6 {
+    private volatile static SingleTon6 instance;
+
+    private SingleTon6() {
+    }
+
+    public static SingleTon6 getInstance() {
+        if (instance==null) {
+            synchronized (SingleTon6.class) {
+                if (instance==null) {
+                    instance = new SingleTon6();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+### 4.3.7 静态内部类【推荐】
+
+归属于懒汉式，在外部类初始化时，内部类还不会初始化。只有在调用时，才会触发由JVM初始化内部类。同时，SingleTon7的构造是由JVM控制的，又保证了线程安全。
+
+```java
+/**
+ * 静态内部类【推荐】
+ */
+public class SingleTon7 {
+
+    private SingleTon7() {
+    }
+
+    private static class SingleTonInstence {
+        private static final SingleTon7 INSTANCE= new SingleTon7();
+    }
+
+    public static SingleTon7 getInstance() {
+       return SingleTonInstence.INSTANCE;
+    }
+}
+```
+
+### 4.3.8 枚举【推荐】
+
+生产环境中推荐使用
+
+```java
+/**
+ * 枚举【推荐，生成环境中推荐】
+ */
+public enum SingleTon8 {
+    INSTANCE;
+
+    public void dosomething() {
+       // 与单例无关，只是在调用单例后可以执行的方法
+        System.out.println("dosomething");
+    }
+
+    public static void main(String[] args) {
+        SingleTon8.INSTANCE.dosomething();
+    }
+}
+```

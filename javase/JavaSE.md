@@ -8,3 +8,4 @@
 
 [Java技术体系说明](https://www.oracle.com/cn/java/technologies/)
 
+[String详解, String和CharSequence区别, StringBuilder和StringBuffer的区别 (String系列之1)](https://www.cnblogs.com/skywang12345/p/string01.html)
