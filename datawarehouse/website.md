@@ -21,3 +21,7 @@
 [数据仓库开发笔记（一）](https://blog.csdn.net/Athenaer/article/details/7935147)
 
 [数据仓库开发笔记（二）](https://blog.csdn.net/Athenaer/article/details/7950709)
+
+* [数据库设计三大范式](https://www.cnblogs.com/xietianjiao/p/10972285.html)
+
+* [Kimball和Inmon方法论的适用场景比较](https://blog.csdn.net/scaulds/article/details/84039061)

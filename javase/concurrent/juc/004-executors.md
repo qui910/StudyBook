@@ -137,6 +137,14 @@ static ExecutorService unconfigurableExecutorService(ExecutorService executor)
 static ScheduledExecutorService unconfigurableScheduledExecutorService(ScheduledExecutorService executor)
 ```
 
+## 1.8 CompletionService
+CompletionService将Executor和BlockingQueue的功能融合在一起。可以将Callable任务提交给它来执行，然后使用类似于队列操作的take和poll等方法来获得已经完成的结果。ExecutorCompletionService实现了CompletionService，并将计算部分委托给一个Executor。
+
+多个ExecutorCompletionService可以共享一个Executor，因此可以创建一个对于特定计算私有，又能共享一个公共Executor的CompletionService。
+
+
+
+
 # 2 Callable & Future
 
 ## 2.1 Callable
@@ -311,3 +319,13 @@ threadFactory是ThreadFactory对象。它是一个线程工厂类，"线程池�
 **8. handler**
 
 handler是RejectedExecutionHandler类型。它是"线程池拒绝策略"的句柄，也就是说"当某任务添加到线程池中，而线程池拒绝该任务时，线程池会通过handler进行相应的处理"。
+
+
+
+
+
+# 参考网址
+
+* [Java线程池中的核心线程是如何被重复利用的](https://blog.csdn.net/MingHuang2017/article/details/79571529)
+
+* [线程池的工作原理与源码解读](https://www.cnblogs.com/qingquanzi/p/8146638.html)
